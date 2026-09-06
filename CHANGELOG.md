@@ -9,10 +9,12 @@
 ### Changes
 
 ### Fixes
+* [NeoForge] Resolved a Typo in neoforge.mods.toml
 
 ### Developer
-
-### Molang & Datapacks
+* Modified RegistryHelper from a Custom One, to an Extension of Cobblemon one
+* Added Spotless for streamlined Code Formatting
+* Streamlined the Versions of Dependencies in libs.version.toml and build.gradle.kts
 
 ### Localization
 - Updated translations for:

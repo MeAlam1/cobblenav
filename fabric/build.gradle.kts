@@ -22,6 +22,13 @@ dependencies {
         targetConfiguration = "transformProductionFabric"
         isTransitive = false
     }
+
+	// Fix for Cobblemon dev on Fabric
+	modRuntimeOnly("org.graalvm.js:js:22.3.0")
+	modRuntimeOnly("org.graalvm.sdk:graal-sdk:22.3.0")
+	modRuntimeOnly("org.graalvm.regex:regex:22.3.0")
+	modRuntimeOnly("org.graalvm.truffle:truffle-api:22.3.0")
+	modRuntimeOnly("com.ibm.icu:icu4j:71.1")
 }
 
 tasks {

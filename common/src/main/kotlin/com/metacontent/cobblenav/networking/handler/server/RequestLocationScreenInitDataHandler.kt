@@ -14,7 +14,7 @@ object RequestLocationScreenInitDataHandler : ServerNetworkPacketHandler<Request
         player: ServerPlayer
     ) {
         server.execute {
-            val buckets = Cobblemon.bestSpawner.config.buckets.map { it.name }
+            val buckets = Cobblemon.bestSpawner.config.worldBuckets.keys.toList()
             val biome = player.level().getBiome(player.onPos).registeredName
 
             LocationScreenInitDataPacket(buckets, biome).sendToPlayer(player)

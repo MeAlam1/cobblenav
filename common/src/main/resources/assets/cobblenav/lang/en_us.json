@@ -130,6 +130,7 @@
   "bucket.cobblenav.uncommon": "uncommon",
   "bucket.cobblenav.rare": "rare",
   "bucket.cobblenav.ultra-rare": "ultra-rare",
+  "bucket.cobblenav.boss": "boss",
 
   "gui.cobblenav.true": "Yes",
   "gui.cobblenav.false": "No",
