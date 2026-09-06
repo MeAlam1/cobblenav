@@ -79,32 +79,25 @@ class ConfigScreen<T : Config<T>>(
 	private val scrollbarX: Int
 		get() = boxRight + SCROLLBAR_GAP
 
+	private val listTop: Int
+		get() = HEADER_HEIGHT + PADDING
+
+	private val listBottom: Int
+		get() = height - FOOTER_HEIGHT - PADDING
+
 	override fun init() {
 		super.init()
-
 		rows.clear()
 		scrollAmount = 0.0
 
-		setupLayout()
-		setupSearch()
-		setupRows()
-		setupDoneButton()
-
-		registerWidgets()
-		arrangeLayoutElements()
-
-		filterRows(searchString)
-	}
-
-	private fun setupLayout() {
+		//region Layout
 		layout = HeaderAndFooterLayout(
 			this,
 			HEADER_HEIGHT,
 			FOOTER_HEIGHT,
 		)
-	}
-
-	private fun setupSearch() {
+		//endregion
+		//region Search Bar
 		val searchLayout = layout.addToHeader(
 			LinearLayout.vertical(),
 		)
@@ -136,15 +129,13 @@ class ConfigScreen<T : Config<T>>(
 		}
 
 		searchLayout.addChild(searchEdit)
-	}
-
-	private fun setupRows() {
+		//endregion
+		//region Rows
 		for (option in config.options()) {
 			rows += buildRows(option)
 		}
-	}
-
-	private fun setupDoneButton() {
+		//endregion
+		//region Done Button
 		doneButton = Button.builder(CommonComponents.GUI_DONE) {
 			onDone()
 		}
@@ -156,9 +147,8 @@ class ConfigScreen<T : Config<T>>(
 			.build()
 
 		layout.addToFooter(doneButton)
-	}
-
-	private fun registerWidgets() {
+		//endregion
+		//region Widgets
 		layout.visitWidgets { widget ->
 			addRenderableWidget(widget)
 		}
@@ -167,11 +157,13 @@ class ConfigScreen<T : Config<T>>(
 			addWidget(row.widget)
 			addWidget(row.resetButton)
 		}
-	}
-
-	private fun arrangeLayoutElements() {
+		//endregion
+		//region Layout Elements
 		layout.arrangeElements()
 		layoutWidgets()
+		//endregion
+
+		filterRows(searchString)
 	}
 
 	private fun buildRows(option: ConfigOption<*>): List<Row> = when (option) {
@@ -451,9 +443,6 @@ class ConfigScreen<T : Config<T>>(
 	private fun layoutWidgets() {
 		val visibleRows = rows.filter { it.visible }
 
-		val listTop = listTop()
-		val listBottom = listBottom()
-
 		val availableHeight =
 			(listBottom - listTop).coerceAtLeast(0)
 
@@ -504,10 +493,6 @@ class ConfigScreen<T : Config<T>>(
 				row.resetButton.visible = false
 			}
 	}
-
-	private fun listTop(): Int = HEADER_HEIGHT + PADDING
-
-	private fun listBottom(): Int = height - FOOTER_HEIGHT - PADDING
 
 	override fun mouseScrolled(
 		mouseX: Double,
@@ -599,20 +584,12 @@ class ConfigScreen<T : Config<T>>(
 	private fun isMouseOverScrollbar(
 		mouseX: Double,
 		mouseY: Double,
-	): Boolean {
-		val listTop = listTop()
-		val listBottom = listBottom()
-
-		return mouseX >= scrollbarX &&
-			mouseX <= scrollbarX + SCROLLBAR_WIDTH &&
-			mouseY >= listTop &&
-			mouseY <= listBottom
-	}
+	): Boolean = mouseX >= scrollbarX &&
+		mouseX <= scrollbarX + SCROLLBAR_WIDTH &&
+		mouseY >= listTop &&
+		mouseY <= listBottom
 
 	private fun updateScrollFromMouse(mouseY: Double) {
-		val listTop = listTop()
-		val listBottom = listBottom()
-
 		val trackHeight =
 			listBottom - listTop
 
@@ -669,9 +646,6 @@ class ConfigScreen<T : Config<T>>(
 			mouseY,
 			partialTick,
 		)
-
-		val listTop = listTop()
-		val listBottom = listBottom()
 
 		graphics.enableScissor(
 			boxLeft,
@@ -748,9 +722,6 @@ class ConfigScreen<T : Config<T>>(
 	private fun drawScrollbar(
 		graphics: GuiGraphics,
 	) {
-		val listTop = listTop()
-		val listBottom = listBottom()
-
 		val trackHeight =
 			listBottom - listTop
 
