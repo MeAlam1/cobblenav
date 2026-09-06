@@ -9,23 +9,17 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
 class LureLevelCollector : ConditionCollector<FishingSpawningCondition>() {
-    companion object {
-        const val NAME = "lure_level"
-    }
+	companion object {
+		const val NAME = "lure_level"
+	}
 
-    override val name = NAME
-    override val color = 0x8A2BE2
-    override val conditionClass = FishingSpawningCondition::class.java
-    override var neededInstalledMods: List<ModDependency> = emptyList()
-    override var neededUninstalledMods: List<ModDependency> = emptyList()
+	override val name = NAME
+	override val color = 0x8A2BE2
+	override val conditionClass = FishingSpawningCondition::class.java
+	override var neededInstalledMods: List<ModDependency> = emptyList()
+	override var neededUninstalledMods: List<ModDependency> = emptyList()
 
-    override fun collectValues(
-        detail: SpawnDetail,
-        condition: FishingSpawningCondition,
-        player: ServerPlayer
-    ): List<MutableComponent>? {
-        return formatValueRange(condition.minLureLevel, condition.maxLureLevel)?.let {
-            listOf(literal(it))
-        }
-    }
+	override fun collectValues(detail: SpawnDetail, condition: FishingSpawningCondition, player: ServerPlayer): List<MutableComponent>? = formatValueRange(condition.minLureLevel, condition.maxLureLevel)?.let {
+		listOf(literal(it))
+	}
 }

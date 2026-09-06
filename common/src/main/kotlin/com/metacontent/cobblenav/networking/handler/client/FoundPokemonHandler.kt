@@ -6,10 +6,10 @@ import com.metacontent.cobblenav.networking.packet.client.FoundPokemonPacket
 import net.minecraft.client.Minecraft
 
 object FoundPokemonHandler : ClientNetworkPacketHandler<FoundPokemonPacket> {
-    override fun handle(packet: FoundPokemonPacket, client: Minecraft) {
-        val screen = client.screen
-        if (screen is FinderScreen) {
-            screen.receiveFoundPokemon(packet.pokemon)
-        }
-    }
+	override fun handle(packet: FoundPokemonPacket, client: Minecraft) {
+		val screen = client.screen
+		if (screen is FinderScreen) {
+			screen.receiveFoundPokemon(packet.pokemon)
+		}
+	}
 }

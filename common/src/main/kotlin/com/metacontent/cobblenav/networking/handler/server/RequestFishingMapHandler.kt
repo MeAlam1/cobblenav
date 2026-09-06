@@ -8,9 +8,9 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 
 object RequestFishingMapHandler : ServerNetworkPacketHandler<RequestFishingMapPacket> {
-    override fun handle(packet: RequestFishingMapPacket, server: MinecraftServer, player: ServerPlayer) {
-        server.execute {
-            FishingMapPacket(SpawnDataHelper.checkFishingSpawns(player)).sendToPlayer(player)
-        }
-    }
+	override fun handle(packet: RequestFishingMapPacket, server: MinecraftServer, player: ServerPlayer) {
+		server.execute {
+			FishingMapPacket(SpawnDataHelper.checkFishingSpawns(player)).sendToPlayer(player)
+		}
+	}
 }

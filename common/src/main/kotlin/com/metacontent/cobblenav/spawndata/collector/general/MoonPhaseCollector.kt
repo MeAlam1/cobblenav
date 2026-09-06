@@ -8,22 +8,16 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
 class MoonPhaseCollector : GeneralConditionCollector() {
-    companion object {
-        const val NAME = "moon_phase"
-    }
+	companion object {
+		const val NAME = "moon_phase"
+	}
 
-    override val name = NAME
-    override val color = 0x708090
+	override val name = NAME
+	override val color = 0x708090
 
-    override fun collectValues(
-        detail: SpawnDetail,
-        condition: SpawningCondition<*>,
-        player: ServerPlayer
-    ): List<MutableComponent>? {
-        return condition.moonPhase?.ranges?.flatMap { range ->
-            range.mapNotNull { phase ->
-                translate("moon.cobblenav.${MoonPhase.entries.getOrNull(phase)?.name?.lowercase()}")
-            }
-        }?.distinct()
-    }
+	override fun collectValues(detail: SpawnDetail, condition: SpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? = condition.moonPhase?.ranges?.flatMap { range ->
+		range.mapNotNull { phase ->
+			translate("moon.cobblenav.${MoonPhase.entries.getOrNull(phase)?.name?.lowercase()}")
+		}
+	}?.distinct()
 }

@@ -7,16 +7,16 @@ import com.metacontent.cobblenav.storage.client.ClientSpawnDataCatalogue
 import com.metacontent.cobblenav.util.cobblenavResource
 
 object CobblenavDataStoreTypes {
-    val SPAWN_DATA = register(
-        PlayerInstancedDataStoreType(
-            id = cobblenavResource("spawn_data_catalogue"),
-            decoder = ClientSpawnDataCatalogue::decode,
-            afterDecodeAction = ClientSpawnDataCatalogue::afterDecode,
-            incrementalAfterDecodeAction = ClientSpawnDataCatalogue::incrementalAfterDecode
-        )
-    )
+	val SPAWN_DATA = register(
+		PlayerInstancedDataStoreType(
+			id = cobblenavResource("spawn_data_catalogue"),
+			decoder = ClientSpawnDataCatalogue::decode,
+			afterDecodeAction = ClientSpawnDataCatalogue::afterDecode,
+			incrementalAfterDecodeAction = ClientSpawnDataCatalogue::incrementalAfterDecode,
+		),
+	)
 
-    fun info() {
-        Cobblenav.LOGGER.info("Registering cobblenav data store types!")
-    }
+	fun info() {
+		Cobblenav.LOGGER.info("Registering cobblenav data store types!")
+	}
 }

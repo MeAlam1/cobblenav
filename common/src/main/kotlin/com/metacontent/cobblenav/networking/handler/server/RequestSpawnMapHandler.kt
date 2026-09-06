@@ -8,16 +8,12 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 
 object RequestSpawnMapHandler : ServerNetworkPacketHandler<RequestSpawnMapPacket> {
-    override fun handle(
-        packet: RequestSpawnMapPacket,
-        server: MinecraftServer,
-        player: ServerPlayer
-    ) {
-        server.execute {
-            val (weightedBucket, spawnDataList) = packet.fixedAreaPoint?.let {
-                SpawnDataHelper.checkFixedAreaSpawns(it, player, packet.bucket)
-            } ?: SpawnDataHelper.checkPlayerSpawns(player, packet.bucket)
-            SpawnMapPacket(weightedBucket, spawnDataList).sendToPlayer(player)
-        }
-    }
+	override fun handle(packet: RequestSpawnMapPacket, server: MinecraftServer, player: ServerPlayer) {
+		server.execute {
+			val (weightedBucket, spawnDataList) = packet.fixedAreaPoint?.let {
+				SpawnDataHelper.checkFixedAreaSpawns(it, player, packet.bucket)
+			} ?: SpawnDataHelper.checkPlayerSpawns(player, packet.bucket)
+			SpawnMapPacket(weightedBucket, spawnDataList).sendToPlayer(player)
+		}
+	}
 }

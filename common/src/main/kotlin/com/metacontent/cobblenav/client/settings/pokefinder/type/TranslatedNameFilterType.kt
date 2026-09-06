@@ -5,11 +5,11 @@ import com.metacontent.cobblenav.client.settings.pokefinder.filter.TranslatedNam
 import net.minecraft.network.chat.Component
 
 object TranslatedNameFilterType : EditableTextFilterType<TranslatedNameFilter>() {
-    override val filterClass = TranslatedNameFilter::class.java
+	override val filterClass = TranslatedNameFilter::class.java
 
-    override val typeIcon = gui("pokefinder/name")
+	override val typeIcon = gui("pokefinder/name")
 
-    override val displayedName = Component.translatable("gui.cobblenav.pokefinder.filter.name")
+	override val displayedName = Component.translatable("gui.cobblenav.pokefinder.filter.name")
 
-    override fun createFilter(): TranslatedNameFilter = TranslatedNameFilter()
+	override fun createFilter(): TranslatedNameFilter = TranslatedNameFilter()
 }

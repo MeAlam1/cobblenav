@@ -8,20 +8,14 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
 class TimeRangeCollector : GeneralConditionCollector() {
-    companion object {
-        const val NAME = "time_range"
-    }
+	companion object {
+		const val NAME = "time_range"
+	}
 
-    override val name = NAME
-    override val color = 0xFF8C00
+	override val name = NAME
+	override val color = 0xFF8C00
 
-    override fun collectValues(
-        detail: SpawnDetail,
-        condition: SpawningCondition<*>,
-        player: ServerPlayer
-    ): List<MutableComponent>? {
-        return condition.timeRange?.ranges?.map { ranges ->
-            translate(getTimeString(ranges))
-        }
-    }
+	override fun collectValues(detail: SpawnDetail, condition: SpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? = condition.timeRange?.ranges?.map { ranges ->
+		translate(getTimeString(ranges))
+	}
 }

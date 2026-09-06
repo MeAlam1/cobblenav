@@ -30,80 +30,78 @@ import kotlin.reflect.KClass
 
 @Mod(Cobblenav.ID)
 class CobblenavNeoForge : Implementation {
-    private val commandArgumentTypes = DeferredRegister.create(Registries.COMMAND_ARGUMENT_TYPE, Cobblenav.ID)
-    override val networkManager = CobblenavNeoForgeNetworkManager
+	private val commandArgumentTypes = DeferredRegister.create(Registries.COMMAND_ARGUMENT_TYPE, Cobblenav.ID)
+	override val networkManager = CobblenavNeoForgeNetworkManager
 
-    init {
-        with(MOD_BUS) {
-            this@CobblenavNeoForge.commandArgumentTypes.register(this)
-            Cobblenav.init(this@CobblenavNeoForge)
-            addListener(networkManager::registerMessages)
-        }
-        with(NeoForge.EVENT_BUS) {
-            addListener(::onWanderingTraderRegistry)
-        }
-        if (FMLEnvironment.dist == Dist.CLIENT) {
-            CobblenavNeoForgeClient.init()
-        }
-    }
+	init {
+		with(MOD_BUS) {
+			this@CobblenavNeoForge.commandArgumentTypes.register(this)
+			Cobblenav.init(this@CobblenavNeoForge)
+			addListener(networkManager::registerMessages)
+		}
+		with(NeoForge.EVENT_BUS) {
+			addListener(::onWanderingTraderRegistry)
+		}
+		if (FMLEnvironment.dist == Dist.CLIENT) {
+			CobblenavNeoForgeClient.init()
+		}
+	}
 
-    override fun registerItems() {
-        with(MOD_BUS) {
-            addListener<RegisterEvent> { event ->
-                event.register(CobblenavItems.resourceKey) { helper ->
-                    CobblenavItems.register { resourceLocation, item -> helper.register(resourceLocation, item) }
-                }
-            }
-            addListener<RegisterEvent> { event ->
-                event.register(Registries.CREATIVE_MODE_TAB) { helper ->
-                    helper.register(
-                        ResourceKey.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), cobblenavResource("cobblenav")),
-                        CreativeModeTab.builder()
-                            .title(Component.translatable("itemGroup.cobblenav.pokenav_group"))
-                            .icon { ItemStack(CobblenavItems.POKENAV) }
-                            .displayItems(CobblenavItems::addToGroup)
-                            .build()
-                    )
-                }
-            }
-        }
-    }
+	override fun registerItems() {
+		with(MOD_BUS) {
+			addListener<RegisterEvent> { event ->
+				event.register(CobblenavItems.resourceKey) { helper ->
+					CobblenavItems.register { resourceLocation, item -> helper.register(resourceLocation, item) }
+				}
+			}
+			addListener<RegisterEvent> { event ->
+				event.register(Registries.CREATIVE_MODE_TAB) { helper ->
+					helper.register(
+						ResourceKey.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), cobblenavResource("cobblenav")),
+						CreativeModeTab.builder()
+							.title(Component.translatable("itemGroup.cobblenav.pokenav_group"))
+							.icon { ItemStack(CobblenavItems.POKENAV) }
+							.displayItems(CobblenavItems::addToGroup)
+							.build(),
+					)
+				}
+			}
+		}
+	}
 
-    override fun registerCommands() {
-        with(NeoForge.EVENT_BUS) {
-            addListener<RegisterCommandsEvent> { event ->
-                CobblenavCommands.register(event.dispatcher, event.buildContext, event.commandSelection)
-            }
-        }
-    }
+	override fun registerCommands() {
+		with(NeoForge.EVENT_BUS) {
+			addListener<RegisterCommandsEvent> { event ->
+				CobblenavCommands.register(event.dispatcher, event.buildContext, event.commandSelection)
+			}
+		}
+	}
 
-    override fun <A : ArgumentType<*>, T : ArgumentTypeInfo.Template<A>> registerCommandArgument(
-        identifier: ResourceLocation,
-        argumentClass: KClass<A>,
-        serializer: ArgumentTypeInfo<A, T>
-    ) {
-        commandArgumentTypes.register(identifier.path) { _ ->
-            ArgumentTypeInfos.registerByClass(argumentClass.java, serializer)
-        }
-    }
+	override fun <A : ArgumentType<*>, T : ArgumentTypeInfo.Template<A>> registerCommandArgument(
+		identifier: ResourceLocation,
+		argumentClass: KClass<A>,
+		serializer: ArgumentTypeInfo<A, T>,
+	) {
+		commandArgumentTypes.register(identifier.path) { _ ->
+			ArgumentTypeInfos.registerByClass(argumentClass.java, serializer)
+		}
+	}
 
-    override fun injectLootTables() {
-        with(NeoForge.EVENT_BUS) {
-            addListener<LootTableLoadEvent> { event ->
-                CobblenavLootInjector.inject(event.name) { builder -> event.table.addPool(builder.build()) }
-            }
-        }
-    }
+	override fun injectLootTables() {
+		with(NeoForge.EVENT_BUS) {
+			addListener<LootTableLoadEvent> { event ->
+				CobblenavLootInjector.inject(event.name) { builder -> event.table.addPool(builder.build()) }
+			}
+		}
+	}
 
-    fun onWanderingTraderRegistry(event: WandererTradesEvent) {
-        event.rareTrades.addAll(Cobblenav.resolveWandererTrades())
-    }
+	fun onWanderingTraderRegistry(event: WandererTradesEvent) {
+		event.rareTrades.addAll(Cobblenav.resolveWandererTrades())
+	}
 
-    override fun isModInstalled(mod: ModDependency): Boolean {
-        return ModList
-            .get()
-            .getModContainerById(mod.id)
-            .map { it.modInfo.version.compareTo(DefaultArtifactVersion(mod.version)) }
-            .orElse(-1) >= 0
-    }
+	override fun isModInstalled(mod: ModDependency): Boolean = ModList
+		.get()
+		.getModContainerById(mod.id)
+		.map { it.modInfo.version.compareTo(DefaultArtifactVersion(mod.version)) }
+		.orElse(-1) >= 0
 }

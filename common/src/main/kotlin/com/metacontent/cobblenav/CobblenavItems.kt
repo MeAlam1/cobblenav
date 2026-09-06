@@ -59,20 +59,16 @@ object CobblenavItems : CobbleNavRegistry<Registry<Item>, ResourceKey<Registry<I
 
 	internal val TRACK_ARROW = create("track_arrow", Item(Item.Properties()))
 
-	private fun pokenavItem(model: PokenavModelType): Item {
-		return create(Pokenav.BASE_REGISTRY_KEY + model.modelName, Pokenav(model)).also {
-			inHandModelItems.add(it)
-			flickeringItems.add(it)
-			openableItems.add(it)
-		}
+	private fun pokenavItem(model: PokenavModelType): Item = create(Pokenav.BASE_REGISTRY_KEY + model.modelName, Pokenav(model)).also {
+		inHandModelItems.add(it)
+		flickeringItems.add(it)
+		openableItems.add(it)
 	}
 
-	private fun pokefinderItem(color: String): Item {
-		return create(Pokefinder.BASE_REGISTRY_KEY + color, Pokefinder(color)).also {
-			inHandModelItems.add(it)
-			flickeringItems.add(it)
-			openableItems.add(it)
-		}
+	private fun pokefinderItem(color: String): Item = create(Pokefinder.BASE_REGISTRY_KEY + color, Pokefinder(color)).also {
+		inHandModelItems.add(it)
+		flickeringItems.add(it)
+		openableItems.add(it)
 	}
 
 	fun addToGroup(displayContext: ItemDisplayParameters, entries: Output) {

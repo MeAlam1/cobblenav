@@ -24,174 +24,166 @@ import kotlin.math.round
 import kotlin.math.sin
 
 class PokefinderOverlay : Gui(Minecraft.getInstance()) {
-    companion object {
-        const val WIDTH = 145
-        const val HEIGHT = 97
-        const val COMPASS_WIDTH = 25
-        const val COMPASS_HEIGHT = 25
-        const val COMPASS_SHEET_WIDTH = 200
-        const val COMPASS_OFFSET = 15
-        const val RADIUS = 128.0
-        const val RADAR_SCALE = 0.55
-        const val DOT_SIZE = 3
-        const val COORDINATES_X = 127
-        const val COORDINATES_Y = 6.4
-        const val COORDINATES_GAP = 6.1
-        const val SCALE_X = 9
-        const val SCALE_Y = 91
-        const val VERSION_X = 4
-        const val VERSION_Y = 84
-        const val SCALE_TEXT = "1 : 2.844"
-        const val TEXT_SCALE = 0.4f
-        val BACKGROUND = gui("pokefinder/overlay")
-        val COMPASS = gui("pokefinder/compass")
-        val DOT = gui("pokefinder/dot")
-    }
+	companion object {
+		const val WIDTH = 145
+		const val HEIGHT = 97
+		const val COMPASS_WIDTH = 25
+		const val COMPASS_HEIGHT = 25
+		const val COMPASS_SHEET_WIDTH = 200
+		const val COMPASS_OFFSET = 15
+		const val RADIUS = 128.0
+		const val RADAR_SCALE = 0.55
+		const val DOT_SIZE = 3
+		const val COORDINATES_X = 127
+		const val COORDINATES_Y = 6.4
+		const val COORDINATES_GAP = 6.1
+		const val SCALE_X = 9
+		const val SCALE_Y = 91
+		const val VERSION_X = 4
+		const val VERSION_Y = 84
+		const val SCALE_TEXT = "1 : 2.844"
+		const val TEXT_SCALE = 0.4f
+		val BACKGROUND = gui("pokefinder/overlay")
+		val COMPASS = gui("pokefinder/compass")
+		val DOT = gui("pokefinder/dot")
+	}
 
-    val color
-        get() = ColorRepository.get("pokefinder_text")
-    val bgColor
-        get() = ColorRepository.get("pokefinder_background")
+	val color
+		get() = ColorRepository.get("pokefinder_text")
+	val bgColor
+		get() = ColorRepository.get("pokefinder_background")
 
-    private val minecraft = Minecraft.getInstance()
-    private val scale = CobblenavClient.config.pokefinderOverlayScale
-    private val offsetX = CobblenavClient.config.pokefinderOverlayOffsetX
-    private val offsetY = CobblenavClient.config.pokefinderOverlayOffsetY
+	private val minecraft = Minecraft.getInstance()
+	private val scale = CobblenavClient.config.pokefinderOverlayScale
+	private val offsetX = CobblenavClient.config.pokefinderOverlayOffsetX
+	private val offsetY = CobblenavClient.config.pokefinderOverlayOffsetY
 
-    override fun render(guiGraphics: GuiGraphics, deltaTracker: DeltaTracker) {
-        val settings = CobblenavClient.pokefinderSettings ?: return
-        val player = minecraft.player ?: return
+	override fun render(guiGraphics: GuiGraphics, deltaTracker: DeltaTracker) {
+		val settings = CobblenavClient.pokefinderSettings ?: return
+		val player = minecraft.player ?: return
 
-        val pos = player.position()
+		val pos = player.position()
 
-        val isRightHand = player.mainHandItem?.item is Pokefinder
-        val x = if (isRightHand) {
-            (minecraft.window.guiScaledWidth / scale).toInt() - WIDTH - offsetX
-        } else {
-            offsetX
-        }
-        val y = (minecraft.window.guiScaledHeight / scale).toInt() - HEIGHT - offsetY
+		val isRightHand = player.mainHandItem?.item is Pokefinder
+		val x = if (isRightHand) {
+			(minecraft.window.guiScaledWidth / scale).toInt() - WIDTH - offsetX
+		} else {
+			offsetX
+		}
+		val y = (minecraft.window.guiScaledHeight / scale).toInt() - HEIGHT - offsetY
 
-        val poseStack = guiGraphics.pose()
+		val poseStack = guiGraphics.pose()
 
-        poseStack.pushAndPop(
-            scale = Vector3f(scale, scale, 0f)
-        ) {
-            blitk(
-                matrixStack = poseStack,
-                texture = BACKGROUND,
-                x = x,
-                y = y,
-                width = WIDTH,
-                height = HEIGHT
-            )
+		poseStack.pushAndPop(
+			scale = Vector3f(scale, scale, 0f),
+		) {
+			blitk(
+				matrixStack = poseStack,
+				texture = BACKGROUND,
+				x = x,
+				y = y,
+				width = WIDTH,
+				height = HEIGHT,
+			)
 
-            drawScaledText(
-                context = guiGraphics,
-                text = Component.literal(pos.x.toInt().toString()),
-                x = x + COORDINATES_X,
-                y = y + COORDINATES_Y,
-                scale = TEXT_SCALE,
-                maxCharacterWidth = (16 / TEXT_SCALE).toInt(),
-                colour = color
-            )
-            drawScaledText(
-                context = guiGraphics,
-                text = Component.literal(pos.y.toInt().toString()),
-                x = x + COORDINATES_X,
-                y = y + COORDINATES_Y + COORDINATES_GAP,
-                scale = TEXT_SCALE,
-                maxCharacterWidth = (16 / TEXT_SCALE).toInt(),
-                colour = color
-            )
-            drawScaledText(
-                context = guiGraphics,
-                text = Component.literal(pos.z.toInt().toString()),
-                x = x + COORDINATES_X,
-                y = y + COORDINATES_Y + COORDINATES_GAP * 2,
-                scale = TEXT_SCALE,
-                maxCharacterWidth = (16 / TEXT_SCALE).toInt(),
-                colour = color
-            )
+			drawScaledText(
+				context = guiGraphics,
+				text = Component.literal(pos.x.toInt().toString()),
+				x = x + COORDINATES_X,
+				y = y + COORDINATES_Y,
+				scale = TEXT_SCALE,
+				maxCharacterWidth = (16 / TEXT_SCALE).toInt(),
+				colour = color,
+			)
+			drawScaledText(
+				context = guiGraphics,
+				text = Component.literal(pos.y.toInt().toString()),
+				x = x + COORDINATES_X,
+				y = y + COORDINATES_Y + COORDINATES_GAP,
+				scale = TEXT_SCALE,
+				maxCharacterWidth = (16 / TEXT_SCALE).toInt(),
+				colour = color,
+			)
+			drawScaledText(
+				context = guiGraphics,
+				text = Component.literal(pos.z.toInt().toString()),
+				x = x + COORDINATES_X,
+				y = y + COORDINATES_Y + COORDINATES_GAP * 2,
+				scale = TEXT_SCALE,
+				maxCharacterWidth = (16 / TEXT_SCALE).toInt(),
+				colour = color,
+			)
 
-            drawScaledText(
-                context = guiGraphics,
-                text = Component.literal(SCALE_TEXT),
-                x = x + SCALE_X,
-                y = y + SCALE_Y,
-                scale = TEXT_SCALE,
-                maxCharacterWidth = (23 / TEXT_SCALE).toInt(),
-                colour = color
-            )
-            drawScaledText(
-                context = guiGraphics,
-                text = Component.literal("v.${Cobblenav.VERSION}"),
-                x = x + VERSION_X,
-                y = y + VERSION_Y,
-                scale = TEXT_SCALE,
-                maxCharacterWidth = (23 / TEXT_SCALE).toInt(),
-                colour = color
-            )
+			drawScaledText(
+				context = guiGraphics,
+				text = Component.literal(SCALE_TEXT),
+				x = x + SCALE_X,
+				y = y + SCALE_Y,
+				scale = TEXT_SCALE,
+				maxCharacterWidth = (23 / TEXT_SCALE).toInt(),
+				colour = color,
+			)
+			drawScaledText(
+				context = guiGraphics,
+				text = Component.literal("v.${Cobblenav.VERSION}"),
+				x = x + VERSION_X,
+				y = y + VERSION_Y,
+				scale = TEXT_SCALE,
+				maxCharacterWidth = (23 / TEXT_SCALE).toInt(),
+				colour = color,
+			)
 
-            renderCompass(poseStack, 180f - player.rotationVector.y, x, y)
+			renderCompass(poseStack, 180f - player.rotationVector.y, x, y)
 
-            val entities = minecraft.level?.getEntitiesOfClass(
-                PokemonEntity::class.java,
-                AABB.ofSize(pos, RADIUS, RADIUS, RADIUS)
-            ) { settings.test(it.pokemon) } ?: listOf()
+			val entities = minecraft.level?.getEntitiesOfClass(
+				PokemonEntity::class.java,
+				AABB.ofSize(pos, RADIUS, RADIUS, RADIUS),
+			) { settings.test(it.pokemon) } ?: listOf()
 
-            entities.renderPokemonDots(guiGraphics, x, y, WIDTH, HEIGHT, pos, player.rotationVector.y)
-        }
-    }
+			entities.renderPokemonDots(guiGraphics, x, y, WIDTH, HEIGHT, pos, player.rotationVector.y)
+		}
+	}
 
-    private fun renderCompass(poseStack: PoseStack, rotation: Float, x: Int, y: Int) {
-        val frame = round((rotation % 360) / 45f).toInt()
-        blitk(
-            matrixStack = poseStack,
-            texture = COMPASS,
-            x = x + COMPASS_OFFSET - COMPASS_WIDTH / 2,
-            y = y + COMPASS_OFFSET - COMPASS_HEIGHT / 2,
-            width = COMPASS_WIDTH,
-            height = COMPASS_HEIGHT,
-            uOffset = COMPASS_HEIGHT * frame,
-            textureWidth = COMPASS_SHEET_WIDTH
-        )
-    }
+	private fun renderCompass(poseStack: PoseStack, rotation: Float, x: Int, y: Int) {
+		val frame = round((rotation % 360) / 45f).toInt()
+		blitk(
+			matrixStack = poseStack,
+			texture = COMPASS,
+			x = x + COMPASS_OFFSET - COMPASS_WIDTH / 2,
+			y = y + COMPASS_OFFSET - COMPASS_HEIGHT / 2,
+			width = COMPASS_WIDTH,
+			height = COMPASS_HEIGHT,
+			uOffset = COMPASS_HEIGHT * frame,
+			textureWidth = COMPASS_SHEET_WIDTH,
+		)
+	}
 
-    private fun Collection<PokemonEntity>.renderPokemonDots(
-        guiGraphics: GuiGraphics,
-        x: Int,
-        y: Int,
-        width: Int,
-        height: Int,
-        center: Vec3,
-        rotation: Float
-    ) {
-        this.forEach {
-            val vec = center.vectorTo(it.position()).scale(RADAR_SCALE)
-            val angle = Math.toRadians(180.0 - rotation)
-            val dotX = x + width / 2 - DOT_SIZE / 2 + vec.x * cos(angle) - vec.z * sin(angle)
-            val dotY = y + height / 2 - DOT_SIZE / 2 + vec.x * sin(angle) + vec.z * cos(angle)
-            blitk(
-                matrixStack = guiGraphics.pose(),
-                texture = DOT,
-                x = floor(dotX),
-                y = floor(dotY),
-                width = DOT_SIZE,
-                height = DOT_SIZE
-            )
+	private fun Collection<PokemonEntity>.renderPokemonDots(guiGraphics: GuiGraphics, x: Int, y: Int, width: Int, height: Int, center: Vec3, rotation: Float) {
+		this.forEach {
+			val vec = center.vectorTo(it.position()).scale(RADAR_SCALE)
+			val angle = Math.toRadians(180.0 - rotation)
+			val dotX = x + width / 2 - DOT_SIZE / 2 + vec.x * cos(angle) - vec.z * sin(angle)
+			val dotY = y + height / 2 - DOT_SIZE / 2 + vec.x * sin(angle) + vec.z * cos(angle)
+			blitk(
+				matrixStack = guiGraphics.pose(),
+				texture = DOT,
+				x = floor(dotX),
+				y = floor(dotY),
+				width = DOT_SIZE,
+				height = DOT_SIZE,
+			)
 
-            if (CobblenavClient.config.enableDisplayOfNamesOnRadar) {
-                drawScaledText(
-                    context = guiGraphics,
-                    text = it.pokemon.getDisplayName(),
-                    x = floor(dotX) + DOT_SIZE / 2,
-                    y = floor(dotY) + DOT_SIZE,
-                    centered = true,
-                    colour = bgColor,
-                    scale = TEXT_SCALE
-                )
-            }
-        }
-    }
+			if (CobblenavClient.config.enableDisplayOfNamesOnRadar) {
+				drawScaledText(
+					context = guiGraphics,
+					text = it.pokemon.getDisplayName(),
+					x = floor(dotX) + DOT_SIZE / 2,
+					y = floor(dotY) + DOT_SIZE,
+					centered = true,
+					colour = bgColor,
+					scale = TEXT_SCALE,
+				)
+			}
+		}
+	}
 }

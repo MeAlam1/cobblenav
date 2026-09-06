@@ -10,23 +10,17 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
 class FluidSubmergedCollector : ConditionCollector<SubmergedTypeSpawningCondition<*>>() {
-    companion object {
-        const val NAME = "fluid_submerged"
-    }
+	companion object {
+		const val NAME = "fluid_submerged"
+	}
 
-    override val name = NAME
-    override val color = 0x20B2AA
-    override val conditionClass = SubmergedTypeSpawningCondition::class.java
-    override var neededInstalledMods: List<ModDependency> = emptyList()
-    override var neededUninstalledMods: List<ModDependency> = emptyList()
+	override val name = NAME
+	override val color = 0x20B2AA
+	override val conditionClass = SubmergedTypeSpawningCondition::class.java
+	override var neededInstalledMods: List<ModDependency> = emptyList()
+	override var neededUninstalledMods: List<ModDependency> = emptyList()
 
-    override fun collectValues(
-        detail: SpawnDetail,
-        condition: SubmergedTypeSpawningCondition<*>,
-        player: ServerPlayer
-    ): List<MutableComponent>? {
-        return condition.fluid?.toResourceLocation()?.let {
-            listOf(translate("tag.fluid.c.${it.path}"))
-        }
-    }
+	override fun collectValues(detail: SpawnDetail, condition: SubmergedTypeSpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? = condition.fluid?.toResourceLocation()?.let {
+		listOf(translate("tag.fluid.c.${it.path}"))
+	}
 }

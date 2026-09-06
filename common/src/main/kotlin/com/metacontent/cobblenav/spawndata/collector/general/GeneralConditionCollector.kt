@@ -5,7 +5,7 @@ import com.metacontent.cobblenav.spawndata.collector.ConditionCollector
 import com.metacontent.cobblenav.util.ModDependency
 
 abstract class GeneralConditionCollector : ConditionCollector<SpawningCondition<*>>() {
-    override val conditionClass = SpawningCondition::class.java
-    override var neededInstalledMods: List<ModDependency> = emptyList()
-    override var neededUninstalledMods: List<ModDependency> = emptyList()
+	override val conditionClass = SpawningCondition::class.java
+	override var neededInstalledMods: List<ModDependency> = emptyList()
+	override var neededUninstalledMods: List<ModDependency> = emptyList()
 }

@@ -1,5 +1,7 @@
 package com.metacontent.cobblenav.mixin;
 
+import static com.cobblemon.mod.common.util.math.QuaternionUtilsKt.fromEulerXYZDegrees;
+
 import com.cobblemon.mod.common.block.PokeSnackBlock;
 import com.metacontent.cobblenav.client.CobblenavClient;
 import com.metacontent.cobblenav.client.gui.PokenavSignalManager;
@@ -32,60 +34,59 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.cobblemon.mod.common.util.math.QuaternionUtilsKt.fromEulerXYZDegrees;
-
 @Mixin(ItemRenderer.class)
 public abstract class ItemRendererMixin {
-    @Shadow
-    @Final
-    private ItemModelShaper itemModelShaper;
 
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V"))
-    private void shake(ItemStack itemStack, ItemDisplayContext itemDisplayContext, boolean bl, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, BakedModel bakedModel, CallbackInfo ci) {
-        if (!itemDisplayContext.firstPerson() && itemDisplayContext != ItemDisplayContext.GUI) return;
+	@Shadow
+	@Final
+	private ItemModelShaper itemModelShaper;
 
-        if (itemStack.getItem() instanceof FlickeringItem) {
-            PokenavSignalManager.Signal signal = PokenavSignalManager.getSignal(itemStack);
-            if (signal != null) {
-                signal.shake(poseStack);
-            }
-        }
+	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V"))
+	private void shake(ItemStack itemStack, ItemDisplayContext itemDisplayContext, boolean bl, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, BakedModel bakedModel, CallbackInfo ci) {
+		if (!itemDisplayContext.firstPerson() && itemDisplayContext != ItemDisplayContext.GUI) return;
 
-        if (itemStack.getItem() instanceof Pokenav) {
-            if (!itemDisplayContext.firstPerson()) return;
-            if (Minecraft.getInstance().hitResult instanceof BlockHitResult hitResult) {
-                ClientLevel level = Minecraft.getInstance().level;
-                if (level == null) return;
+		if (itemStack.getItem() instanceof FlickeringItem) {
+			PokenavSignalManager.Signal signal = PokenavSignalManager.getSignal(itemStack);
+			if (signal != null) {
+				signal.shake(poseStack);
+			}
+		}
 
-                BlockPos pos = hitResult.getBlockPos();
-                Block block = level.getBlockState(pos).getBlock();
-                if (block instanceof PokeSnackBlock) {
-                    Quaternionf rotation = fromEulerXYZDegrees(new Quaternionf(), new Vector3f(0f, 0f, 30f));
-                    poseStack.rotateAround(rotation, 0, -0.5f, 0);
-                }
-            }
-        }
-    }
+		if (itemStack.getItem() instanceof Pokenav) {
+			if (!itemDisplayContext.firstPerson()) return;
+			if (Minecraft.getInstance().hitResult instanceof BlockHitResult hitResult) {
+				ClientLevel level = Minecraft.getInstance().level;
+				if (level == null) return;
 
-    @ModifyVariable(method = "render", at = @At("HEAD"), argsOnly = true)
-    public BakedModel flicker(BakedModel bakedModel, ItemStack stack, ItemDisplayContext renderMode) {
-        if (!CobblenavClient.INSTANCE.getConfig().getEnableMultipleModelItems()) return bakedModel;
+				BlockPos pos = hitResult.getBlockPos();
+				Block block = level.getBlockState(pos).getBlock();
+				if (block instanceof PokeSnackBlock) {
+					Quaternionf rotation = fromEulerXYZDegrees(new Quaternionf(), new Vector3f(0f, 0f, 30f));
+					poseStack.rotateAround(rotation, 0, -0.5f, 0);
+				}
+			}
+		}
+	}
 
-        Item item = stack.getItem();
-        ResourceLocation modelId = null;
+	@ModifyVariable(method = "render", at = @At("HEAD"), argsOnly = true)
+	public BakedModel flicker(BakedModel bakedModel, ItemStack stack, ItemDisplayContext renderMode) {
+		if (!CobblenavClient.INSTANCE.getConfig().getEnableMultipleModelItems()) return bakedModel;
 
-        if (item instanceof OpenableItem openable && openable.isOpened(stack)) {
-            modelId = openable.getOpenedModel(stack, renderMode);
-        } else if (item instanceof FlickeringItem flickering && PokenavSignalManager.hasSignal(stack)) {
-            modelId = flickering.getFlickeringModel(stack, renderMode);
-        }
+		Item item = stack.getItem();
+		ResourceLocation modelId = null;
 
-        if (item instanceof InHandModelItem modelItem && modelId == null) {
-            modelId = modelItem.getModel(stack, renderMode);
-        }
+		if (item instanceof OpenableItem openable && openable.isOpened(stack)) {
+			modelId = openable.getOpenedModel(stack, renderMode);
+		} else if (item instanceof FlickeringItem flickering && PokenavSignalManager.hasSignal(stack)) {
+			modelId = flickering.getFlickeringModel(stack, renderMode);
+		}
 
-        if (modelId == null) return bakedModel;
+		if (item instanceof InHandModelItem modelItem && modelId == null) {
+			modelId = modelItem.getModel(stack, renderMode);
+		}
 
-        return itemModelShaper.getModelManager().getModel(ModelResourceLocation.inventory(modelId));
-    }
+		if (modelId == null) return bakedModel;
+
+		return itemModelShaper.getModelManager().getModel(ModelResourceLocation.inventory(modelId));
+	}
 }

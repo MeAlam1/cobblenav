@@ -6,18 +6,16 @@ import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 
 interface OpenableItem {
-    val openedInventoryModel: ResourceLocation
-    val openedInHandModel: ResourceLocation
+	val openedInventoryModel: ResourceLocation
+	val openedInHandModel: ResourceLocation
 
-    fun getOpenedModel(stack: ItemStack, displayContext: ItemDisplayContext): ResourceLocation? {
-        return if (displayContext.isGui()) {
-            openedInventoryModel
-        } else if (displayContext.firstPerson()) {
-            openedInHandModel
-        } else {
-            null
-        }
-    }
+	fun getOpenedModel(stack: ItemStack, displayContext: ItemDisplayContext): ResourceLocation? = if (displayContext.isGui()) {
+		openedInventoryModel
+	} else if (displayContext.firstPerson()) {
+		openedInHandModel
+	} else {
+		null
+	}
 
-    fun isOpened(stack: ItemStack): Boolean
+	fun isOpened(stack: ItemStack): Boolean
 }

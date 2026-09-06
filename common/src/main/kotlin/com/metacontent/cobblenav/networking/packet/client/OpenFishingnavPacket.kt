@@ -6,16 +6,16 @@ import com.metacontent.cobblenav.util.cobblenavResource
 import net.minecraft.network.RegistryFriendlyByteBuf
 
 class OpenFishingnavPacket(val os: PokenavOS) : CobblenavNetworkPacket<OpenFishingnavPacket> {
-    companion object {
-        val ID = cobblenavResource("open_fishingnav")
-        fun decode(buffer: RegistryFriendlyByteBuf) = OpenFishingnavPacket(
-            PokenavOS.decode(buffer)
-        )
-    }
+	companion object {
+		val ID = cobblenavResource("open_fishingnav")
+		fun decode(buffer: RegistryFriendlyByteBuf) = OpenFishingnavPacket(
+			PokenavOS.decode(buffer),
+		)
+	}
 
-    override val id = ID
+	override val id = ID
 
-    override fun encode(buffer: RegistryFriendlyByteBuf) {
-        os.encode(buffer)
-    }
+	override fun encode(buffer: RegistryFriendlyByteBuf) {
+		os.encode(buffer)
+	}
 }

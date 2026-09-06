@@ -11,40 +11,37 @@ import com.metacontent.cobblenav.util.cobblenavResource
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 
-class LabelSyncPacket(speciesToLabels: Collection<Pair<ResourceLocation, HashSet<String>>>) :
-    DataRegistrySyncPacket<Pair<ResourceLocation, HashSet<String>>, LabelSyncPacket>(speciesToLabels) {
-    companion object {
-        val ID = cobblenavResource("label_sync")
-        fun decode(buffer: RegistryFriendlyByteBuf) = LabelSyncPacket(emptyList()).apply {
-            val size = buffer.readInt()
-            val newBuffer = RegistryFriendlyByteBuf(buffer.readBytes(size), buffer.registryAccess())
-            this.buffer = newBuffer
-        }
-    }
+class LabelSyncPacket(speciesToLabels: Collection<Pair<ResourceLocation, HashSet<String>>>) : DataRegistrySyncPacket<Pair<ResourceLocation, HashSet<String>>, LabelSyncPacket>(speciesToLabels) {
+	companion object {
+		val ID = cobblenavResource("label_sync")
+		fun decode(buffer: RegistryFriendlyByteBuf) = LabelSyncPacket(emptyList()).apply {
+			val size = buffer.readInt()
+			val newBuffer = RegistryFriendlyByteBuf(buffer.readBytes(size), buffer.registryAccess())
+			this.buffer = newBuffer
+		}
+	}
 
-    override val id = ID
+	override val id = ID
 
-    override fun decodeEntry(buffer: RegistryFriendlyByteBuf): Pair<ResourceLocation, HashSet<String>>? {
-        return try {
-            buffer.readIdentifier() to buffer.readList { it.readString() }.toHashSet()
-        } catch (e: Exception) {
-            Cobblenav.LOGGER.error(e.message, e)
-            null
-        }
-    }
+	override fun decodeEntry(buffer: RegistryFriendlyByteBuf): Pair<ResourceLocation, HashSet<String>>? = try {
+		buffer.readIdentifier() to buffer.readList { it.readString() }.toHashSet()
+	} catch (e: Exception) {
+		Cobblenav.LOGGER.error(e.message, e)
+		null
+	}
 
-    override fun synchronizeDecoded(entries: Collection<Pair<ResourceLocation, HashSet<String>>>) {
-        entries.forEach { (id, labels) ->
-            PokemonSpecies.getByIdentifier(id)?.labels?.addAll(labels)
-        }
-    }
+	override fun synchronizeDecoded(entries: Collection<Pair<ResourceLocation, HashSet<String>>>) {
+		entries.forEach { (id, labels) ->
+			PokemonSpecies.getByIdentifier(id)?.labels?.addAll(labels)
+		}
+	}
 
-    override fun encodeEntry(buffer: RegistryFriendlyByteBuf, entry: Pair<ResourceLocation, HashSet<String>>) {
-        try {
-            buffer.writeIdentifier(entry.first)
-            buffer.writeCollection(entry.second) { byteBuf, s -> byteBuf.writeString(s) }
-        } catch (e: Exception) {
-            Cobblenav.LOGGER.error(e.message, e)
-        }
-    }
+	override fun encodeEntry(buffer: RegistryFriendlyByteBuf, entry: Pair<ResourceLocation, HashSet<String>>) {
+		try {
+			buffer.writeIdentifier(entry.first)
+			buffer.writeCollection(entry.second) { byteBuf, s -> byteBuf.writeString(s) }
+		} catch (e: Exception) {
+			Cobblenav.LOGGER.error(e.message, e)
+		}
+	}
 }

@@ -41,19 +41,13 @@ object SpawnDataHelper {
 	val spawnDetailIds = mutableSetOf<String>()
 	val spawnDetailIdBySpecies = mutableMapOf<String, MutableList<String>>()
 
-	fun calculateWeightedBuckets(
-		bucketWeights: MutableMap<String, Float>,
-		influences: List<SpawningInfluence>
-	): List<WeightedBucket> {
+	fun calculateWeightedBuckets(bucketWeights: MutableMap<String, Float>, influences: List<SpawningInfluence>): List<WeightedBucket> {
 		influences.forEach { it.affectBucketWeights(bucketWeights) }
 		val sum = bucketWeights.values.sum()
 		return bucketWeights.map { (key, value) -> WeightedBucket(key, value / sum) }
 	}
 
-	fun checkPlayerSpawns(
-		player: ServerPlayer,
-		bucketName: String
-	): Pair<WeightedBucket, List<CheckedSpawnData>> {
+	fun checkPlayerSpawns(player: ServerPlayer, bucketName: String): Pair<WeightedBucket, List<CheckedSpawnData>> {
 		val config = Cobblemon.config
 
 		if (!config.enableSpawning) return WeightedBucket(bucketName, 0f) to emptyList()
@@ -70,19 +64,20 @@ object SpawnDataHelper {
 		val zone = Cobblemon.spawningZoneGenerator.generate(
 			spawner = spawner,
 			input = SpawningZoneInput(
-				cause, player.serverLevel(),
+				cause,
+				player.serverLevel(),
 				ceil(player.x - config.spawningZoneDiameter / 2f).toInt(),
 				ceil(player.y - config.spawningZoneHeight / 2f).toInt(),
 				ceil(player.z - config.spawningZoneDiameter / 2f).toInt(),
 				config.spawningZoneDiameter,
 				config.spawningZoneHeight,
-				config.spawningZoneDiameter
-			)
+				config.spawningZoneDiameter,
+			),
 		)
 		val spawnablePositions = Cobblenav.resolver.resolve(
 			spawner = spawner,
 			spawnablePositionCalculators = SpawnablePositionCalculator.prioritizedAreaCalculators,
-			zone = zone
+			zone = zone,
 		)
 		val spawnProbabilities = spawner.selector.getProbabilities(spawner, bucket, spawnablePositions)
 
@@ -93,15 +88,13 @@ object SpawnDataHelper {
 
 		val weightedBucket = calculateWeightedBuckets(
 			bucketWeights,
-			spawner.influences + zone.unconditionalInfluences
+			spawner.influences + zone.unconditionalInfluences,
 		).first { it.name == bucketName }
 
 		return weightedBucket to spawnDataList
 	}
 
-	fun checkFishingSpawns(
-		player: ServerPlayer
-	): Map<String, List<CheckedSpawnData>> {
+	fun checkFishingSpawns(player: ServerPlayer): Map<String, List<CheckedSpawnData>> {
 		val bobber = player.fishing
 		val rods = if (bobber is PokeRodFishingBobberEntity && bobber.rodStack != null) {
 			listOf(bobber.rodStack!!)
@@ -128,8 +121,8 @@ object SpawnDataHelper {
 				pos = pos,
 				influences = mutableListOf(
 					PlayerLevelRangeInfluence(player, TYPICAL_VARIATION),
-					bucketInfluence
-				)
+					bucketInfluence,
+				),
 			)
 		}
 
@@ -153,11 +146,7 @@ object SpawnDataHelper {
 		}
 	}
 
-	fun checkFixedAreaSpawns(
-		areaPoint: BlockPos,
-		player: ServerPlayer,
-		bucketName: String
-	): Pair<WeightedBucket, List<CheckedSpawnData>> {
+	fun checkFixedAreaSpawns(areaPoint: BlockPos, player: ServerPlayer, bucketName: String): Pair<WeightedBucket, List<CheckedSpawnData>> {
 		val spawner = player.serverLevel().getBlockEntity(areaPoint)?.let {
 			(it as? PokeSnackBlockEntity)?.spawner
 		} ?: return WeightedBucket(bucketName, 0f) to emptyList()
@@ -171,12 +160,12 @@ object SpawnDataHelper {
 		val cause = SpawnCause(spawner, player)
 		val zone = Cobblemon.spawningZoneGenerator.generate(
 			spawner = spawner,
-			input = spawner.getZoneInput(cause)
+			input = spawner.getZoneInput(cause),
 		)
 		val spawnablePositions = Cobblenav.resolver.resolve(
 			spawner = spawner,
 			spawnablePositionCalculators = SpawnablePositionCalculator.prioritizedAreaCalculators,
-			zone = zone
+			zone = zone,
 		)
 
 		val spawnProbabilities = spawner.selector.getProbabilities(spawner, bucket, spawnablePositions)
@@ -188,17 +177,13 @@ object SpawnDataHelper {
 
 		val weightedBucket = calculateWeightedBuckets(
 			bucketWeights,
-			spawner.influences + zone.unconditionalInfluences
+			spawner.influences + zone.unconditionalInfluences,
 		).first { it.name == bucketName }
 
 		return weightedBucket to spawnDataList
 	}
 
-	fun collect(
-		detail: SpawnDetail,
-		fittingPositions: List<SpawnablePosition>,
-		player: ServerPlayer
-	): SpawnData? {
+	fun collect(detail: SpawnDetail, fittingPositions: List<SpawnablePosition>, player: ServerPlayer): SpawnData? {
 		val result = SpawnResultData.fromDetail(detail, player) ?: return null
 
 		val conditions = mutableListOf<ConditionData>()
@@ -233,7 +218,7 @@ object SpawnDataHelper {
 			conditions = conditions,
 			anticonditions = anticonditions,
 			blockConditions = BlockConditions(blockConditions),
-			blockAnticonditions = BlockConditions(blockAnticonditions)
+			blockAnticonditions = BlockConditions(blockAnticonditions),
 		)
 	}
 

@@ -13,64 +13,54 @@ import net.minecraft.server.level.ServerPlayer
 import org.joml.Vector3f
 
 interface SpawnResultData : Encodable {
-    companion object {
-        private val transformers: HashMap<String, (SpawnDetail, ServerPlayer) -> SpawnResultData?> = hashMapOf()
+	companion object {
+		private val transformers: HashMap<String, (SpawnDetail, ServerPlayer) -> SpawnResultData?> = hashMapOf()
 
-        private val decoders: HashMap<String, (RegistryFriendlyByteBuf) -> SpawnResultData> = hashMapOf()
+		private val decoders: HashMap<String, (RegistryFriendlyByteBuf) -> SpawnResultData> = hashMapOf()
 
-        fun register(
-            type: String,
-            transformer: (SpawnDetail, ServerPlayer) -> SpawnResultData?,
-            decoder: (RegistryFriendlyByteBuf) -> SpawnResultData
-        ) {
-            transformers[type] = transformer
-            decoders[type] = decoder
-        }
+		fun register(type: String, transformer: (SpawnDetail, ServerPlayer) -> SpawnResultData?, decoder: (RegistryFriendlyByteBuf) -> SpawnResultData) {
+			transformers[type] = transformer
+			decoders[type] = decoder
+		}
 
-        fun fromDetail(detail: SpawnDetail, player: ServerPlayer): SpawnResultData? = transformers[detail.type]?.invoke(detail, player)
+		fun fromDetail(detail: SpawnDetail, player: ServerPlayer): SpawnResultData? = transformers[detail.type]?.invoke(detail, player)
 
-        fun decode(buffer: RegistryFriendlyByteBuf): SpawnResultData {
-            val type = buffer.readString()
-            return decoders[type]?.invoke(buffer) ?: throw IllegalStateException("Unknown spawn result data type")
-        }
-    }
+		fun decode(buffer: RegistryFriendlyByteBuf): SpawnResultData {
+			val type = buffer.readString()
+			return decoders[type]?.invoke(buffer) ?: throw IllegalStateException("Unknown spawn result data type")
+		}
+	}
 
-    val type: String
+	val type: String
 
-    val dataWidgets: List<AbstractWidget>?
+	val dataWidgets: List<AbstractWidget>?
 
-    fun drawResult(
-        poseStack: PoseStack,
-        x: Float = 0f,
-        y: Float = 0f,
-        z: Float = 0f,
-        delta: Float = 0f
-    )
+	fun drawResult(poseStack: PoseStack, x: Float = 0f, y: Float = 0f, z: Float = 0f, delta: Float = 0f)
 
-    override fun encode(buffer: RegistryFriendlyByteBuf) {
-        buffer.writeString(type)
-        encodeResultData(buffer)
-    }
+	override fun encode(buffer: RegistryFriendlyByteBuf) {
+		buffer.writeString(type)
+		encodeResultData(buffer)
+	}
 
-    fun encodeResultData(buffer: RegistryFriendlyByteBuf)
+	fun encodeResultData(buffer: RegistryFriendlyByteBuf)
 
-    fun getResultPokemon(): PokemonProperties?
+	fun getResultPokemon(): PokemonProperties?
 
-    fun getResultId(): String?
+	fun getResultId(): String?
 
-    fun canBeTracked(): Boolean
+	fun canBeTracked(): Boolean
 
-    fun containsResult(objects: Collection<*>): Boolean
+	fun containsResult(objects: Collection<*>): Boolean
 
-    fun getColor(): Int
+	fun getColor(): Int
 
-    fun getResultName(): MutableComponent
+	fun getResultName(): MutableComponent
 
-    fun shouldRenderPlatform(): Boolean
+	fun shouldRenderPlatform(): Boolean
 
-    fun shouldRenderPokeBall(): Boolean
+	fun shouldRenderPokeBall(): Boolean
 
-    fun getRotation(): Vector3f
+	fun getRotation(): Vector3f
 
-    fun isUnknown(): Boolean
+	fun isUnknown(): Boolean
 }

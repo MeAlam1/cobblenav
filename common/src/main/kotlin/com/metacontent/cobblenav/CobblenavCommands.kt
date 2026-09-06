@@ -7,7 +7,7 @@ import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
 
 object CobblenavCommands {
-    fun register(dispatcher: CommandDispatcher<CommandSourceStack>, registry: CommandBuildContext, selection: Commands.CommandSelection) {
-        CatalogueCommand.register(dispatcher)
-    }
+	fun register(dispatcher: CommandDispatcher<CommandSourceStack>, registry: CommandBuildContext, selection: Commands.CommandSelection) {
+		CatalogueCommand.register(dispatcher)
+	}
 }

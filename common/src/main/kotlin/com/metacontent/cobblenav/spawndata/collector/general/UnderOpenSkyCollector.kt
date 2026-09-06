@@ -7,20 +7,16 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
 class UnderOpenSkyCollector : GeneralConditionCollector() {
-    companion object {
-        const val NAME = "under_open_sky"
-    }
+	companion object {
+		const val NAME = "under_open_sky"
+	}
 
-    override val name = NAME
-    override val color = 0x1E90FF
+	override val name = NAME
+	override val color = 0x1E90FF
 
-    override fun collectValues(
-        detail: SpawnDetail,
-        condition: SpawningCondition<*>,
-        player: ServerPlayer
-    ): List<MutableComponent>? {
-        return condition.canSeeSky?.let {
-            return listOf(translate("gui.cobblenav.$it"))
-        }
-    }
+	override fun collectValues(detail: SpawnDetail, condition: SpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? {
+		return condition.canSeeSky?.let {
+			return listOf(translate("gui.cobblenav.$it"))
+		}
+	}
 }

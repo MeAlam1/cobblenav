@@ -6,18 +6,14 @@ import com.metacontent.cobblenav.util.ModDependency
 import net.minecraft.resources.ResourceLocation
 
 class SeafloorTypeBlockCollector : BlockConditionCollector<SeafloorTypeSpawningCondition<*>> {
-    companion object {
-        const val NAME = "seafloor_type_block"
-    }
+	companion object {
+		const val NAME = "seafloor_type_block"
+	}
 
-    override val name = NAME
-    override val conditionClass = SeafloorTypeSpawningCondition::class.java
-    override var neededInstalledMods: List<ModDependency> = emptyList()
-    override var neededUninstalledMods: List<ModDependency> = emptyList()
+	override val name = NAME
+	override val conditionClass = SeafloorTypeSpawningCondition::class.java
+	override var neededInstalledMods: List<ModDependency> = emptyList()
+	override var neededUninstalledMods: List<ModDependency> = emptyList()
 
-    override fun collect(
-        condition: SeafloorTypeSpawningCondition<*>
-    ): Set<ResourceLocation> {
-        return condition.neededBaseBlocks?.toBlockSet() ?: emptySet()
-    }
+	override fun collect(condition: SeafloorTypeSpawningCondition<*>): Set<ResourceLocation> = condition.neededBaseBlocks?.toBlockSet() ?: emptySet()
 }

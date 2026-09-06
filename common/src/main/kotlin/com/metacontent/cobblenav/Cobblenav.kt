@@ -40,86 +40,86 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 object Cobblenav {
-    const val ID = "cobblenav"
-    const val VERSION = "2.4.0"
-    val LOGGER: Logger = LoggerFactory.getLogger(ID)
+	const val ID = "cobblenav"
+	const val VERSION = "2.4.0"
+	val LOGGER: Logger = LoggerFactory.getLogger(ID)
 
-    lateinit var config: CobblenavConfig
-    lateinit var implementation: Implementation
-    val resolver = PokenavSpawnablePositionResolver()
+	lateinit var config: CobblenavConfig
+	lateinit var implementation: Implementation
+	val resolver = PokenavSpawnablePositionResolver()
 
-    fun init(implementation: Implementation) {
-        ConditionCollectors.registerConfigEntries()
-        config = Config.load(CobblenavConfig::class.java)
-        this.implementation = implementation
-        implementation.registerItems()
-        registerArgumentTypes()
-        implementation.registerCommands()
-        implementation.injectLootTables()
+	fun init(implementation: Implementation) {
+		ConditionCollectors.registerConfigEntries()
+		config = Config.load(CobblenavConfig::class.java)
+		this.implementation = implementation
+		implementation.registerItems()
+		registerArgumentTypes()
+		implementation.registerCommands()
+		implementation.injectLootTables()
 
-        CobblemonDataProvider.register(BiomePlatforms, true)
+		CobblemonDataProvider.register(BiomePlatforms, true)
 
-        CobblenavEvents.FISH_TRAVEL_STARTED.subscribe { event ->
-            CloseFishingnavPacket().sendToPlayer(event.player)
-        }
+		CobblenavEvents.FISH_TRAVEL_STARTED.subscribe { event ->
+			CloseFishingnavPacket().sendToPlayer(event.player)
+		}
 
-        CobblemonEvents.DATA_SYNCHRONIZED.subscribe { player ->
-            if (config.syncLabelsWithClient) {
-                LabelSyncPacket(PokemonSpecies.species.map { it.resourceIdentifier to it.labels }).sendToPlayer(player)
-            }
-            if (config.syncEvYieldWithClient) {
-                EvYieldSyncPacket(PokemonSpecies.species.map(EvYieldDataEntry::fromSpecies)).sendToPlayer(player)
-            }
-        }
+		CobblemonEvents.DATA_SYNCHRONIZED.subscribe { player ->
+			if (config.syncLabelsWithClient) {
+				LabelSyncPacket(PokemonSpecies.species.map { it.resourceIdentifier to it.labels }).sendToPlayer(player)
+			}
+			if (config.syncEvYieldWithClient) {
+				EvYieldSyncPacket(PokemonSpecies.species.map(EvYieldDataEntry::fromSpecies)).sendToPlayer(player)
+			}
+		}
 
-        CobblenavDataStoreTypes.info()
+		CobblenavDataStoreTypes.info()
 
-        PlatformEvents.SERVER_STARTING.subscribe(Priority.LOWEST) { (server) ->
-            ConditionCollectors.init()
+		PlatformEvents.SERVER_STARTING.subscribe(Priority.LOWEST) { (server) ->
+			ConditionCollectors.init()
 
-            val spawnDataNbtFactory = CachedPlayerDataStoreFactory(SpawnDataCatalogueNbtBackend())
-            spawnDataNbtFactory.setup(server)
+			val spawnDataNbtFactory = CachedPlayerDataStoreFactory(SpawnDataCatalogueNbtBackend())
+			spawnDataNbtFactory.setup(server)
 
-            val manager = Cobblemon.playerDataManager
-            manager.setFactory(spawnDataNbtFactory, CobblenavDataStoreTypes.SPAWN_DATA)
-            manager.saveTasks[CobblenavDataStoreTypes.SPAWN_DATA] = ScheduledTask.Builder()
-                .execute { manager.saveAllOfOneType(CobblenavDataStoreTypes.SPAWN_DATA) }
-                .delay(30f)
-                .interval(120f)
-                .infiniteIterations()
-                .tracker(ServerTaskTracker)
-                .build()
-        }
+			val manager = Cobblemon.playerDataManager
+			manager.setFactory(spawnDataNbtFactory, CobblenavDataStoreTypes.SPAWN_DATA)
+			manager.saveTasks[CobblenavDataStoreTypes.SPAWN_DATA] = ScheduledTask.Builder()
+				.execute { manager.saveAllOfOneType(CobblenavDataStoreTypes.SPAWN_DATA) }
+				.delay(30f)
+				.interval(120f)
+				.infiniteIterations()
+				.tracker(ServerTaskTracker)
+				.build()
+		}
 
-        PlatformEvents.SERVER_STARTED.subscribe { (server) ->
-            SpawnDataHelper.reloadSpawnDetails()
-            CobblemonSpawnPools.WORLD_SPAWN_POOL.observable.subscribe {
-                SpawnDataHelper.reloadSpawnDetails()
-            }
+		PlatformEvents.SERVER_STARTED.subscribe { (server) ->
+			SpawnDataHelper.reloadSpawnDetails()
+			CobblemonSpawnPools.WORLD_SPAWN_POOL.observable.subscribe {
+				SpawnDataHelper.reloadSpawnDetails()
+			}
 
-            BiomePlatforms.onServerStarted(server)
-        }
+			BiomePlatforms.onServerStarted(server)
+		}
 
-        SpawnResultData.register(PokemonSpawnDetail.TYPE, PokemonSpawnResultData::transform, PokemonSpawnResultData::decodeResultData)
-        SpawnResultData.register(PokemonHerdSpawnDetail.TYPE, PokemonHerdSpawnResultData::transform, PokemonHerdSpawnResultData::decodeResultData)
-        SpawnResultData.register(UnknownSpawnResultData.TYPE, UnknownSpawnResultData::transform, UnknownSpawnResultData::decodeResultData)
+		SpawnResultData.register(PokemonSpawnDetail.TYPE, PokemonSpawnResultData::transform, PokemonSpawnResultData::decodeResultData)
+		SpawnResultData.register(PokemonHerdSpawnDetail.TYPE, PokemonHerdSpawnResultData::transform, PokemonHerdSpawnResultData::decodeResultData)
+		SpawnResultData.register(UnknownSpawnResultData.TYPE, UnknownSpawnResultData::transform, UnknownSpawnResultData::decodeResultData)
 
-        SpawnDataHelper.onInit()
+		SpawnDataHelper.onInit()
 
-        registerCustomProperties()
-    }
+		registerCustomProperties()
+	}
 
-    private fun registerArgumentTypes() {
-    }
+	private fun registerArgumentTypes() {
+	}
 
-    fun resolveWandererTrades() = listOf(
-        VillagerTrades.ItemsForEmeralds(CobblenavItems.WANDERER_POKENAV, 24, 1, 1, 60)
-    )
+	fun resolveWandererTrades() = listOf(
+		VillagerTrades.ItemsForEmeralds(CobblenavItems.WANDERER_POKENAV, 24, 1, 1, 60),
+	)
 
-    fun registerCustomProperties() {
-        CustomPokemonProperty.properties.add(SpawnDetailIdPropertyType)
-        AspectProvider.register(BucketSpeciesFeatureProvider)
-        CustomPokemonProperty.properties.add(BucketSpeciesFeatureProvider)
-        GlobalSpeciesFeatures.registerDirectly(BucketSpeciesFeatureProvider.NAME, BucketSpeciesFeatureProvider)
-    }
+	fun registerCustomProperties() {
+		CustomPokemonProperty.properties.add(SpawnDetailIdPropertyType)
+		AspectProvider.register(BucketSpeciesFeatureProvider)
+		CustomPokemonProperty.properties.add(BucketSpeciesFeatureProvider)
+		GlobalSpeciesFeatures.registerDirectly(BucketSpeciesFeatureProvider.NAME, BucketSpeciesFeatureProvider)
+	}
 }

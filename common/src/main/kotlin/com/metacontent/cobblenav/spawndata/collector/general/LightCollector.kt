@@ -7,20 +7,14 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
 class LightCollector : GeneralConditionCollector() {
-    companion object {
-        const val NAME = "light"
-    }
+	companion object {
+		const val NAME = "light"
+	}
 
-    override val name = NAME
-    override val color = 0xFFD700
+	override val name = NAME
+	override val color = 0xFFD700
 
-    override fun collectValues(
-        detail: SpawnDetail,
-        condition: SpawningCondition<*>,
-        player: ServerPlayer
-    ): List<MutableComponent>? {
-        return formatValueRange(condition.minLight, condition.maxLight)?.let {
-            listOf(literal(it))
-        }
-    }
+	override fun collectValues(detail: SpawnDetail, condition: SpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? = formatValueRange(condition.minLight, condition.maxLight)?.let {
+		listOf(literal(it))
+	}
 }

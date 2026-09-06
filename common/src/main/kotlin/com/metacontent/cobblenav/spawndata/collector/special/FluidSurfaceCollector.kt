@@ -10,23 +10,17 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
 class FluidSurfaceCollector : ConditionCollector<SurfaceTypeSpawningCondition<*>>() {
-    companion object {
-        const val NAME = "fluid_surface"
-    }
+	companion object {
+		const val NAME = "fluid_surface"
+	}
 
-    override val name = NAME
-    override val color = 0x5F9EA0
-    override val conditionClass = SurfaceTypeSpawningCondition::class.java
-    override var neededInstalledMods: List<ModDependency> = emptyList()
-    override var neededUninstalledMods: List<ModDependency> = emptyList()
+	override val name = NAME
+	override val color = 0x5F9EA0
+	override val conditionClass = SurfaceTypeSpawningCondition::class.java
+	override var neededInstalledMods: List<ModDependency> = emptyList()
+	override var neededUninstalledMods: List<ModDependency> = emptyList()
 
-    override fun collectValues(
-        detail: SpawnDetail,
-        condition: SurfaceTypeSpawningCondition<*>,
-        player: ServerPlayer
-    ): List<MutableComponent>? {
-        return condition.fluid?.toResourceLocation()?.let {
-            listOf(translate("tag.fluid.c.${it.path}"))
-        }
-    }
+	override fun collectValues(detail: SpawnDetail, condition: SurfaceTypeSpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? = condition.fluid?.toResourceLocation()?.let {
+		listOf(translate("tag.fluid.c.${it.path}"))
+	}
 }

@@ -9,24 +9,24 @@ import net.neoforged.neoforge.common.NeoForge
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 
 object CobblenavNeoForgeClient : ClientImplementation {
-    fun init() {
-        with(MOD_BUS) {
-            addListener(this@CobblenavNeoForgeClient::initialize)
-            addListener(this@CobblenavNeoForgeClient::onRegisterReloadListener)
-        }
-        with(NeoForge.EVENT_BUS) {
-        }
-    }
+	fun init() {
+		with(MOD_BUS) {
+			addListener(this@CobblenavNeoForgeClient::initialize)
+			addListener(this@CobblenavNeoForgeClient::onRegisterReloadListener)
+		}
+		with(NeoForge.EVENT_BUS) {
+		}
+	}
 
-    private fun initialize(event: FMLClientSetupEvent) {
-        CobblenavClient.init(this)
-    }
+	private fun initialize(event: FMLClientSetupEvent) {
+		CobblenavClient.init(this)
+	}
 
-    private fun onRegisterReloadListener(event: RegisterClientReloadListenersEvent) {
-        event.registerReloadListener { synchronizer, manager, prepareProfiler, applyProfiler, prepareExecutor, applyExecutor ->
-            return@registerReloadListener synchronizer.wait(Unit.INSTANCE).thenRun {
-                CobblenavClient.reloadAssets(manager)
-            }
-        }
-    }
+	private fun onRegisterReloadListener(event: RegisterClientReloadListenersEvent) {
+		event.registerReloadListener { synchronizer, manager, prepareProfiler, applyProfiler, prepareExecutor, applyExecutor ->
+			return@registerReloadListener synchronizer.wait(Unit.INSTANCE).thenRun {
+				CobblenavClient.reloadAssets(manager)
+			}
+		}
+	}
 }

@@ -8,16 +8,12 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 
 object RequestLocationScreenInitDataHandler : ServerNetworkPacketHandler<RequestLocationScreenInitDataPacket> {
-    override fun handle(
-        packet: RequestLocationScreenInitDataPacket,
-        server: MinecraftServer,
-        player: ServerPlayer
-    ) {
-        server.execute {
-            val buckets = Cobblemon.bestSpawner.config.worldBuckets.keys.toList()
-            val biome = player.level().getBiome(player.onPos).registeredName
+	override fun handle(packet: RequestLocationScreenInitDataPacket, server: MinecraftServer, player: ServerPlayer) {
+		server.execute {
+			val buckets = Cobblemon.bestSpawner.config.worldBuckets.keys.toList()
+			val biome = player.level().getBiome(player.onPos).registeredName
 
-            LocationScreenInitDataPacket(buckets, biome).sendToPlayer(player)
-        }
-    }
+			LocationScreenInitDataPacket(buckets, biome).sendToPlayer(player)
+		}
+	}
 }

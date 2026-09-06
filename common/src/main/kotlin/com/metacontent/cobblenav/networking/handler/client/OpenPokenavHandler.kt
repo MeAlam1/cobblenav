@@ -7,12 +7,11 @@ import com.metacontent.cobblenav.networking.packet.client.OpenPokenavPacket
 import net.minecraft.client.Minecraft
 
 object OpenPokenavHandler : ClientNetworkPacketHandler<OpenPokenavPacket> {
-    override fun handle(packet: OpenPokenavPacket, client: Minecraft) {
-        if (CobblenavClient.trackArrowOverlay.tracking) {
-            CobblenavClient.trackArrowOverlay.tracking = false
-        }
-        else {
-            client.setScreen(LocationScreen(packet.os, makeOpeningSound = true, animateOpening = true, packet.fixedAreaPoint))
-        }
-    }
+	override fun handle(packet: OpenPokenavPacket, client: Minecraft) {
+		if (CobblenavClient.trackArrowOverlay.tracking) {
+			CobblenavClient.trackArrowOverlay.tracking = false
+		} else {
+			client.setScreen(LocationScreen(packet.os, makeOpeningSound = true, animateOpening = true, packet.fixedAreaPoint))
+		}
+	}
 }

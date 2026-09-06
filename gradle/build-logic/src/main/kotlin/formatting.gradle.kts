@@ -44,7 +44,6 @@ spotless {
 			mapOf(
 				"ktlint_standard_no-wildcard-imports" to "disabled",
 				"ktlint_standard_package-name" to "disabled",
-				"max_line_length" to "160",
 			),
 		)
 

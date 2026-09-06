@@ -6,14 +6,12 @@ import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 
 interface InHandModelItem {
-    val inventoryModel: ResourceLocation
-    val inHandModel: ResourceLocation
+	val inventoryModel: ResourceLocation
+	val inHandModel: ResourceLocation
 
-    fun getModel(stack: ItemStack, displayContext: ItemDisplayContext): ResourceLocation {
-        return if (displayContext.isGui()) {
-            inventoryModel
-        } else {
-            inHandModel
-        }
-    }
+	fun getModel(stack: ItemStack, displayContext: ItemDisplayContext): ResourceLocation = if (displayContext.isGui()) {
+		inventoryModel
+	} else {
+		inHandModel
+	}
 }

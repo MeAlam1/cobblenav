@@ -6,12 +6,12 @@ import com.metacontent.cobblenav.networking.packet.client.FishingMapPacket
 import net.minecraft.client.Minecraft
 
 object FishingMapHandler : ClientNetworkPacketHandler<FishingMapPacket> {
-    override fun handle(packet: FishingMapPacket, client: Minecraft) {
+	override fun handle(packet: FishingMapPacket, client: Minecraft) {
 //        client.player?.let {
 //            packet.fishingMap.values.flatten().forEach { data ->
 //                data.conditions.addAll(0, ClientCollectors.collect(data, it))
 //            }
 //        }
-        (client.screen as? FishingnavScreen)?.receiveFishingMap(packet.fishingMap)
-    }
+		(client.screen as? FishingnavScreen)?.receiveFishingMap(packet.fishingMap)
+	}
 }

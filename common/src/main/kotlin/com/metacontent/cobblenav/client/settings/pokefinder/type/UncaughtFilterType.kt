@@ -7,15 +7,13 @@ import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.chat.Component
 
 object UncaughtFilterType : RadarFilterType<UncaughtFilter> {
-    override val filterClass = UncaughtFilter::class.java
+	override val filterClass = UncaughtFilter::class.java
 
-    override val typeIcon = gui("pokefinder/uncaught")
+	override val typeIcon = gui("pokefinder/uncaught")
 
-    override val displayedName = Component.translatable("gui.cobblenav.pokefinder.filter.uncaught")
+	override val displayedName = Component.translatable("gui.cobblenav.pokefinder.filter.uncaught")
 
-    override fun createFilter(): UncaughtFilter = UncaughtFilter()
+	override fun createFilter(): UncaughtFilter = UncaughtFilter()
 
-    override fun createWidget(filter: UncaughtFilter): AbstractWidget {
-        return UncaughtFilterWidget()
-    }
+	override fun createWidget(filter: UncaughtFilter): AbstractWidget = UncaughtFilterWidget()
 }

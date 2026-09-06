@@ -8,15 +8,19 @@ import net.minecraft.resources.ResourceLocation
 import kotlin.reflect.KClass
 
 interface Implementation {
-    val networkManager: NetworkManager
+	val networkManager: NetworkManager
 
-    fun registerItems()
+	fun registerItems()
 
-    fun registerCommands()
+	fun registerCommands()
 
-    fun injectLootTables()
+	fun injectLootTables()
 
-    fun <A : ArgumentType<*>, T : ArgumentTypeInfo.Template<A>> registerCommandArgument(identifier: ResourceLocation, argumentClass: KClass<A>, serializer: ArgumentTypeInfo<A, T>)
+	fun <A : ArgumentType<*>, T : ArgumentTypeInfo.Template<A>> registerCommandArgument(
+		identifier: ResourceLocation,
+		argumentClass: KClass<A>,
+		serializer: ArgumentTypeInfo<A, T>,
+	)
 
-    fun isModInstalled(mod: ModDependency): Boolean
+	fun isModInstalled(mod: ModDependency): Boolean
 }

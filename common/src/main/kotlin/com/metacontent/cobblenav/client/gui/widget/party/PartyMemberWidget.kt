@@ -11,12 +11,7 @@ import org.joml.Quaternionf
 import org.joml.Vector3f
 
 // TODO: Unused
-class PartyMemberWidget(
-	var x: Int, var y: Int,
-	val width: Int, val height: Int,
-	val pokemon: RenderablePokemon,
-	rotationY: Float
-) : Renderable {
+class PartyMemberWidget(var x: Int, var y: Int, val width: Int, val height: Int, val pokemon: RenderablePokemon, rotationY: Float) : Renderable {
 
 	private val rotationVec = Vector3f(0f, rotationY, 0f)
 
@@ -26,7 +21,7 @@ class PartyMemberWidget(
 		poseStack.translate(
 			x.toDouble() + width / 2f,
 			y.toDouble() + height / 2f + 18.5 - 1f * 7.5 * 1.5,
-			0.0
+			0.0,
 		)
 		drawProfilePokemon(
 			renderablePokemon = pokemon,
@@ -36,7 +31,7 @@ class PartyMemberWidget(
 			state = FloatingState(),
 			scale = 7.5f,
 			profileTransformType = ProfileTransformType.NONE,
-			applyBaseScale = true
+			applyBaseScale = true,
 		)
 		poseStack.popPose()
 	}

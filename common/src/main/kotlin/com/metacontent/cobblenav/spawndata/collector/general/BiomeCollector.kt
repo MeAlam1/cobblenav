@@ -8,19 +8,15 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
 class BiomeCollector : GeneralConditionCollector() {
-    companion object {
-        const val NAME = "biomes"
-    }
+	companion object {
+		const val NAME = "biomes"
+	}
 
-    override val name = NAME
-    override val color = 0x2E8B57
+	override val name = NAME
+	override val color = 0x2E8B57
 
-    override fun collectValues(
-        detail: SpawnDetail,
-        condition: SpawningCondition<*>,
-        player: ServerPlayer
-    ): List<MutableComponent>? {
-        val biomes = condition.biomes?.mapNotNull { it.toResourceLocation() }?.toSet() ?: return null
-        return biomes.map { translate(it, "biome") }
-    }
+	override fun collectValues(detail: SpawnDetail, condition: SpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? {
+		val biomes = condition.biomes?.mapNotNull { it.toResourceLocation() }?.toSet() ?: return null
+		return biomes.map { translate(it, "biome") }
+	}
 }

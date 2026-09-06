@@ -11,19 +11,17 @@ import com.metacontent.cobblenav.client.settings.pokefinder.filter.EditableTextF
 import net.minecraft.client.gui.components.AbstractWidget
 
 abstract class EditableTextFilterType<T : EditableTextFilter> : RadarFilterType<T> {
-    override fun createWidget(filter: T): AbstractWidget {
-        return TextFieldWidget(
-            x = 0,
-            y = 0,
-            width = WIDGET_WIDTH,
-            height = WIDGET_HEIGHT,
-            lineWidth = LINE_WIDTH,
-            lineHeight = LINE_HEIGHT,
-            lineX = 5,
-            default = filter.asString(),
-            textColor = ColorRepository.get("pokefinder_text"),
-            textureSheet = FIELD,
-            onChange = filter::update
-        )
-    }
+	override fun createWidget(filter: T): AbstractWidget = TextFieldWidget(
+		x = 0,
+		y = 0,
+		width = WIDGET_WIDTH,
+		height = WIDGET_HEIGHT,
+		lineWidth = LINE_WIDTH,
+		lineHeight = LINE_HEIGHT,
+		lineX = 5,
+		default = filter.asString(),
+		textColor = ColorRepository.get("pokefinder_text"),
+		textureSheet = FIELD,
+		onChange = filter::update,
+	)
 }

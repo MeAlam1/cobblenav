@@ -10,25 +10,19 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
 class RodTypeCollector : ConditionCollector<FishingSpawningCondition>() {
-    companion object {
-        const val NAME = "rod_type"
-    }
+	companion object {
+		const val NAME = "rod_type"
+	}
 
-    override val name = NAME
-    override val color = 0xD2691E
-    override val conditionClass = FishingSpawningCondition::class.java
-    override var neededInstalledMods: List<ModDependency> = emptyList()
-    override var neededUninstalledMods: List<ModDependency> = emptyList()
+	override val name = NAME
+	override val color = 0xD2691E
+	override val conditionClass = FishingSpawningCondition::class.java
+	override var neededInstalledMods: List<ModDependency> = emptyList()
+	override var neededUninstalledMods: List<ModDependency> = emptyList()
 
-    override fun collectValues(
-        detail: SpawnDetail,
-        condition: FishingSpawningCondition,
-        player: ServerPlayer
-    ): List<MutableComponent>? {
-        return condition.rodType?.let { resourceLocation ->
-            PokeRods.getPokeRod(resourceLocation)?.pokeBallId?.let {
-                listOf(translate(it, "item"))
-            }
-        }
-    }
+	override fun collectValues(detail: SpawnDetail, condition: FishingSpawningCondition, player: ServerPlayer): List<MutableComponent>? = condition.rodType?.let { resourceLocation ->
+		PokeRods.getPokeRod(resourceLocation)?.pokeBallId?.let {
+			listOf(translate(it, "item"))
+		}
+	}
 }

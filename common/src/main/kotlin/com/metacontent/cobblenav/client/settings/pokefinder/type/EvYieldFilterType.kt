@@ -7,15 +7,13 @@ import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.chat.Component
 
 object EvYieldFilterType : RadarFilterType<EvYieldFilter> {
-    override val filterClass = EvYieldFilter::class.java
+	override val filterClass = EvYieldFilter::class.java
 
-    override val typeIcon = gui("pokefinder/ev_yield")
+	override val typeIcon = gui("pokefinder/ev_yield")
 
-    override val displayedName = Component.translatable("gui.cobblenav.pokefinder.filter.ev_yield")
+	override val displayedName = Component.translatable("gui.cobblenav.pokefinder.filter.ev_yield")
 
-    override fun createFilter(): EvYieldFilter = EvYieldFilter()
+	override fun createFilter(): EvYieldFilter = EvYieldFilter()
 
-    override fun createWidget(filter: EvYieldFilter): AbstractWidget {
-        return EvYieldFilterWidget(filter)
-    }
+	override fun createWidget(filter: EvYieldFilter): AbstractWidget = EvYieldFilterWidget(filter)
 }

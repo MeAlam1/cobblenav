@@ -12,19 +12,19 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
 
 object RequestFishingnavScreenInitDataHandler : ServerNetworkPacketHandler<RequestFishingnavScreenInitDataPacket> {
-    override fun handle(packet: RequestFishingnavScreenInitDataPacket, server: MinecraftServer, player: ServerPlayer) {
-        server.execute {
-            val buckets = Cobblemon.bestSpawner.config.fishingBuckets.keys.toList()
-            var pokeBall = ResourceLocation.withDefaultNamespace("air")
-            var lineColor = ""
-            var bait = ItemStack.EMPTY
-            (player.fishing as? PokeRodFishingBobberEntity)?.let { bobber ->
-                pokeBall = bobber.pokeRodId?.let { PokeRods.getPokeRod(it)?.pokeBallId } ?: pokeBall
-                lineColor = bobber.lineColor
-                bait = bobber.bobberBait
-            }
+	override fun handle(packet: RequestFishingnavScreenInitDataPacket, server: MinecraftServer, player: ServerPlayer) {
+		server.execute {
+			val buckets = Cobblemon.bestSpawner.config.fishingBuckets.keys.toList()
+			var pokeBall = ResourceLocation.withDefaultNamespace("air")
+			var lineColor = ""
+			var bait = ItemStack.EMPTY
+			(player.fishing as? PokeRodFishingBobberEntity)?.let { bobber ->
+				pokeBall = bobber.pokeRodId?.let { PokeRods.getPokeRod(it)?.pokeBallId } ?: pokeBall
+				lineColor = bobber.lineColor
+				bait = bobber.bobberBait
+			}
 
-            FishingnavScreenInitDataPacket(buckets, pokeBall, lineColor, bait).sendToPlayer(player)
-        }
-    }
+			FishingnavScreenInitDataPacket(buckets, pokeBall, lineColor, bait).sendToPlayer(player)
+		}
+	}
 }
