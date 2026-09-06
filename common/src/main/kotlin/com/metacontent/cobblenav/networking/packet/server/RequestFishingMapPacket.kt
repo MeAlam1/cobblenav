@@ -5,13 +5,13 @@ import com.metacontent.cobblenav.util.cobblenavResource
 import net.minecraft.network.RegistryFriendlyByteBuf
 
 class RequestFishingMapPacket : CobblenavNetworkPacket<RequestFishingMapPacket> {
-    companion object {
-        val ID = cobblenavResource("request_fishing_map")
-        fun decode(buffer: RegistryFriendlyByteBuf) = RequestFishingMapPacket()
-    }
+	companion object {
+		val ID = cobblenavResource("request_fishing_map")
+		fun decode(buffer: RegistryFriendlyByteBuf) = RequestFishingMapPacket()
+	}
 
-    override val id = ID
+	override val id = ID
 
-    override fun encode(buffer: RegistryFriendlyByteBuf) {
-    }
+	override fun encode(buffer: RegistryFriendlyByteBuf) {
+	}
 }

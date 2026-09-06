@@ -1,0 +1,7 @@
+- Added mark indicating if a Pokémon is nearby.
+- Improved checking of installed mods. Now mod version will also be checked to avoid incompatibilities.
+- Improved biome platforms.
+- Removed the `enableMythsAndLegendsIntegration` parameter. MaL collectors can be now enabled/disabled in the same way as others.
+- Fixed blur issue.
+- Fixed incompatibility with the newest Cobblemon Counter versions.
+- Some Location screen fixes.

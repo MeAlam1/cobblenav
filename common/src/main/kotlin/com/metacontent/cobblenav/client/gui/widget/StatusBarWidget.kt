@@ -10,40 +10,38 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 
-class StatusBarWidget(
-    x: Int, y: Int
-) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Status Bar")) {
-    companion object {
-        const val DECORATION_WIDTH: Int = 16
-        const val CLOCKS_WIDTH: Int = 30
-        const val SPACE: Int = 4
-        const val WIDTH: Int = DECORATION_WIDTH + CLOCKS_WIDTH + SPACE
-        const val HEIGHT: Int = 6
-        const val TEXT_SCALE: Float = 0.7f
-        val TEXTURE = gui("status_bar")
-    }
+class StatusBarWidget(x: Int, y: Int) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Status Bar")) {
+	companion object {
+		const val DECORATION_WIDTH: Int = 16
+		const val CLOCKS_WIDTH: Int = 30
+		const val SPACE: Int = 4
+		const val WIDTH: Int = DECORATION_WIDTH + CLOCKS_WIDTH + SPACE
+		const val HEIGHT: Int = 6
+		const val TEXT_SCALE: Float = 0.7f
+		val TEXTURE = gui("status_bar")
+	}
 
-    override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
-        val poseStack = guiGraphics.pose()
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+		val poseStack = guiGraphics.pose()
 
-        val dayTime = Minecraft.getInstance().level?.dayTime ?: 0L
+		val dayTime = Minecraft.getInstance().level?.dayTime ?: 0L
 
-        drawScaledText(
-            context = guiGraphics,
-            text = Component.literal(getTimeString(dayTime)),
-            x = x + DECORATION_WIDTH + SPACE,
-            y = y + 1,
-            scale = TEXT_SCALE,
-            maxCharacterWidth = (CLOCKS_WIDTH / TEXT_SCALE).toInt()
-        )
+		drawScaledText(
+			context = guiGraphics,
+			text = Component.literal(getTimeString(dayTime)),
+			x = x + DECORATION_WIDTH + SPACE,
+			y = y + 1,
+			scale = TEXT_SCALE,
+			maxCharacterWidth = (CLOCKS_WIDTH / TEXT_SCALE).toInt(),
+		)
 
-        blitk(
-            matrixStack = poseStack,
-            texture = TEXTURE,
-            x = x,
-            y = y,
-            width = DECORATION_WIDTH,
-            height = height
-        )
-    }
+		blitk(
+			matrixStack = poseStack,
+			texture = TEXTURE,
+			x = x,
+			y = y,
+			width = DECORATION_WIDTH,
+			height = height,
+		)
+	}
 }

@@ -8,52 +8,51 @@ import java.io.FileReader
 import java.io.FileWriter
 
 abstract class Config<T : Config<T>> {
-    companion object {
-        private const val PATH = "config/cobblenav"
-        private val GSON: Gson = GsonBuilder()
-            .disableHtmlEscaping()
-            .setPrettyPrinting()
-            .create()
+	companion object {
+		private const val PATH = "config/cobblenav"
+		private val GSON: Gson = GsonBuilder()
+			.disableHtmlEscaping()
+			.setPrettyPrinting()
+			.create()
 
-        fun <C : Config<C>> load(clazz: Class<C>): C {
-            val default = clazz.getConstructor().newInstance()
+		fun <C : Config<C>> load(clazz: Class<C>): C {
+			val default = clazz.getConstructor().newInstance()
 
-            val configFile = File("$PATH/${default.fileName}")
-            configFile.parentFile.mkdirs()
+			val configFile = File("$PATH/${default.fileName}")
+			configFile.parentFile.mkdirs()
 
-            val config = runCatching {
-                if (!configFile.exists()) {
-                    configFile.createNewFile()
-                }
-                FileReader(configFile).use {
-                    GSON.fromJson(it, clazz) ?: default
-                }
-            }.onFailure {
-                Cobblenav.LOGGER.error(it.message, it)
-            }.getOrDefault(default)
+			val config = runCatching {
+				if (!configFile.exists()) {
+					configFile.createNewFile()
+				}
+				FileReader(configFile).use {
+					GSON.fromJson(it, clazz) ?: default
+				}
+			}.onFailure {
+				Cobblenav.LOGGER.error(it.message, it)
+			}.getOrDefault(default)
 
-            config.applyToLoadedConfig(default)
+			config.applyToLoadedConfig(default)
 
-            config.save()
+			config.save()
 
-            return config
-        }
-    }
+			return config
+		}
+	}
 
-    abstract val fileName: String
+	abstract val fileName: String
 
-    fun save() {
-        val configFile = File("$PATH/$fileName")
-        try {
-            val fileWriter = FileWriter(configFile)
-            GSON.toJson(this, fileWriter)
-            fileWriter.flush()
-            fileWriter.close()
-        }
-        catch (e: Exception) {
-            Cobblenav.LOGGER.error(e.message, e)
-        }
-    }
+	fun save() {
+		val configFile = File("$PATH/$fileName")
+		try {
+			val fileWriter = FileWriter(configFile)
+			GSON.toJson(this, fileWriter)
+			fileWriter.flush()
+			fileWriter.close()
+		} catch (e: Exception) {
+			Cobblenav.LOGGER.error(e.message, e)
+		}
+	}
 
-    protected open fun applyToLoadedConfig(default: T) {}
+	protected open fun applyToLoadedConfig(default: T) {}
 }

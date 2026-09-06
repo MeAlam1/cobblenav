@@ -1,0 +1,98 @@
+#file: noinspection SpellCheckingInspection
+name: Build and publish project artifacts on platforms
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+
+env:
+  cobblemon: 1.8.0
+  project_name: cobblenav
+  curseforge_id: 976014
+  modrinth_id: bI8Nt3uA
+
+jobs:
+  build:
+    name: "Build mod jars"
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        # Use these Java versions
+        java: [
+          21,    # Current Java LTS
+        ]
+    outputs:
+      version: ${{ steps.version.outputs.MOD_VERSION }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Validate gradle wrapper
+        uses: gradle/actions/wrapper-validation@v6
+      - name: Setup jdk ${{ matrix.java }}
+        uses: actions/setup-java@v5
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+      - name: Build
+        uses: burrunan/gradle-cache-action@v3
+        with:
+          read-only: true
+          arguments: build
+      - name: Save version output
+        id: version
+        run: echo "MOD_VERSION=$(gradle currentVersion -q -Prelease.quiet)" >> "$GITHUB_OUTPUT"
+      - name: Capture build artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: artifacts
+          path: |
+            fabric/build/libs/cobblenav-fabric-${{ github.ref_name }}.jar
+            fabric/build/libs/cobblenav-fabric-${{ github.ref_name }}-sources.jar
+            neoforge/build/libs/cobblenav-neoforge-${{ github.ref_name }}.jar
+            neoforge/build/libs/cobblenav-neoforge-${{ github.ref_name }}-sources.jar
+
+  publish:
+    name: "Publish artifacts on platforms"
+    needs: build
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        loader: [
+          fabric,
+          neoforge,
+        ]
+    steps:
+      - name: Retrieve build artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: artifacts
+      - name: Display structure of downloaded files
+        if: github.event_name == 'workflow_dispatch'
+        run: ls -R
+      - name: Publish ${{ matrix.loader }} version (CurseForge/Modrinth)
+        if: github.event_name == 'release'
+        uses: Kira-NT/mc-publish@v3.3
+        with:
+          name: "CobbleNav ${{ needs.build.outputs.version }} for Cobblemon ${{ env.cobblemon }}"
+          java: 21
+          game-versions: 1.21.1
+          loaders: ${{ matrix.loader }}
+
+          files: |
+            ${{ matrix.loader }}/build/libs/${{ env.project_name }}-${{ matrix.loader }}-${{ needs.build.outputs.version }}.jar
+            ${{ matrix.loader }}/build/libs/${{ env.project_name }}-${{ matrix.loader }}-${{ needs.build.outputs.version }}-sources.jar
+
+          version: "${{ env.cobblemon }}_${{ needs.build.outputs.version }}"
+          version-type: release
+
+          curseforge-id: ${{ env.curseforge_id }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          modrinth-id: ${{ env.modrinth_id }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          dependencies: |
+            cobblemon@1.8.0(required){curseforge:687131}{modrinth:MdwFAVRL}

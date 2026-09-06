@@ -2,31 +2,27 @@ package com.metacontent.cobblenav.spawndata.collector.special
 
 import com.cobblemon.mod.common.api.fishing.PokeRods
 import com.cobblemon.mod.common.api.spawning.condition.FishingSpawningCondition
-import com.cobblemon.mod.common.api.spawning.position.SpawnablePosition
-import com.metacontent.cobblenav.api.platform.SpawnDataContext
+import com.cobblemon.mod.common.api.spawning.detail.SpawnDetail
+import com.metacontent.cobblenav.client.gui.util.translate
 import com.metacontent.cobblenav.spawndata.collector.ConditionCollector
-import com.metacontent.cobblenav.spawndata.collector.ConfigureableCollector
 import com.metacontent.cobblenav.util.ModDependency
-import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
-class RodTypeCollector : ConditionCollector<FishingSpawningCondition>, ConfigureableCollector {
-    override val configName = "rod_type"
-    override val conditionClass = FishingSpawningCondition::class.java
-    override var neededInstalledMods: List<ModDependency> = emptyList()
-    override var neededUninstalledMods: List<ModDependency> = emptyList()
+class RodTypeCollector : ConditionCollector<FishingSpawningCondition>() {
+	companion object {
+		const val NAME = "rod_type"
+	}
 
-    override fun collect(
-        condition: FishingSpawningCondition,
-        spawnablePositions: List<SpawnablePosition>,
-        player: ServerPlayer,
-        builder: SpawnDataContext.Builder
-    ): MutableComponent? {
-        return condition.rodType?.let { resourceLocation ->
-            PokeRods.getPokeRod(resourceLocation)?.let { type ->
-                Component.translatable("gui.cobblenav.spawn_data.rod_type").append(Component.translatable(type.pokeBallId.toLanguageKey("item")))
-            }
-        }
-    }
+	override val name = NAME
+	override val color = 0xD2691E
+	override val conditionClass = FishingSpawningCondition::class.java
+	override var neededInstalledMods: List<ModDependency> = emptyList()
+	override var neededUninstalledMods: List<ModDependency> = emptyList()
+
+	override fun collectValues(detail: SpawnDetail, condition: FishingSpawningCondition, player: ServerPlayer): List<MutableComponent>? = condition.rodType?.let { resourceLocation ->
+		PokeRods.getPokeRod(resourceLocation)?.pokeBallId?.let {
+			listOf(translate(it, "item"))
+		}
+	}
 }

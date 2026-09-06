@@ -1,0 +1,1 @@
+- Fixed crash when starting a dedicated server

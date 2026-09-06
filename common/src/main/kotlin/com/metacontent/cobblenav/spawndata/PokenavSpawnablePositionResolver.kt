@@ -8,22 +8,23 @@ import com.cobblemon.mod.common.api.spawning.position.calculators.AreaSpawnableP
 import com.cobblemon.mod.common.api.spawning.spawner.Spawner
 
 class PokenavSpawnablePositionResolver : AreaSpawnablePositionResolver {
-    override fun resolve(
-        spawner: Spawner,
-        spawnablePositionCalculators: List<AreaSpawnablePositionCalculator<*>>,
-        zone: SpawningZone
-    ): List<AreaSpawnablePosition> {
-        val entitylessZone = SpawningZone(
-            cause = zone.cause,
-            world = zone.world,
-            baseX = zone.baseX,
-            baseY = zone.baseY,
-            baseZ = zone.baseZ,
-            blocks = zone.blocks,
-            skyLevel = zone.skyLevel,
-            nearbyEntityPositions = emptyList(),
-            influences = zone.conditionalInfluences as List<SpawningZoneInfluence> + (zone.unconditionalInfluences as? List<SpawningZoneInfluence> ?: emptyList())
-        )
-        return super.resolve(spawner, spawnablePositionCalculators, entitylessZone)
-    }
+	override fun resolve(
+		spawner: Spawner,
+		spawnablePositionCalculators: List<AreaSpawnablePositionCalculator<*>>,
+		zone: SpawningZone,
+	): List<AreaSpawnablePosition> {
+		val entitylessZone = SpawningZone(
+			cause = zone.cause,
+			world = zone.world,
+			baseX = zone.baseX,
+			baseY = zone.baseY,
+			baseZ = zone.baseZ,
+			blocks = zone.blocks,
+			skyLevel = zone.skyLevel,
+			nearbyEntityPositions = emptyList(),
+			influences =
+			zone.conditionalInfluences as List<SpawningZoneInfluence> + (zone.unconditionalInfluences as? List<SpawningZoneInfluence> ?: emptyList()),
+		)
+		return super.resolve(spawner, spawnablePositionCalculators, entitylessZone)
+	}
 }

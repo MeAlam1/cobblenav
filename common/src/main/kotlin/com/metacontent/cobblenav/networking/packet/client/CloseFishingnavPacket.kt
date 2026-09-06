@@ -6,13 +6,13 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 
 class CloseFishingnavPacket : CobblenavNetworkPacket<CloseFishingnavPacket> {
-    companion object {
-        val ID = cobblenavResource("close_fishingnav")
-        fun decode(buffer: RegistryFriendlyByteBuf) = CloseFishingnavPacket()
-    }
+	companion object {
+		val ID = cobblenavResource("close_fishingnav")
+		fun decode(buffer: RegistryFriendlyByteBuf) = CloseFishingnavPacket()
+	}
 
-    override val id = ID
+	override val id = ID
 
-    override fun encode(buffer: RegistryFriendlyByteBuf) {
-    }
+	override fun encode(buffer: RegistryFriendlyByteBuf) {
+	}
 }
