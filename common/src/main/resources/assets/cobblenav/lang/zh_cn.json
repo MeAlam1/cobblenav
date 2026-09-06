@@ -2,7 +2,7 @@
   "key.cobblenav.open_pokenav": "打开Pokenav",
   "key.cobblenav.open_location": "打开位置屏幕",
   "category.cobblenav": "Cobblenav",
-  "itemGroup.cobblenav.pokenav_group": "Cobblenav",
+  "cobblenav.itemGroup.pokenav": "Cobblenav",
   "tag.item.cobblenav.pokenav": "宝可导航器",
   "tag.item.cobblenav.dyed_pokenav": "染色宝可导航器",
   "item.cobblenav.pokenav_item": "宝可导航器",

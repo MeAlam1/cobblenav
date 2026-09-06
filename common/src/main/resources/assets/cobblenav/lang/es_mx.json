@@ -3,7 +3,7 @@
   "key.cobblenav.open_location": "Abrir Pantalla de Localización",
   "category.cobblenav": "Cobblenav",
   "gamerule.titleCommandsPermissionLevel": "Nivel de permiso del comando de título",
-  "itemGroup.cobblenav.pokenav_group": "Cobblenav",
+  "cobblenav.itemGroup.pokenav": "Cobblenav",
   "item.cobblenav.pokefinder_item": "Pokefinder",
   "item.cobblenav.pokenav_item": "Pokenav",
   "item.cobblenav.pokenav_item.type.custom": "Custom",

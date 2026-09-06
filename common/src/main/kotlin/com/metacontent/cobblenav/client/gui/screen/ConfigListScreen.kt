@@ -3,7 +3,8 @@ package com.metacontent.cobblenav.client.gui.screen
 import com.metacontent.cobblenav.config.ClientCobblenavConfig
 import com.metacontent.cobblenav.config.CobblenavConfig
 import com.metacontent.cobblenav.config.Config
-import com.metacontent.cobblenav.util.TranslatableUtils
+import com.metacontent.cobblenav.util.guiLang
+import com.metacontent.cobblenav.util.lang
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.screens.Screen
@@ -12,7 +13,7 @@ import net.minecraft.network.chat.Component
 class ConfigListScreen(
 	private val parent: Screen?,
 	private val entries: List<Entry>,
-) : Screen(TranslatableUtils.gui("config_list.title")) {
+) : Screen(guiLang("config.title")) {
 
 	class Entry(
 		val label: Component,
@@ -28,12 +29,12 @@ class ConfigListScreen(
 			parent,
 			listOf(
 				Entry(
-					TranslatableUtils.gui("config_list.client"),
+					lang("edit.context", "client config"),
 				) { screenParent ->
 					ConfigScreen(Config.load(ClientCobblenavConfig::class.java), screenParent)
 				},
 				Entry(
-					TranslatableUtils.gui("config_list.server"),
+					lang("edit.context", "server config"),
 				) { screenParent ->
 					ConfigScreen(Config.load(CobblenavConfig::class.java), screenParent)
 				},

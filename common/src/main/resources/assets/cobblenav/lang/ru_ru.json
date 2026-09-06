@@ -2,7 +2,7 @@
   "key.cobblenav.open_pokenav": "Открыть PokéNav",
   "key.cobblenav.open_location": "Открыть экран локации",
   "category.cobblenav": "Cobblenav",
-  "itemGroup.cobblenav.pokenav_group": "Cobblenav",
+  "cobblenav.itemGroup.pokenav": "Cobblenav",
   "tag.item.cobblenav.pokenav": "PokéNav",
   "tag.item.cobblenav.dyed_pokenav": "Окрашенный PokéNav",
   "item.cobblenav.pokenav_item": "PokéNav",

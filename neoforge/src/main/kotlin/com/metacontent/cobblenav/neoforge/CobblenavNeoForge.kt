@@ -1,14 +1,13 @@
 package com.metacontent.cobblenav.neoforge
 
 import com.metacontent.cobblenav.*
-import com.metacontent.cobblenav.cobblenavResource
 import com.metacontent.cobblenav.neoforge.client.CobblenavNeoForgeClient
+import com.metacontent.cobblenav.util.creativeTabLang
 import com.mojang.brigadier.arguments.ArgumentType
 import net.minecraft.commands.synchronization.ArgumentTypeInfo
 import net.minecraft.commands.synchronization.ArgumentTypeInfos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
@@ -56,7 +55,7 @@ class CobblenavNeoForge : CobblenavImplementation {
 					helper.register(
 						ResourceKey.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), cobblenavResource("cobblenav")),
 						CreativeModeTab.builder()
-							.title(Component.translatable("itemGroup.cobblenav.pokenav_group"))
+							.title(creativeTabLang("pokenav"))
 							.icon { ItemStack(CobblenavItems.POKENAV) }
 							.displayItems(CobblenavItems::addToGroup)
 							.build(),

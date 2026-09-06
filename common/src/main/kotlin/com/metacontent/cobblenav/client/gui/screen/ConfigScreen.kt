@@ -2,6 +2,8 @@ package com.metacontent.cobblenav.client.gui.screen
 
 import com.metacontent.cobblenav.config.Config
 import com.metacontent.cobblenav.config.ConfigOption
+import com.metacontent.cobblenav.util.guiLang
+import com.metacontent.cobblenav.util.lang
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.*
 import net.minecraft.client.gui.layouts.HeaderAndFooterLayout
@@ -14,10 +16,7 @@ class ConfigScreen<T : Config<T>>(
 	private val config: T,
 	private val parent: Screen?,
 ) : Screen(
-	Component.translatableWithFallback(
-		"${idPrefix(config)}.title",
-		"Edit ${config.fileName}",
-	),
+	lang("edit.context", "${idPrefix(config)}.title"),
 ) {
 
 	companion object {
@@ -44,16 +43,8 @@ class ConfigScreen<T : Config<T>>(
 			.removeSuffix(".json")
 			.replace('-', '_')
 
-		private fun humanize(fieldName: String): String {
-			val spaced = fieldName.replace(
-				Regex("([a-z0-9])([A-Z])"),
-				"$1 $2",
-			)
-
-			return spaced.replaceFirstChar {
-				it.uppercase()
-			}
-		}
+		private fun textPrefix(config: Config<*>): String = idPrefix(config)
+			.replace('_', ' ')
 	}
 
 	private class Row(
@@ -120,12 +111,10 @@ class ConfigScreen<T : Config<T>>(
 
 		searchLayout.addChild(
 			StringWidget(
-				Component.translatableWithFallback(
-					"${idPrefix(config)}.search",
-					"Search Configurations",
-				),
+				lang("search.context", textPrefix(config)),
 				font,
 			),
+			searchLayout.newCellSettings().alignHorizontallyCenter(),
 		)
 
 		searchEdit = EditBox(
@@ -134,10 +123,7 @@ class ConfigScreen<T : Config<T>>(
 			0,
 			SLOT_WIDTH / 2,
 			SLOT_HEIGHT,
-			Component.translatableWithFallback(
-				"${idPrefix(config)}.search",
-				"Search Configurations",
-			),
+			lang("search.context", textPrefix(config)),
 		).also { editBox ->
 			editBox.height = WIDGET_HEIGHT
 			editBox.setMaxLength(250)
@@ -188,17 +174,12 @@ class ConfigScreen<T : Config<T>>(
 		layoutWidgets()
 	}
 
-	private fun scalarLabel(name: String): Component = Component.translatableWithFallback(
-		"${idPrefix(config)}.option.$name",
-		humanize(name),
-	)
-
 	private fun buildRows(option: ConfigOption<*>): List<Row> = when (option) {
 		is ConfigOption.BooleanOption ->
 			listOf(
 				createScalarRow(
 					option = option,
-					label = scalarLabel(option.name),
+					label = guiLang("${idPrefix(config)}.option.${option.name}"),
 					widgetBuilder = { onChanged ->
 						buildBooleanWidget(option, onChanged)
 					},
@@ -209,82 +190,26 @@ class ConfigScreen<T : Config<T>>(
 			listOf(
 				createScalarRow(
 					option = option,
-					label = scalarLabel(option.name),
+					label = guiLang("${idPrefix(config)}.option.${option.name}"),
 					widgetBuilder = { onChanged ->
 						buildEnumWidget(option, onChanged)
 					},
 				),
 			)
 
-		is ConfigOption.IntOption ->
-			listOf(
-				createTextRow(
-					option = option,
-					label = scalarLabel(option.name),
-					initialValue = option.get().toString(),
-					isValid = { it.toIntOrNull() != null },
-					parseAndSet = { text ->
-						text.toIntOrNull()?.let(option::set)
-					},
-					refresh = { editBox ->
-						editBox.value = option.get().toString()
-					},
-				),
-			)
+		is ConfigOption.IntOption -> listOf(buildParsedTextRow(option, String::toIntOrNull))
 
-		is ConfigOption.LongOption ->
-			listOf(
-				createTextRow(
-					option = option,
-					label = scalarLabel(option.name),
-					initialValue = option.get().toString(),
-					isValid = { it.toLongOrNull() != null },
-					parseAndSet = { text ->
-						text.toLongOrNull()?.let(option::set)
-					},
-					refresh = { editBox ->
-						editBox.value = option.get().toString()
-					},
-				),
-			)
+		is ConfigOption.LongOption -> listOf(buildParsedTextRow(option, String::toLongOrNull))
 
-		is ConfigOption.FloatOption ->
-			listOf(
-				createTextRow(
-					option = option,
-					label = scalarLabel(option.name),
-					initialValue = option.get().toString(),
-					isValid = { it.toFloatOrNull() != null },
-					parseAndSet = { text ->
-						text.toFloatOrNull()?.let(option::set)
-					},
-					refresh = { editBox ->
-						editBox.value = option.get().toString()
-					},
-				),
-			)
+		is ConfigOption.FloatOption -> listOf(buildParsedTextRow(option, String::toFloatOrNull))
 
-		is ConfigOption.DoubleOption ->
-			listOf(
-				createTextRow(
-					option = option,
-					label = scalarLabel(option.name),
-					initialValue = option.get().toString(),
-					isValid = { it.toDoubleOrNull() != null },
-					parseAndSet = { text ->
-						text.toDoubleOrNull()?.let(option::set)
-					},
-					refresh = { editBox ->
-						editBox.value = option.get().toString()
-					},
-				),
-			)
+		is ConfigOption.DoubleOption -> listOf(buildParsedTextRow(option, String::toDoubleOrNull))
 
 		is ConfigOption.StringOption ->
 			listOf(
 				createTextRow(
 					option = option,
-					label = scalarLabel(option.name),
+					label = guiLang("${idPrefix(config)}.option.${option.name}"),
 					initialValue = option.get(),
 					isValid = { true },
 					parseAndSet = { text ->
@@ -296,6 +221,22 @@ class ConfigScreen<T : Config<T>>(
 				),
 			)
 	}
+
+	private fun <T : Any> buildParsedTextRow(
+		option: ConfigOption<T>,
+		parse: (String) -> T?,
+	): Row = createTextRow(
+		option = option,
+		label = guiLang("${idPrefix(config)}.option.${option.name}"),
+		initialValue = option.get().toString(),
+		isValid = { parse(it) != null },
+		parseAndSet = { text ->
+			parse(text)?.let(option::set)
+		},
+		refresh = { editBox ->
+			editBox.value = option.get().toString()
+		},
+	)
 
 	private fun createScalarRow(
 		option: ConfigOption<*>,
@@ -381,9 +322,8 @@ class ConfigScreen<T : Config<T>>(
 	private fun createResetButton(
 		onReset: () -> Unit,
 	): Button = Button.builder(
-		Component.translatableWithFallback(
-			"${idPrefix(config)}.reset",
-			"Reset",
+		lang(
+			"reset",
 		),
 	) {
 		onReset()

@@ -1,5 +1,6 @@
 package com.metacontent.cobblenav
 
+import com.metacontent.cobblenav.util.creativeTabLang
 import com.mojang.brigadier.arguments.ArgumentType
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry
@@ -10,7 +11,6 @@ import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
 import net.minecraft.commands.synchronization.ArgumentTypeInfo
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import kotlin.reflect.KClass
@@ -42,7 +42,7 @@ class CobblenavFabric :
 			BuiltInRegistries.CREATIVE_MODE_TAB,
 			cobblenavResource("cobblenav"),
 			FabricItemGroup.builder()
-				.title(Component.translatable("itemGroup.cobblenav.pokenav_group"))
+				.title(creativeTabLang("pokenav"))
 				.icon { ItemStack(CobblenavItems.POKENAV) }
 				.displayItems(CobblenavItems::addToGroup)
 				.build(),

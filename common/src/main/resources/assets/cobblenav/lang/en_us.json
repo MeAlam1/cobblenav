@@ -1,11 +1,38 @@
 {
+  "category.cobblenav": "Cobblenav",
+  
+  "cobblenav.edit.context": "Edit %1$s",
+  "cobblenav.reset": "Reset",
+  "cobblenav.search.context": "Search %1$s",
+  
+  "cobblenav.itemGroup.pokenav": "Cobblenav",
+
+  "cobblenav.gui.client_config.option.screenScale": "Screen Scale",
+  "cobblenav.gui.client_config.option.enableBlurEffect": "Enable Blur Effect",
+  "cobblenav.gui.client_config.option.sendErrorMessagesToChat": "Send Error Messages To Chat",
+  "cobblenav.gui.client_config.option.pokefinderScreenScale": "Pokefinder Screen Scale",
+  "cobblenav.gui.client_config.option.pokefinderOverlayScale": "Pokefinder Overlay Scale",
+  "cobblenav.gui.client_config.option.pokefinderOverlayOffsetX": "Pokefinder Overlay Offset X",
+  "cobblenav.gui.client_config.option.pokefinderOverlayOffsetY": "Pokefinder Overlay Offset Y",
+  "cobblenav.gui.client_config.option.enableDisplayOfNamesOnRadar": "Enable Display Of Names On Radar",
+  "cobblenav.gui.client_config.option.trackArrowYOffset": "Track Arrow Y Offset",
+  "cobblenav.gui.client_config.option.maxCloudNumber": "Max Cloud Number",
+  "cobblenav.gui.client_config.option.maxCloudVelocity": "Max Cloud Velocity",
+  "cobblenav.gui.client_config.option.enableItemShaking": "Enable Item Shaking",
+  "cobblenav.gui.client_config.option.enableMultipleModelItems": "Enable Multiple Model Items",
+
+  "cobblenav.gui.server_config.option.hideUnknownPokemon": "Hide Unknown Pokemon",
+  "cobblenav.gui.server_config.option.hideConditionsOfUnknownSpawns": "Hide Conditions Of Unknown Spawns",
+  "cobblenav.gui.server_config.option.hideNaturalBlockConditions": "Hide Natural Block Conditions",
+  "cobblenav.gui.server_config.option.percentageForKnownHerd": "Percentage For Known Herd",
+  "cobblenav.gui.server_config.option.syncLabelsWithClient": "Sync Labels With Client",
+  "cobblenav.gui.server_config.option.syncEvYieldWithClient": "Sync EV Yield With Client",
+  "cobblenav.gui.server_config.option.searchAreaWidth": "Search Area Width",
+  "cobblenav.gui.server_config.option.searchAreaHeight": "Search Area Height",
+  
   "key.cobblenav.open_pokenav": "Open Pokenav",
   "key.cobblenav.open_location": "Open Location Screen",
-  "category.cobblenav": "Cobblenav",
-  "itemGroup.cobblenav.pokenav_group": "Cobblenav",
-  "tag.item.cobblenav.pokenav": "PokéNav",
-  "tag.item.cobblenav.dyed_pokenav": "Dyed PokéNav",
-  "tag.item.cobblenav.pokefinder": "PokéFinder",
+  
   "item.cobblenav.pokenav_item": "PokéNav",
   "item.cobblenav.pokefinder_item": "PokéFinder",
   "item.cobblenav.fishingnav_item": "FishingNav",
@@ -33,6 +60,10 @@
   "item.cobblenav.pokenav_item.netherite": "Netherite",
   "item.cobblenav.pokenav_item.wanderer": "Wanderer",
   "item.cobblenav.pokenav_item_old": "Old PokéNav",
+
+  "tag.item.cobblenav.pokenav": "PokéNav",
+  "tag.item.cobblenav.dyed_pokenav": "Dyed PokéNav",
+  "tag.item.cobblenav.pokefinder": "PokéFinder",
 
   "gui.cobblenav.support_button.header.location_screen": "Location - Support",
   "gui.cobblenav.support.location_screen": "The location screen displays all possible Pokémon that can spawn in your area, separated by buckets. Tooltips that appear when you hover over a Pokémon display more detailed information, as well as the conditions that affected the chance of spawning in your particular case.",

@@ -1,6 +1,6 @@
 {
 "gamerule.titleCommandsPermissionLevel": "타이틀 명령어 사용 권한 레벨",
-"itemGroup.cobblenav.pokenav_group": "코블내브",
+"cobblenav.itemGroup.pokenav": "코블내브",
 "item.cobblenav.pokenav_item": "포켓내비",
 "gui.cobblenav.pokenav_item.title": "포켓몬 네비게이터",
 "gui.cobblenav.pokenav_item.close_button": "끄기",
