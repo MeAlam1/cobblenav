@@ -2,7 +2,6 @@ package com.metacontent.cobblenav.spawndata.collector.block
 
 import com.cobblemon.mod.common.api.spawning.condition.AreaTypeSpawningCondition
 import com.metacontent.cobblenav.spawndata.collector.BlockConditionCollector
-import com.metacontent.cobblenav.util.ModDependency
 import net.minecraft.resources.ResourceLocation
 
 class AreaTypeBlockCollector : BlockConditionCollector<AreaTypeSpawningCondition<*>> {
@@ -12,8 +11,6 @@ class AreaTypeBlockCollector : BlockConditionCollector<AreaTypeSpawningCondition
 
 	override val name = NAME
 	override val conditionClass = AreaTypeSpawningCondition::class.java
-	override var neededInstalledMods: List<ModDependency> = emptyList()
-	override var neededUninstalledMods: List<ModDependency> = emptyList()
 
 	override fun collect(condition: AreaTypeSpawningCondition<*>): Set<ResourceLocation> = condition.neededNearbyBlocks?.toBlockSet() ?: emptySet()
 }

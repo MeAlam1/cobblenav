@@ -45,10 +45,10 @@ object Cobblenav {
 	val LOGGER: Logger = LoggerFactory.getLogger(ID)
 
 	lateinit var config: CobblenavConfig
-	lateinit var implementation: Implementation
+	lateinit var implementation: CobblenavImplementation
 	val resolver = PokenavSpawnablePositionResolver()
 
-	fun init(implementation: Implementation) {
+	fun init(implementation: CobblenavImplementation) {
 		ConditionCollectors.registerConfigEntries()
 		config = Config.load(CobblenavConfig::class.java)
 		this.implementation = implementation
