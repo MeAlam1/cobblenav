@@ -27,10 +27,10 @@ versionRange = "[1.21.1]"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependecies.cobblenav]]
+[[dependencies.cobblenav]]
 modId = "cobblemon"
 type = "required"
-versionRange = "[1.7.0,)"
+versionRange = "[1.8.0,)"
 ordering = "NONE"
 side = "BOTH"
 

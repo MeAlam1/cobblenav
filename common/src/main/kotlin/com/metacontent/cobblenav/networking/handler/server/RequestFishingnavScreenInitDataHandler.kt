@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack
 object RequestFishingnavScreenInitDataHandler : ServerNetworkPacketHandler<RequestFishingnavScreenInitDataPacket> {
     override fun handle(packet: RequestFishingnavScreenInitDataPacket, server: MinecraftServer, player: ServerPlayer) {
         server.execute {
-            val buckets = Cobblemon.bestSpawner.config.buckets.map { it.name }
+            val buckets = Cobblemon.bestSpawner.config.fishingBuckets.keys.toList()
             var pokeBall = ResourceLocation.withDefaultNamespace("air")
             var lineColor = ""
             var bait = ItemStack.EMPTY

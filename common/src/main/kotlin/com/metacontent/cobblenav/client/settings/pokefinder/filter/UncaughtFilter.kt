@@ -14,6 +14,6 @@ class UncaughtFilter : RadarFilter {
     override fun test(pokemon: Pokemon): Boolean {
         val speciesRecord = CobblemonClient.clientPokedexData.getSpeciesRecord(pokemon.species.resourceIdentifier)
         val knowledge = speciesRecord?.getFormRecord(pokemon.form.name)?.knowledge ?: return true
-        return knowledge != PokedexEntryProgress.CAUGHT
+        return knowledge != PokedexEntryProgress.OWNED
     }
 }

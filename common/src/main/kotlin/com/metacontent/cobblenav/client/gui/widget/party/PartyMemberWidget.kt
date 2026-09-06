@@ -1,5 +1,6 @@
 package com.metacontent.cobblenav.client.gui.widget.party
 
+import com.cobblemon.mod.common.client.gui.ProfileTransformType
 import com.cobblemon.mod.common.client.gui.drawProfilePokemon
 import com.cobblemon.mod.common.client.render.models.blockbench.FloatingState
 import com.cobblemon.mod.common.pokemon.RenderablePokemon
@@ -33,7 +34,7 @@ class PartyMemberWidget(
             rotation = Quaternionf().fromEulerXYZDegrees(rotationVec),
             state = FloatingState(),
             scale = 7.5f,
-            applyProfileTransform = false,
+            profileTransformType = ProfileTransformType.NONE,
             applyBaseScale = true
         )
         poseStack.popPose()

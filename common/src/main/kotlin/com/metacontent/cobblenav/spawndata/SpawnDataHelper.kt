@@ -3,7 +3,6 @@ package com.metacontent.cobblenav.spawndata
 import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.api.spawning.CobblemonSpawnPools
-import com.cobblemon.mod.common.api.spawning.SpawnBucket
 import com.cobblemon.mod.common.api.spawning.SpawnCause
 import com.cobblemon.mod.common.api.spawning.detail.PokemonSpawnDetail
 import com.cobblemon.mod.common.api.spawning.detail.SpawnDetail
@@ -43,12 +42,12 @@ object SpawnDataHelper {
     val spawnDetailIdBySpecies = mutableMapOf<String, MutableList<String>>()
 
     fun calculateWeightedBuckets(
-        bucketWeights: MutableMap<SpawnBucket, Float>,
+        bucketWeights: MutableMap<String, Float>,
         influences: List<SpawningInfluence>
     ): List<WeightedBucket> {
         influences.forEach { it.affectBucketWeights(bucketWeights) }
         val sum = bucketWeights.values.sum()
-        return bucketWeights.map { (key, value) -> WeightedBucket(key.name, value / sum) }
+        return bucketWeights.map { (key, value) -> WeightedBucket(key, value / sum) }
     }
 
     fun checkPlayerSpawns(
@@ -61,8 +60,8 @@ object SpawnDataHelper {
 
         val spawner = player.spawner
 
-        val bucketWeights = Cobblemon.bestSpawner.config.buckets.associateWith { it.weight }.toMutableMap()
-        val bucket = bucketWeights.keys.firstOrNull { it.name == bucketName } ?: run {
+        val bucketWeights = Cobblemon.bestSpawner.config.worldBuckets.toMutableMap()
+        if (bucketName !in bucketWeights) {
             Cobblenav.LOGGER.error("For some reason bucket is null")
             return WeightedBucket(bucketName, 0f) to emptyList()
         }
@@ -85,7 +84,7 @@ object SpawnDataHelper {
             spawnablePositionCalculators = SpawnablePositionCalculator.prioritizedAreaCalculators,
             zone = zone
         )
-        val spawnProbabilities = spawner.selector.getProbabilities(spawner, bucket, spawnablePositions)
+        val spawnProbabilities = spawner.selector.getProbabilities(spawner, bucketName, spawnablePositions)
 
         val spawnDataList = spawnProbabilities.mapNotNull { (detail, spawnChance) ->
             val fittingPositions = spawnablePositions.filter { detail.isSatisfiedBy(it) }
@@ -95,7 +94,7 @@ object SpawnDataHelper {
         val weightedBucket = calculateWeightedBuckets(
             bucketWeights,
             spawner.influences + zone.unconditionalInfluences
-        ).first { it.name == bucketName }
+        ).firstOrNull { it.name == bucketName } ?: WeightedBucket(bucketName, 0f)
 
         return weightedBucket to spawnDataList
     }
@@ -134,7 +133,7 @@ object SpawnDataHelper {
             )
         }
 
-        val bucketWeights = Cobblemon.bestSpawner.config.buckets.associateWith { it.weight }.toMutableMap()
+        val bucketWeights = Cobblemon.bestSpawner.config.fishingBuckets.toMutableMap()
         val influences = if (spawnablePositions.size == 1) {
             spawnablePositions.first().influences + spawner.influences
         } else {
@@ -144,11 +143,11 @@ object SpawnDataHelper {
             name to chance
         }
 
-        return bucketWeights.keys.associate { bucket ->
-            bucket.name to spawner.selector.getProbabilities(spawner, bucket, spawnablePositions)
+        return bucketWeights.keys.associateWith { bucket ->
+            spawner.selector.getProbabilities(spawner, bucket, spawnablePositions)
                 .mapNotNull { (detail, chance) ->
                     collect(detail, emptyList(), player)?.let {
-                        CheckedSpawnData(it, chance * pokemonChance * (weightedBuckets[bucket.name] ?: 1f))
+                        CheckedSpawnData(it, chance * pokemonChance * (weightedBuckets[bucket] ?: 1f))
                     }
                 }
         }
@@ -163,8 +162,8 @@ object SpawnDataHelper {
             (it as? PokeSnackBlockEntity)?.spawner
         } ?: return WeightedBucket(bucketName, 0f) to emptyList()
 
-        val bucketWeights = Cobblemon.bestSpawner.config.buckets.associateWith { it.weight }.toMutableMap()
-        val bucket = bucketWeights.keys.firstOrNull { it.name == bucketName } ?: run {
+        val bucketWeights = Cobblemon.bestSpawner.config.pokeSnackBuckets.toMutableMap()
+        if (bucketName !in bucketWeights) {
             Cobblenav.LOGGER.error("For some reason bucket is null")
             return WeightedBucket(bucketName, 0f) to emptyList()
         }
@@ -180,7 +179,7 @@ object SpawnDataHelper {
             zone = zone
         )
 
-        val spawnProbabilities = spawner.selector.getProbabilities(spawner, bucket, spawnablePositions)
+        val spawnProbabilities = spawner.selector.getProbabilities(spawner, bucketName, spawnablePositions)
 
         val spawnDataList = spawnProbabilities.mapNotNull { (detail, spawnChance) ->
             val fittingPositions = spawnablePositions.filter { detail.isSatisfiedBy(it) }
@@ -190,7 +189,7 @@ object SpawnDataHelper {
         val weightedBucket = calculateWeightedBuckets(
             bucketWeights,
             spawner.influences + zone.unconditionalInfluences
-        ).first { it.name == bucketName }
+        ).firstOrNull { it.name == bucketName } ?: WeightedBucket(bucketName, 0f)
 
         return weightedBucket to spawnDataList
     }
@@ -228,7 +227,7 @@ object SpawnDataHelper {
             id = if (!result.isUnknown() || !Cobblenav.config.hideUnknownPokemon) detail.id else "???",
             result = result,
             positionType = detail.spawnablePositionType.name,
-            bucket = detail.bucket.name,
+            bucket = detail.bucket,
             weight = detail.weight,
             platformId = platformId,
             conditions = conditions,
