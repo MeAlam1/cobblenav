@@ -14,5 +14,6 @@
 * Fix concurrent modification during spawn catalogue encoding
 
 ### Developer
+* Added Github Templates
 
 ### Localization

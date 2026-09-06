@@ -44,10 +44,7 @@ class ScrollableView(
 		guiGraphics.disableScissor()
 	}
 
-	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean {
-		if (!clicked(pMouseX, pMouseY)) return false
-		return super.mouseClicked(pMouseX, pMouseY, pButton)
-	}
+	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean = clicked(pMouseX, pMouseY) && super.mouseClicked(pMouseX, pMouseY, pButton)
 
 	override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
 		if (child.height > height) {
