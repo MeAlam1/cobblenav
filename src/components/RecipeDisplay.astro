@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+import Recipe from "./recipes/CraftingRecipe.astro";
+import SmithingRecipe from "./recipes/SmithingRecipe.astro";
+
+interface Props {
+    collection: "craftingRecipes" | "smithingRecipes";
+    modId: string;
+}
+
+const { collection, modId } = Astro.props;
+
+let allCraftingRecipes: Awaited<
+    ReturnType<typeof getCollection<"craftingRecipes">>
+> = [];
+let allSmithingRecipes: Awaited<
+    ReturnType<typeof getCollection<"smithingRecipes">>
+> = [];
+
+switch (collection) {
+    case "craftingRecipes":
+        allCraftingRecipes = await getCollection(
+            "craftingRecipes",
+            (item) => item.data.modFilter === modId,
+        );
+        break;
+    case "smithingRecipes":
+        allSmithingRecipes = await getCollection(
+            "smithingRecipes",
+            (item) => item.data.modFilter === modId,
+        );
+        break;
+}
+---
+
+<div
+    class="recipes-list not-content"
+    style="display: flex; flex-direction: column; gap: 32px;"
+>
+    {
+        allCraftingRecipes.length > 0 &&
+            allCraftingRecipes.map((recipe) => (
+                <Recipe
+                    name={recipe.data.name}
+                    description={recipe.data.description}
+                    ingredients={recipe.data.ingredients}
+                    resultItem={recipe.data.resultItem}
+                    resultCount={recipe.data.resultCount}
+                />
+            ))
+    }
+
+    {
+        allSmithingRecipes.length > 0 &&
+            allSmithingRecipes.map((recipe) => (
+                <SmithingRecipe
+                    name={recipe.data.name}
+                    description={recipe.data.description}
+                    template={recipe.data.template ?? null}
+                    baseItem={recipe.data.baseItem}
+                    additionItem={recipe.data.additionItem}
+                    resultItem={recipe.data.resultItem}
+                />
+            ))
+    }
+</div>

@@ -1,0 +1,221 @@
+---
+import type { Commands } from "../types";
+
+interface Props {
+    commands: Commands;
+}
+
+const { commands } = Astro.props;
+---
+
+<section class="commands not-content" aria-label="Available commands">
+    {
+        commands.length > 0 ? (
+            <ul class="commands-list" role="list">
+                {commands.map((entry) => (
+                    <li class="command-card">
+                        <div class="command-header">
+                            <code class="command-name">{entry.command}</code>
+                            <div class="pills-container">
+                                {entry.permissionNode && (
+                                    <span
+                                        class="permission-pill"
+                                        title="Permission node"
+                                    >
+                                        {entry.permissionNode}
+                                    </span>
+                                )}
+                                {entry.requiresOp && (
+                                    <span
+                                        class="requires-op-pill"
+                                        title="Requires OP status"
+                                    >
+                                        Requires OP
+                                    </span>
+                                )}
+                                {entry.controlledByConfig && (
+                                    <span
+                                        class="controlled-by-config-pill"
+                                        title="Controlled by config"
+                                    >
+                                        Controlled by config
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+
+                        <p class="command-description">{entry.description}</p>
+
+                        <div class="usage-row">
+                            <span class="usage-label">Usage</span>
+                            <code class="usage-value">{entry.usage}</code>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        ) : (
+            <p class="empty-state">
+                No commands are documented for this module yet.
+            </p>
+        )
+    }
+</section>
+
+<style>
+    .commands {
+        margin: 1rem 0 1.5rem;
+    }
+
+    .commands-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.85rem;
+    }
+
+    .command-card {
+        border: 1px solid var(--sl-color-gray-5);
+        background: linear-gradient(
+            145deg,
+            color-mix(
+                in srgb,
+                var(--sl-color-bg) 90%,
+                var(--sl-color-accent) 10%
+            ),
+            var(--sl-color-bg)
+        );
+        border-radius: 0.75rem;
+        padding: 0.9rem 1rem;
+        box-shadow: 0 1px 0
+            color-mix(in srgb, var(--sl-color-white) 15%, transparent);
+    }
+
+    .command-header {
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .pills-container {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .command-name {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--sl-color-text);
+        background: var(--sl-color-black);
+        border: 1px solid var(--sl-color-gray-5);
+        border-radius: 0.5rem;
+        padding: 0.35rem 0.55rem;
+        line-height: 1.35;
+        overflow-wrap: anywhere;
+    }
+
+    .permission-pill,
+    .requires-op-pill,
+    .controlled-by-config-pill {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+        line-height: 1.35;
+        white-space: nowrap;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .permission-pill {
+        border: 1px solid
+            color-mix(
+                in srgb,
+                var(--sl-color-accent) 45%,
+                var(--sl-color-gray-4)
+            );
+        background: color-mix(
+            in srgb,
+            var(--sl-color-accent) 12%,
+            var(--sl-color-bg)
+        );
+        color: var(--sl-color-text-accent);
+    }
+
+    .requires-op-pill,
+    .controlled-by-config-pill {
+        border: 1px solid
+            color-mix(
+                in srgb,
+                var(--sl-color-orange) 45%,
+                var(--sl-color-gray-4)
+            );
+        background: color-mix(
+            in srgb,
+            var(--sl-color-orange) 12%,
+            var(--sl-color-bg)
+        );
+        color: var(--sl-color-orange);
+    }
+
+    .command-description {
+        margin: 0.55rem 0 0;
+        color: var(--sl-color-text);
+        line-height: 1.55;
+    }
+
+    .usage-row {
+        margin-top: 0.8rem;
+        display: grid;
+        gap: 0.35rem;
+    }
+
+    .usage-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--sl-color-gray-2);
+    }
+
+    .usage-value {
+        display: block;
+        border: 1px dashed var(--sl-color-gray-5);
+        border-radius: 0.55rem;
+        padding: 0.45rem 0.6rem;
+        font-size: 0.875rem;
+        line-height: 1.45;
+        background: color-mix(in srgb, var(--sl-color-gray-6) 40%, transparent);
+        color: var(--sl-color-text);
+        overflow-wrap: anywhere;
+    }
+
+    .empty-state {
+        margin: 0;
+        border: 1px dashed var(--sl-color-gray-5);
+        border-radius: 0.7rem;
+        padding: 0.9rem 1rem;
+        color: var(--sl-color-gray-2);
+        background: color-mix(
+            in srgb,
+            var(--sl-color-bg) 90%,
+            var(--sl-color-gray-6) 10%
+        );
+        font-style: italic;
+    }
+
+    @media (max-width: 40rem) {
+        .command-card {
+            padding: 0.8rem 0.85rem;
+        }
+
+        .command-name {
+            font-size: 0.9rem;
+        }
+    }
+</style>

@@ -1,0 +1,36 @@
+{
+    "name": "ReBreather Mk2",
+    "description": "Allows the player to breathe underwater for a moderate period of time.",
+    "modFilter": "cobblemon_breathers",
+    "ingredients": [
+        null,
+        {
+            "modId": "cobblemon",
+            "itemId": "mystic_water"
+        },
+        null,
+        {
+            "modId": "minecraft",
+            "itemId": "diamond"
+        },
+        {
+            "modId": "cobblemon_breathers",
+            "itemId": "rebreather_mk1"
+        },
+        {
+            "modId": "minecraft",
+            "itemId": "diamond"
+        },
+        null,
+        {
+            "modId": "minecraft",
+            "itemId": "bucket"
+        },
+        null
+    ],
+    "resultItem": {
+        "modId": "cobblemon_breathers",
+        "itemId": "rebreather_mk2"
+    },
+    "resultCount": 1
+}

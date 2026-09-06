@@ -1,0 +1,322 @@
+---
+import type { Ingredient } from "../../types";
+
+interface Props {
+    // A 9-item array representing the 3x3 grid slots (null for empty slots)
+    ingredients: (string | Ingredient | null)[];
+    resultItem: Ingredient | string;
+    resultCount?: number;
+    name?: string;
+    description?: string;
+}
+
+const {
+    ingredients,
+    resultItem,
+    resultCount = 1,
+    name,
+    description,
+} = Astro.props;
+
+// Helper to construct image paths from your public folder
+const getTexturePath = (item: string | Ingredient | null) => {
+    if (!item) return null;
+    if (typeof item === "string") {
+        return `/textures/minecraft/${item}.png`;
+    }
+    return `/textures/${item.modId}/${item.itemId}.png`;
+};
+
+// Helper to format item names (e.g., "diamond_pickaxe" → "Diamond Pickaxe")
+const formatItemName = (item: string | Ingredient | null) => {
+    if (!item) return "Empty";
+    if (typeof item === "string") {
+        return item
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+    }
+    return item.itemId
+        .split("_")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+};
+---
+
+<div class="recipe-container">
+    {name && <h2 class="recipe-name">{name}</h2>}
+    {description && <p class="recipe-description">{description}</p>}
+    <div class="minecraft-recipe">
+        <div class="recipe-grid">
+            {
+                ingredients.map((item) => {
+                    const texture = getTexturePath(item);
+                    return (
+                        <div
+                            class="recipe-slot"
+                            data-tooltip={formatItemName(item)}
+                        >
+                            {texture && (
+                                <img
+                                    src={texture}
+                                    alt={formatItemName(item)}
+                                    class="item-texture"
+                                />
+                            )}
+                        </div>
+                    );
+                })
+            }
+        </div>
+
+        <div class="recipe-arrow">→</div>
+
+        <div class="recipe-result-container">
+            <div
+                class="recipe-result"
+                data-tooltip={formatItemName(resultItem)}
+            >
+                <img
+                    src={getTexturePath(resultItem)}
+                    alt={formatItemName(resultItem)}
+                    class="item-texture"
+                />
+                {
+                    resultCount > 1 && (
+                        <span class="item-count">{resultCount}</span>
+                    )
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style is:global>
+    @font-face {
+        font-family: "Minecraft";
+        src: url("/font/Monocraft.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+    }
+</style>
+
+<style>
+    .recipe-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 24px;
+        background: linear-gradient(
+            135deg,
+            rgba(40, 40, 45, 0.6) 0%,
+            rgba(25, 25, 30, 0.8) 100%
+        );
+        border: 2px solid rgba(139, 139, 139, 0.3);
+        border-radius: 8px;
+        box-shadow:
+            0 8px 16px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        width: fit-content;
+        backdrop-filter: blur(10px);
+    }
+
+    :global(html[data-theme="light"]) .recipe-container {
+        background: linear-gradient(
+            135deg,
+            rgba(240, 240, 245, 0.9) 0%,
+            rgba(220, 220, 230, 0.95) 100%
+        );
+        border: 2px solid rgba(100, 100, 110, 0.3);
+        box-shadow:
+            0 8px 16px rgba(0, 0, 0, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .recipe-name {
+        font-family: "Minecraft", monospace, sans-serif;
+        font-size: 2rem;
+        font-weight: normal;
+        color: #ffffff;
+        text-shadow:
+            3px 3px 0px #3f3f3f,
+            -1px -1px 0px rgba(0, 0, 0, 0.5),
+            0 0 20px rgba(255, 255, 255, 0.1);
+        margin: 0;
+        padding-bottom: 8px;
+        letter-spacing: 1px;
+        image-rendering: pixelated;
+        border-bottom: 2px solid rgba(139, 139, 139, 0.3);
+    }
+
+    :global(html[data-theme="light"]) .recipe-name {
+        color: #2d2d2d;
+        text-shadow:
+            3px 3px 0px rgba(150, 150, 150, 0.4),
+            -1px -1px 0px rgba(255, 255, 255, 0.8),
+            0 0 20px rgba(0, 0, 0, 0.1);
+        border-bottom-color: rgba(100, 100, 110, 0.3);
+    }
+
+    .recipe-description {
+        font-family: "Minecraft", monospace, sans-serif;
+        font-size: 1rem;
+        color: #b8b8b8;
+        text-shadow:
+            2px 2px 0px rgba(0, 0, 0, 0.6),
+            0 0 10px rgba(0, 0, 0, 0.3);
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+        max-width: 500px;
+    }
+
+    :global(html[data-theme="light"]) .recipe-description {
+        color: #4a4a4a;
+        text-shadow:
+            2px 2px 0px rgba(200, 200, 200, 0.5),
+            0 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .minecraft-recipe {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        background: linear-gradient(135deg, #c6c6c6 0%, #8b8b8b 100%);
+        padding: 20px 24px;
+        border-top: 3px solid #ffffff;
+        border-left: 3px solid #ffffff;
+        border-right: 3px solid #373737;
+        border-bottom: 3px solid #373737;
+        box-shadow:
+            inset 0 0 0 1px #555555,
+            0 4px 8px rgba(0, 0, 0, 0.4);
+        width: fit-content;
+        font-family: "Minecraft", monospace, sans-serif;
+        image-rendering: pixelated;
+        user-select: none;
+    }
+
+    .recipe-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 54px);
+        grid-template-rows: repeat(3, 54px);
+        gap: 3px;
+        background-color: #373737;
+        padding: 3px;
+        box-shadow:
+            inset 2px 2px 0 0 #1a1a1a,
+            inset -1px -1px 0 0 #5a5a5a;
+    }
+
+    .recipe-slot,
+    .recipe-result {
+        background: linear-gradient(135deg, #8b8b8b 0%, #646464 100%);
+        border-top: 2px solid #373737;
+        border-left: 2px solid #373737;
+        border-right: 2px solid #ffffff;
+        border-bottom: 2px solid #ffffff;
+        box-shadow:
+            inset 1px 1px 0 0 rgba(0, 0, 0, 0.5),
+            inset -1px -1px 0 0 rgba(255, 255, 255, 0.3);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+    }
+
+    .recipe-slot[data-tooltip]:hover::after,
+    .recipe-result[data-tooltip]:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-8px);
+        padding: 6px 10px;
+        background: linear-gradient(180deg, #100010 0%, #100010 100%);
+        border: 2px solid;
+        border-color: #5000ff #2800aa #2800aa #5000ff;
+        color: #ffffff;
+        font-family: "Minecraft", monospace, sans-serif;
+        font-size: 16px;
+        pointer-events: none;
+        z-index: 10000;
+        white-space: nowrap;
+        text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+        image-rendering: pixelated;
+        animation: tooltipFadeIn 0.15s ease;
+    }
+
+    @keyframes tooltipFadeIn {
+        from {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-4px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-8px);
+        }
+    }
+
+    .recipe-slot:hover,
+    .recipe-result:hover {
+        background: linear-gradient(135deg, #a0a0a0 0%, #787878 100%);
+    }
+
+    .recipe-arrow {
+        font-size: 2.5rem;
+        color: #373737;
+        font-weight: bold;
+        text-shadow:
+            1px 1px 0 #ffffff,
+            -1px -1px 0 rgba(0, 0, 0, 0.2);
+        filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+    }
+
+    .recipe-result-container {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #8b8b8b 0%, #646464 100%);
+        border-top: 2px solid #373737;
+        border-left: 2px solid #373737;
+        border-right: 2px solid #ffffff;
+        border-bottom: 2px solid #ffffff;
+        box-shadow:
+            inset 1px 1px 0 0 rgba(0, 0, 0, 0.5),
+            inset -1px -1px 0 0 rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .recipe-result-container:hover {
+        background: linear-gradient(135deg, #a0a0a0 0%, #787878 100%);
+    }
+
+    .item-texture {
+        width: 36px;
+        height: 36px;
+        object-fit: contain;
+        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+    }
+
+    .recipe-result .item-texture {
+        width: 44px;
+        height: 44px;
+    }
+
+    .item-count {
+        position: absolute;
+        bottom: 3px;
+        right: 5px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: #ffffff;
+        text-shadow:
+            2px 2px 0px #3f3f3f,
+            -1px -1px 0px rgba(0, 0, 0, 0.5);
+        font-family: "Minecraft", monospace, sans-serif;
+    }
+</style>

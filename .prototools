@@ -1,0 +1,4 @@
+# Prototools helper file, more info at: https://moonrepo.dev/proto
+
+npm = "~11"
+node = "22.20.0"
