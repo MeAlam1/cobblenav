@@ -49,10 +49,10 @@ jobs:
         with:
           name: artifacts
           path: |
-            fabric/build/libs/cobblenav-fabric-${{ steps.version.outputs.MOD_VERSION }}.jar
-            fabric/build/libs/cobblenav-fabric-${{ steps.version.outputs.MOD_VERSION }}-sources.jar
-            neoforge/build/libs/cobblenav-neoforge-${{ steps.version.outputs.MOD_VERSION }}.jar
-            neoforge/build/libs/cobblenav-neoforge-${{ steps.version.outputs.MOD_VERSION }}-sources.jar
+            fabric/build/libs/cobblenav-fabric-${{ github.ref_name }}.jar
+            fabric/build/libs/cobblenav-fabric-${{ github.ref_name }}-sources.jar
+            neoforge/build/libs/cobblenav-neoforge-${{ github.ref_name }}.jar
+            neoforge/build/libs/cobblenav-neoforge-${{ github.ref_name }}-sources.jar
 
   publish:
     name: "Publish artifacts on platforms"
