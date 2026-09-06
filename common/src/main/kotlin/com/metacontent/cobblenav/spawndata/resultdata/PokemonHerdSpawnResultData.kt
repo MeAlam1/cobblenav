@@ -42,10 +42,10 @@ class PokemonHerdSpawnResultData(
 			val heardables = detail.herdablePokemon.toMutableList()
 			if (heardables.isEmpty()) return null
 
-			val leaders = heardables.filter { it.isLeader == true }.ifEmpty { heardables }
+			val leaders = heardables.filter { it.isLeader }.ifEmpty { heardables }
 			val leader = leaders.random()
 
-			val herd = heardables.filter { it.isLeader != true }.ifEmpty { heardables }.randomNoCopy(2)
+			val herd = heardables.filter { !it.isLeader }.ifEmpty { heardables }.randomNoCopy(2)
 			val leftPokemon = herd.getOrNull(0)?.pokemon?.createAndGetAsRenderable(player.serverLevel(), player.onPos)
 			val rightPokemon = herd.getOrNull(1)?.pokemon?.createAndGetAsRenderable(player.serverLevel(), player.onPos)
 

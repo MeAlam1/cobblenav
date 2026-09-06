@@ -28,12 +28,20 @@ dependencies {
     shadowBundle(projects.common) {
         targetConfiguration = "transformProductionNeoForge"
     }
-
-    modImplementation(libs.cobblemon.neoforge)
-
-    implementation(libs.kotlinforforge.neoforge) {
-        exclude(group = "net.neoforged.fancymodloader", module = "loader")
-    }
+	
+	implementation(libs.neoforge.kotlin) {
+		exclude(group = "net.neoforged.fancymodloader", module = "loader")
+	}
+	
+	modImplementation(libs.bundles.neoforge) {
+		isTransitive = false
+	}
+	modCompileOnly(libs.bundles.neoforge.compileOnly) {
+		isTransitive = false
+	}
+	modRuntimeOnly(libs.bundles.neoforge.runtimeOnly) {
+		isTransitive = false
+	}
 }
 
 tasks {

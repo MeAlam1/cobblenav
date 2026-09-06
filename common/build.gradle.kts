@@ -11,5 +11,14 @@ dependencies {
     // which get remapped to the correct annotations on each platform.
     // Do NOT use other classes from Fabric Loader.
     modImplementation(libs.fabric.loader)
-    modImplementation(libs.cobblemon.common)
+
+	modImplementation(libs.bundles.common) {
+		isTransitive = false
+	}
+	modCompileOnly(libs.bundles.common.compileOnly) {
+		isTransitive = false
+	}
+	modRuntimeOnly(libs.bundles.common.runtimeOnly) {
+		isTransitive = false
+	}
 }

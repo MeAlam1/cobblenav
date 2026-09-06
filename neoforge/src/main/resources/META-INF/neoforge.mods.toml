@@ -7,7 +7,7 @@ license = "MPL-2.0"
 modId = "cobblenav"
 version = "${version}"
 displayName = "Cobblenav"
-authors = "gatekeep"
+authors = "MeAlam, gatekeep"
 description = '''
 The Cobblenav mod is inspired by the item and related mechanics featured in the games Pokémon RSE and Pokémon ORAS
 '''

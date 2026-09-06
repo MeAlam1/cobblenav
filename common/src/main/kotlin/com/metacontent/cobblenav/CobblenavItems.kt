@@ -1,7 +1,7 @@
 package com.metacontent.cobblenav
 
 import com.metacontent.cobblenav.item.*
-import com.metacontent.cobblenav.registry.CobbleNavRegistry
+import com.metacontent.cobblenav.platform.CobbleNavRegistry
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries

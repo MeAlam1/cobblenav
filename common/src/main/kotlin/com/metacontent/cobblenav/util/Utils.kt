@@ -16,10 +16,6 @@ import net.minecraft.server.level.ServerPlayer
 
 fun cobblenavResource(name: String, namespace: String = Cobblenav.ID): ResourceLocation = ResourceLocation.fromNamespaceAndPath(namespace, name)
 
-fun log(message: String) {
-	Cobblenav.LOGGER.info(message)
-}
-
 fun RegistryLikeCondition<*>.toResourceLocation(): ResourceLocation? {
 	if (this is RegistryLikeIdentifierCondition) {
 		return this.identifier
