@@ -78,23 +78,21 @@ class ConfigVariableList(
 			is ConfigOption.StringOption -> buildText(option) { it }
 		}
 
-		private fun buildBoolean(option: ConfigOption.BooleanOption): AbstractWidget =
-			CycleButton.onOffBuilder(option.get())
-				.displayOnlyValue()
-				.create(0, 0, ConfigScreen.WIDGET_WIDTH, ConfigScreen.WIDGET_HEIGHT, Component.empty()) { _, value ->
-					option.set(value)
-					updateResetState()
-				}
+		private fun buildBoolean(option: ConfigOption.BooleanOption): AbstractWidget = CycleButton.onOffBuilder(option.get())
+			.displayOnlyValue()
+			.create(0, 0, ConfigScreen.WIDGET_WIDTH, ConfigScreen.WIDGET_HEIGHT, Component.empty()) { _, value ->
+				option.set(value)
+				updateResetState()
+			}
 
-		private fun buildEnum(option: ConfigOption.EnumOption<*>): AbstractWidget =
-			CycleButton.builder<Enum<*>> { value -> Component.literal(value.name) }
-				.withValues(option.values)
-				.withInitialValue(option.get())
-				.displayOnlyValue()
-				.create(0, 0, ConfigScreen.WIDGET_WIDTH, ConfigScreen.WIDGET_HEIGHT, Component.empty()) { _, value ->
-					option.setUnchecked(value)
-					updateResetState()
-				}
+		private fun buildEnum(option: ConfigOption.EnumOption<*>): AbstractWidget = CycleButton.builder<Enum<*>> { value -> Component.literal(value.name) }
+			.withValues(option.values)
+			.withInitialValue(option.get())
+			.displayOnlyValue()
+			.create(0, 0, ConfigScreen.WIDGET_WIDTH, ConfigScreen.WIDGET_HEIGHT, Component.empty()) { _, value ->
+				option.setUnchecked(value)
+				updateResetState()
+			}
 
 		private fun <V : Any> buildText(
 			option: ConfigOption<V>,
@@ -111,10 +109,10 @@ class ConfigVariableList(
 
 			editBox.setFilter { text ->
 				text.isEmpty() ||
-						text == "-" ||
-						text == "." ||
-						text == "-." ||
-						parse(text) != null
+					text == "-" ||
+					text == "." ||
+					text == "-." ||
+					parse(text) != null
 			}
 
 			editBox.setResponder { text ->
@@ -176,7 +174,6 @@ class ConfigVariableList(
 
 		override fun children(): MutableList<out GuiEventListener> = children.toMutableList()
 
-		override fun narratables(): MutableList<out NarratableEntry> =
-			children.toMutableList()
+		override fun narratables(): MutableList<out NarratableEntry> = children.toMutableList()
 	}
 }

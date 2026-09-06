@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.client.gui.screen.pokefinder
+package com.metacontent.cobblenav.client.gui.screen
 
 import com.cobblemon.mod.common.CobblemonSounds
 import com.cobblemon.mod.common.api.gui.blitk

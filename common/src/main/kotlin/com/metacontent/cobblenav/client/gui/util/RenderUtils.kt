@@ -6,8 +6,8 @@ import com.cobblemon.mod.common.entity.PoseType
 import com.cobblemon.mod.common.pokemon.RenderablePokemon
 import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
 import com.metacontent.cobblenav.client.CobblenavClient
+import com.metacontent.cobblenav.client.gui.screen.PokefinderScreen
 import com.metacontent.cobblenav.client.gui.screen.PokenavScreen
-import com.metacontent.cobblenav.client.gui.screen.pokefinder.PokefinderScreen
 import com.metacontent.cobblenav.cobblenavResource
 import com.metacontent.cobblenav.util.CustomizableBlurEffectProcessor
 import com.mojang.blaze3d.vertex.PoseStack

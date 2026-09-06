@@ -1,6 +1,6 @@
 package com.metacontent.cobblenav.mixin;
 
-import com.metacontent.cobblenav.client.gui.screen.pokefinder.PokefinderScreen;
+import com.metacontent.cobblenav.client.gui.screen.PokefinderScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;

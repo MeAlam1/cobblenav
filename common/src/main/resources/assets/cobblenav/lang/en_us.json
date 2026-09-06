@@ -7,6 +7,7 @@
   
   "cobblenav.itemGroup.pokenav": "Cobblenav",
 
+  "cobblenav.gui.config.title": "Config Screen",
   "cobblenav.gui.client_config.option.screenScale": "Screen Scale",
   "cobblenav.gui.client_config.option.enableBlurEffect": "Enable Blur Effect",
   "cobblenav.gui.client_config.option.sendErrorMessagesToChat": "Send Error Messages To Chat",
@@ -29,6 +30,8 @@
   "cobblenav.gui.server_config.option.syncEvYieldWithClient": "Sync EV Yield With Client",
   "cobblenav.gui.server_config.option.searchAreaWidth": "Search Area Width",
   "cobblenav.gui.server_config.option.searchAreaHeight": "Search Area Height",
+
+  "cobblenav.gui.contacts.title": "Contacts Screen",
   
   "key.cobblenav.open_pokenav": "Open Pokenav",
   "key.cobblenav.open_location": "Open Location Screen",
