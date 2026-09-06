@@ -7,10 +7,10 @@ import com.metacontent.cobblenav.networking.packet.client.CloseFishingnavPacket
 import net.minecraft.client.Minecraft
 
 object CloseFishingnavHandler : ClientNetworkPacketHandler<CloseFishingnavPacket> {
-    override fun handle(packet: CloseFishingnavPacket, client: Minecraft) {
-        (client.screen as? FishingnavScreen)?.let {
-            client.player?.playSound(CobblemonSounds.EVOLUTION_NOTIFICATION, 0.6f, 1.5f)
-            it.onClose()
-        }
-    }
+	override fun handle(packet: CloseFishingnavPacket, client: Minecraft) {
+		(client.screen as? FishingnavScreen)?.let {
+			client.player?.playSound(CobblemonSounds.EVOLUTION_NOTIFICATION, 0.6f, 1.5f)
+			it.onClose()
+		}
+	}
 }

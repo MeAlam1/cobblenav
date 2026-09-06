@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(GrowingPlantBlock.class)
 public interface GrowingPlantBlockMixin {
-    @Invoker("getHeadBlock")
-    GrowingPlantHeadBlock invokeGetHeadBlock();
+
+	@Invoker("getHeadBlock")
+	GrowingPlantHeadBlock invokeGetHeadBlock();
 }

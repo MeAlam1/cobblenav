@@ -11,8 +11,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Gui.class)
 public abstract class GuiMixin {
-    @Inject(method = "renderTitle", at = @At("HEAD"))
-    protected void beforeTitleRender(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        CobblenavClient.INSTANCE.renderOverlay(guiGraphics, deltaTracker);
-    }
+
+	@Inject(method = "renderTitle", at = @At("HEAD"))
+	protected void beforeTitleRender(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
+		CobblenavClient.INSTANCE.renderOverlay(guiGraphics, deltaTracker);
+	}
 }

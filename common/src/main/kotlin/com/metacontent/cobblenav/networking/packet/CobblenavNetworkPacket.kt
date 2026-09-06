@@ -6,15 +6,15 @@ import com.metacontent.cobblenav.Cobblenav
 import net.minecraft.server.level.ServerPlayer
 
 interface CobblenavNetworkPacket<T : NetworkPacket<T>> : NetworkPacket<T> {
-    override fun sendToServer() = Cobblenav.implementation.networkManager.sendToServer(this)
+	override fun sendToServer() = Cobblenav.implementation.networkManager.sendToServer(this)
 
-    override fun sendToPlayer(player: ServerPlayer) = Cobblenav.implementation.networkManager.sendPacketToPlayer(player, this)
+	override fun sendToPlayer(player: ServerPlayer) = Cobblenav.implementation.networkManager.sendPacketToPlayer(player, this)
 
-    override fun sendToPlayers(players: Iterable<ServerPlayer>) {
-        if (players.any()) {
-            players.forEach { sendToPlayer(it) }
-        }
-    }
+	override fun sendToPlayers(players: Iterable<ServerPlayer>) {
+		if (players.any()) {
+			players.forEach { sendToPlayer(it) }
+		}
+	}
 
-    override fun sendToAllPlayers() = sendToPlayers(server()!!.playerList.players)
+	override fun sendToAllPlayers() = sendToPlayers(server()!!.playerList.players)
 }

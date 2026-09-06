@@ -9,86 +9,79 @@ import kotlin.math.ceil
 import kotlin.math.max
 
 open class TableView<I : AbstractWidget>(
-    x: Int, y: Int,
-    width: Int,
-    val columns: Int,
-    val columnWidth: Int = width / columns,
-    private val verticalGap: Float = 0f,
-    private val horizontalGap: Float = (width - columns * columnWidth) / (columns - 1f),
+	x: Int,
+	y: Int,
+	width: Int,
+	val columns: Int,
+	val columnWidth: Int = width / columns,
+	private val verticalGap: Float = 0f,
+	private val horizontalGap: Float = (width - columns * columnWidth) / (columns - 1f),
 ) : SoundlessWidget(x, y, width, 0, Component.literal("Table View")) {
-    private val items = mutableListOf<I>()
-    val rows
-        get() = ceil(items.size.toFloat() / columns.toFloat()).toInt()
+	internal val items = mutableListOf<I>()
+	val rows
+		get() = ceil(items.size.toFloat() / columns.toFloat()).toInt()
 
-    override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
-        items.forEach { it.render(guiGraphics, i, j, f) }
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+		calculateItems()
+		items.forEach { it.render(guiGraphics, i, j, f) }
 //        guiGraphics.renderOutline(x, y, width, height, FastColor.ARGB32.color(255, 0, 0, 0))
-    }
+	}
 
-    fun add(widget: I) {
-        items.add(widget)
-        addWidget(widget)
-        initItems()
-    }
+	fun add(widget: I) {
+		items.add(widget)
+		children.add(widget)
+	}
 
-    fun add(widgets: List<I>) {
-        items.addAll(widgets)
-        widgets.forEach(this::addWidget)
-        initItems()
-    }
+	fun add(widgets: List<I>) {
+		items.addAll(widgets)
+		children.addAll(widgets)
+	}
 
-    fun clear() {
-        items.forEach { removeWidget(it) }
-        items.clear()
-    }
+	fun remove(widget: I) {
+		items.remove(widget)
+		children.remove(widget)
+	}
 
-    fun <T : Comparable<T>> resort(sorting: Sorting, extractor: (I) -> T) {
-        val resortedItems = items.sortedWith { firstWidget, secondWidget ->
-            compareValues(extractor.invoke(firstWidget), extractor.invoke(secondWidget)) * sorting.multiplier
-        }
-        items.clear()
-        add(resortedItems)
-    }
+	fun clear() {
+		items.clear()
+		children.clear()
+	}
 
-    fun applyToAll(consumer: (I) -> Unit) {
-        items.forEach(consumer)
-    }
+	fun <T : Comparable<T>> resort(sorting: Sorting, extractor: (I) -> T) {
+		val resortedItems = items.sortedWith { firstWidget, secondWidget ->
+			compareValues(extractor.invoke(firstWidget), extractor.invoke(secondWidget)) * sorting.multiplier
+		}
+		items.clear()
+		add(resortedItems)
+	}
 
-    fun isEmpty() = items.isEmpty()
+	fun applyToAll(consumer: (I) -> Unit) {
+		items.forEach(consumer)
+	}
 
-    open fun initItems() {
-        val contentWidth = columns * columnWidth + (columns - 1) * horizontalGap
-        val padding = (width - contentWidth) / 2
-        var initializedHeight = 0
-        for (i in 0 until rows) {
-            var rowHeight = 0
-            for (j in 0 until columns) {
-                val index = i * columns + j
-                if (items.size <= index) break
-                val item = items[index]
-                item.x = (padding + x + j * (columnWidth + horizontalGap)).toInt()
-                item.y = y + initializedHeight
-                rowHeight = max(rowHeight, item.height)
-            }
-            initializedHeight += (rowHeight + verticalGap).toInt()
-        }
-        height = initializedHeight
-    }
+	fun isEmpty() = items.isEmpty()
 
-    override fun setY(i: Int) {
-        val delta = y - i
-        super.setY(i)
-        items.forEach { it.y -= delta }
-    }
+	open fun calculateItems() {
+		val contentWidth = columns * columnWidth + (columns - 1) * horizontalGap
+		val padding = (width - contentWidth) / 2
+		var calculatedHeight = 0
+		for (i in 0 until rows) {
+			var rowHeight = 0
+			for (j in 0 until columns) {
+				val index = i * columns + j
+				if (items.size <= index) break
+				val item = items[index]
+				item.x = (padding + x + j * (columnWidth + horizontalGap)).toInt()
+				item.y = y + calculatedHeight
+				rowHeight = max(rowHeight, item.height)
+			}
+			calculatedHeight += (rowHeight + verticalGap).toInt()
+		}
+		height = calculatedHeight
+	}
 
-    override fun setX(i: Int) {
-        val delta = x - i
-        super.setX(i)
-        items.forEach { it.x -= delta }
-    }
-
-    override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean {
-        if (!clicked(pMouseX, pMouseY)) return false
-        return super.mouseClicked(pMouseX, pMouseY, pButton)
-    }
+	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean {
+		items.forEach { it.isFocused = false }
+		return super.mouseClicked(pMouseX, pMouseY, pButton)
+	}
 }

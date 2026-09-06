@@ -1,52 +1,64 @@
 package com.metacontent.cobblenav.config
 
+import com.cobblemon.mod.common.util.removeIf
+import com.metacontent.cobblenav.spawndata.collector.Collector
+
 class CobblenavConfig : Config<CobblenavConfig>() {
-    @Transient
-    override val fileName = "server-config.json"
+	companion object {
+		private val collectors = mutableMapOf<String, Boolean>()
 
-    val hideUnknownPokemon = false
-    val showPokemonTooltips = true
-    val hideUnknownPokemonTooltips = false
-    val hideNaturalBlockConditions = true
-    val syncLabelsWithClient = true
-    val checkSpawnWidth = 8
-    val checkSpawnHeight = 16
-    val searchAreaWidth = 200.0
-    val searchAreaHeight = 200.0
-    val pokemonFeatureWeights = FeatureWeights.BASE
-    val collectableConditions = mutableMapOf(
-        "biomes"                 to true,
-        "coordinates"           to true,
-        "light"                 to true,
-        "moon_phase"            to true,
-        "sky_light"             to true,
-        "slime_chunk"           to true,
-        "structures"            to true,
-        "time_range"            to true,
-        "under_open_sky"        to true,
-        "weather"               to true,
-        "y_height"              to true,
-        "depth_submerged"       to true,
-        "depth_surface"         to true,
-        "fluid_submerged"       to true,
-        "fluid_surface"         to true,
-        "bait"                  to true,
-        "lure_level"            to true,
-        "rod"                   to true,
-        "rod_type"              to true,
-        "area_type_block"       to true,
-        "grounded_type_block"   to true,
-        "seafloor_type_block"   to true,
-        "fishing_block"         to true,
-        "count"                 to true,
-        "streak"                to true,
-        "key_item"              to false,
-        "items"                 to false,
-        "pokemon"               to false,
-        "zygarde_cube_charge"   to false
-    )
+		fun addCollector(collectorName: String, defaultValue: Boolean = true) {
+			collectors[collectorName] = defaultValue
+		}
 
-    override fun applyToLoadedConfig(default: CobblenavConfig) {
-        default.collectableConditions.forEach { this.collectableConditions.putIfAbsent(it.key, it.value) }
-    }
+		fun containsCollector(collectorName: String): Boolean = collectors.containsKey(collectorName)
+	}
+
+	@Transient
+	override val fileName = "server-config.json"
+
+	var hideUnknownPokemon = false
+	var hideConditionsOfUnknownSpawns = true
+	var hideNaturalBlockConditions = true
+	var percentageForKnownHerd = 0.5f
+	var syncLabelsWithClient = true
+	var syncEvYieldWithClient = true
+	var searchAreaWidth = 128.0
+	var searchAreaHeight = 128.0
+	var pokemonFeatureWeights = FeatureWeights.BASE
+	val collectableConditions = mutableMapOf<String, Boolean>()
+
+	override fun applyToLoadedConfig(default: CobblenavConfig) {
+		collectors.forEach { this.collectableConditions.putIfAbsent(it.key, it.value) }
+		this.collectableConditions.removeIf { !collectors.keys.contains(it.key) }
+	}
+
+	fun collectorEnabled(collector: Collector<*>): Boolean = collectableConditions.contains(collector.name)
+
+	override fun options(): List<ConfigOption<*>> = listOf(
+		ConfigOption.BooleanOption("hideUnknownPokemon", { hideUnknownPokemon }, { hideUnknownPokemon = it }, false),
+		ConfigOption.BooleanOption(
+			"hideConditionsOfUnknownSpawns",
+			{ hideConditionsOfUnknownSpawns },
+			{ hideConditionsOfUnknownSpawns = it },
+			true,
+		),
+		ConfigOption.BooleanOption(
+			"hideNaturalBlockConditions",
+			{ hideNaturalBlockConditions },
+			{ hideNaturalBlockConditions = it },
+			true,
+		),
+		ConfigOption.FloatOption(
+			"percentageForKnownHerd",
+			{ percentageForKnownHerd },
+			{ percentageForKnownHerd = it },
+			0f..1f,
+			0.5f,
+		),
+		ConfigOption.BooleanOption("syncLabelsWithClient", { syncLabelsWithClient }, { syncLabelsWithClient = it }, true),
+		ConfigOption.BooleanOption("syncEvYieldWithClient", { syncEvYieldWithClient }, { syncEvYieldWithClient = it }, true),
+		ConfigOption.DoubleOption("searchAreaWidth", { searchAreaWidth }, { searchAreaWidth = it }, 128.0),
+		ConfigOption.DoubleOption("searchAreaHeight", { searchAreaHeight }, { searchAreaHeight = it }, 128.0),
+	)
 }
