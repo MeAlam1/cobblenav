@@ -6,6 +6,7 @@
 ### Changes
 
 ### Fixes
+* Fix concurrent modification during spawn catalogue encoding
 
 ### Developer
 

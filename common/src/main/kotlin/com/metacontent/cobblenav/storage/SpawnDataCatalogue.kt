@@ -84,5 +84,5 @@ class SpawnDataCatalogue(override val uuid: UUID, spawnDetailIds: MutableSet<Str
 		}
 	}
 
-	override fun toClientData() = ClientSpawnDataCatalogue(spawnDetailIds)
+	override fun toClientData() = ClientSpawnDataCatalogue(spawnDetailIds.toMutableSet())
 }
