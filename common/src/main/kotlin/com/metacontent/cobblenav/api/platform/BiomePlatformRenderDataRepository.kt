@@ -8,7 +8,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.metacontent.cobblenav.Cobblenav
 import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.cobblenavResource
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.packs.PackType

@@ -13,7 +13,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.metacontent.cobblenav.Cobblenav
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.cobblenavResource
 import com.mojang.datafixers.util.Either
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag

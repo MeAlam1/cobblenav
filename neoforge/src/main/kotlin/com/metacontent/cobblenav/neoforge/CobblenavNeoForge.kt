@@ -1,8 +1,8 @@
 package com.metacontent.cobblenav.neoforge
 
 import com.metacontent.cobblenav.*
+import com.metacontent.cobblenav.cobblenavResource
 import com.metacontent.cobblenav.neoforge.client.CobblenavNeoForgeClient
-import com.metacontent.cobblenav.util.cobblenavResource
 import com.mojang.brigadier.arguments.ArgumentType
 import net.minecraft.commands.synchronization.ArgumentTypeInfo
 import net.minecraft.commands.synchronization.ArgumentTypeInfos

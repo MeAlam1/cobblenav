@@ -10,7 +10,7 @@ import com.cobblemon.mod.common.util.readString
 import com.cobblemon.mod.common.util.writeIdentifier
 import com.cobblemon.mod.common.util.writeString
 import com.metacontent.cobblenav.Cobblenav
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.cobblenavResource
 import com.metacontent.cobblenav.util.getEvYield
 import com.metacontent.cobblenav.util.setEvYield
 import net.minecraft.network.RegistryFriendlyByteBuf

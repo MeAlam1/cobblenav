@@ -1,9 +1,9 @@
 package com.metacontent.cobblenav.networking.packet.client
 
+import com.metacontent.cobblenav.cobblenavResource
 import com.metacontent.cobblenav.networking.packet.CobblenavNetworkPacket
 import com.metacontent.cobblenav.spawndata.CheckedSpawnData
 import com.metacontent.cobblenav.util.WeightedBucket
-import com.metacontent.cobblenav.util.cobblenavResource
 import net.minecraft.network.RegistryFriendlyByteBuf
 
 class SpawnMapPacket(val weightedBucket: WeightedBucket, val spawnDataList: List<CheckedSpawnData>) : CobblenavNetworkPacket<SpawnMapPacket> {

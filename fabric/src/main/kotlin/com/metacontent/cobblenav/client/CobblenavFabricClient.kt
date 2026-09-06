@@ -1,12 +1,10 @@
 package com.metacontent.cobblenav.client
 
 import com.metacontent.cobblenav.CobblenavFabricNetworkManager
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.cobblenavResource
 import net.fabricmc.api.ClientModInitializer
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.resources.PreparableReloadListener
 import net.minecraft.server.packs.resources.ResourceManager

@@ -4,8 +4,8 @@ import com.cobblemon.mod.common.util.readItemStack
 import com.cobblemon.mod.common.util.readString
 import com.cobblemon.mod.common.util.writeItemStack
 import com.cobblemon.mod.common.util.writeString
+import com.metacontent.cobblenav.cobblenavResource
 import com.metacontent.cobblenav.networking.packet.CobblenavNetworkPacket
-import com.metacontent.cobblenav.util.cobblenavResource
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
