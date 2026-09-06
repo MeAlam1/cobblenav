@@ -1,0 +1,94 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["Bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for making a Bug Report! Please provide as much detail as possible to help us diagnose and resolve the issue.
+  - type: checkboxes
+    attributes:
+      label: Bug Report rule checks (please read carefully)
+      options:
+        - label: "I have checked that my problem <a href='https://github.com/MeAlam1/cobblenav/issues' target='_blank'>is not already reported</a>"
+          required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: |
+        Please describe the bug in as much detail as possible.
+    validations:
+      required: true
+  - type: textarea
+    id: how-to-reproduce
+    attributes:
+      label: How to reproduce this issue?
+      description: Explain the steps to reproduce the bug. A clear description will help us find and fix the issue faster. If possible, include screenshots.
+      placeholder: |
+        Step 1:
+        Step 2:
+        Step 3:
+        ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: Describe what you expected to happen.
+  - type: textarea
+    id: steps-already-taken
+    attributes:
+      label: Steps Already Taken
+      description: What troubleshooting steps or workarounds have you attempted?
+  - type: textarea
+    id: logs-and-error-messages
+    attributes:
+      label: Logs and Error Messages
+      description: Provide any relevant logs or error messages. This information helps us understand the issue better.
+  - type: dropdown
+    id: modloader-version
+    attributes:
+      label: Mod Loader
+      description: Which Mod Loader are you using?
+      options:
+        - "NeoForge"
+        - "Fabric"
+    validations:
+      required: true
+  - type: input
+    id: library-version
+    attributes:
+      label: Pokenav version
+      description: Which version of Pokenav are you using when the bug occurred?
+    validations:
+      required: true
+  - type: dropdown
+    id: minecraft-version
+    attributes:
+      label: Minecraft Version
+      description: Which Minecraft version did the bug occur on?
+      options:
+        - "1.20.1"
+        - "1.21.1"
+    validations:
+      required: true
+  - type: textarea
+    id: which-other-mods
+    attributes:
+      label: Which other mods?
+      description: List any other mods you have installed. This can help us determine if there is an interaction with another mod. (Outside of Cobblemon)
+  - type: input
+    id: operating-system
+    attributes:
+      label: Operating System
+      description: What operating system are you using?
+    validations:
+      required: true
+  - type: textarea
+    id: more-information
+    attributes:
+      label: More information
+      description: Provide any additional information that might be relevant to the issue.

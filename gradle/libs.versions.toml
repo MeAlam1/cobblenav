@@ -1,0 +1,69 @@
+[versions]
+# Minecraft
+minecraft = "1.21.1"
+
+# Cobblemon
+cobblemon = "1.8.0+1.21.1"
+
+# Fabric
+fabric-loader = "0.17.2"
+fabric-api = "0.116.6+1.21.1"
+fabric-kotlin = "1.13.6+kotlin.2.2.20"
+mod-menu = "11.0.3"
+
+# NeoForge
+neoforge = "21.1.182"
+kotlinforforge = "5.10.0"
+
+# Plugins
+architectury-loom = "1.11-SNAPSHOT"
+architectury-plugin = "3.4-SNAPSHOT"
+shadow = "8.1.1"
+kotlin = "2.2.20"
+spotless = "8.2.0"
+
+[libraries]
+# Minecraft
+minecraft = { module = "net.minecraft:minecraft", version.ref = "minecraft" }
+cobblemon = { module = "com.cobblemon:mod", version.ref = "cobblemon" }
+
+# Fabric
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
+fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+fabric-kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric-kotlin" }
+fabric-cobblemon = { module = "com.cobblemon:fabric", version.ref = "cobblemon" }
+mod-menu = { group = "com.terraformersmc", name = "modmenu", version.ref = "mod-menu" }
+
+# NeoForge
+neoforge = { module = "net.neoforged:neoforge", version.ref = "neoforge" }
+neoforge-kotlin = { module = "thedarkcolour:kotlinforforge-neoforge", version.ref = "kotlinforforge" }
+neoforge-cobblemon = { module = "com.cobblemon:neoforge", version.ref = "cobblemon" }
+
+# Plugins
+shadow = { module = "com.github.johnrengelman:shadow", version.ref = "shadow" }
+kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+spotless-gradle = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
+loom = { group = "dev.architectury", name = "architectury-loom", version.ref = "architectury-loom" }
+architectury = { group = "architectury-plugin", name = "architectury-plugin.gradle.plugin", version.ref = "architectury-plugin" }
+
+[plugins]
+cobblenav-convention-base = { id = "cobblenav.base-convention" }
+cobblenav-convention-common = { id = "cobblenav.common-convention" }
+
+[bundles]
+formatting = [ "spotless-gradle"]
+
+# Common
+common = ["cobblemon"]
+common-compileOnly = []
+common-runtimeOnly = []
+
+# Fabric
+fabric = ["fabric-kotlin", "fabric-cobblemon"]
+fabric-compileOnly = ["mod-menu"]
+fabric-runtimeOnly = ["mod-menu"]
+
+# NeoForge
+neoforge = ["neoforge-kotlin", "neoforge-cobblemon"]
+neoforge-compileOnly = []
+neoforge-runtimeOnly = []

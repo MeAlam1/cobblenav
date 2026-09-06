@@ -6,10 +6,10 @@ import com.metacontent.cobblenav.networking.packet.client.LocationScreenInitData
 import net.minecraft.client.Minecraft
 
 object LocationScreenInitDataHandler : ClientNetworkPacketHandler<LocationScreenInitDataPacket> {
-    override fun handle(packet: LocationScreenInitDataPacket, client: Minecraft) {
-        val screen = client.screen
-        if (screen is LocationScreen) {
-            screen.receiveInitData(packet.buckets, packet.biome)
-        }
-    }
+	override fun handle(packet: LocationScreenInitDataPacket, client: Minecraft) {
+		val screen = client.screen
+		if (screen is LocationScreen) {
+			screen.receiveInitData(packet.buckets, packet.biome)
+		}
+	}
 }

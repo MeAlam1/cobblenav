@@ -14,11 +14,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PokerodItem.class)
 public class PokeRodItemMixin {
-    @Inject(method = "use", at = @At("HEAD"), cancellable = true)
-    protected void injectUse(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir) {
-        if (user.getOffhandItem().is(CobblenavItems.INSTANCE.getFISHINGNAV()) && user.isShiftKeyDown()) {
-            cir.setReturnValue(InteractionResultHolder.pass(user.getItemInHand(hand)));
-            cir.cancel();
-        }
-    }
+
+	@Inject(method = "use", at = @At("HEAD"), cancellable = true)
+	protected void injectUse(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir) {
+		if (user.getOffhandItem().is(CobblenavItems.INSTANCE.getFISHINGNAV()) && user.isShiftKeyDown()) {
+			cir.setReturnValue(InteractionResultHolder.pass(user.getItemInHand(hand)));
+			cir.cancel();
+		}
+	}
 }

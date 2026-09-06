@@ -6,7 +6,7 @@ import com.metacontent.cobblenav.networking.packet.client.OpenFishingnavPacket
 import net.minecraft.client.Minecraft
 
 object OpenFishingnavHandler : ClientNetworkPacketHandler<OpenFishingnavPacket> {
-    override fun handle(packet: OpenFishingnavPacket, client: Minecraft) {
-        client.setScreen(FishingnavScreen(packet.os))
-    }
+	override fun handle(packet: OpenFishingnavPacket, client: Minecraft) {
+		client.setScreen(FishingnavScreen(packet.os))
+	}
 }

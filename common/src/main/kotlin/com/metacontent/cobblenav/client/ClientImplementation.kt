@@ -1,4 +1,3 @@
 package com.metacontent.cobblenav.client
 
-interface ClientImplementation {
-}
+interface ClientImplementation

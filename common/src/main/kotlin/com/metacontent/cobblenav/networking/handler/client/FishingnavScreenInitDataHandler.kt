@@ -6,7 +6,12 @@ import com.metacontent.cobblenav.networking.packet.client.FishingnavScreenInitDa
 import net.minecraft.client.Minecraft
 
 object FishingnavScreenInitDataHandler : ClientNetworkPacketHandler<FishingnavScreenInitDataPacket> {
-    override fun handle(packet: FishingnavScreenInitDataPacket, client: Minecraft) {
-        (client.screen as? FishingnavScreen)?.receiveInitData(packet.buckets, packet.pokeBall, packet.lineColor, packet.baitItem)
-    }
+	override fun handle(packet: FishingnavScreenInitDataPacket, client: Minecraft) {
+		(client.screen as? FishingnavScreen)?.receiveInitData(
+			packet.buckets,
+			packet.pokeBall,
+			packet.lineColor,
+			packet.baitItem,
+		)
+	}
 }

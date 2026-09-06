@@ -6,39 +6,41 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 
 open class IconButton(
-    pX: Int = 0, pY: Int = 0,
-    pWidth: Int = 0, pHeight: Int = 0,
-    disabled: Boolean = false,
-    action: (PokenavButton) -> Unit,
-    var texture: ResourceLocation?,
-    message: Component = Component.empty(),
-    private val textureWidth: Int = pWidth,
-    private val textureHeight: Int = pHeight,
-    private val uOffset: Int = 0,
-    private val vOffset: Int = 0
+	pX: Int = 0,
+	pY: Int = 0,
+	pWidth: Int = 0,
+	pHeight: Int = 0,
+	disabled: Boolean = false,
+	action: (PokenavButton) -> Unit,
+	var texture: ResourceLocation?,
+	message: Component = Component.empty(),
+	private val textureWidth: Int = pWidth,
+	private val textureHeight: Int = pHeight,
+	private val uOffset: Int = 0,
+	private val vOffset: Int = 0,
 ) : PokenavButton(pX, pY, pWidth, pHeight, message, disabled, action) {
-    override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
-        val poseStack = guiGraphics.pose()
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+		val poseStack = guiGraphics.pose()
 
-        var rgb = 1f
-        if (disabled) {
-            rgb -= 0.4f
-        } else if (isHovered(i, j)) {
-            rgb += 0.1f
-        }
+		var rgb = 1f
+		if (disabled) {
+			rgb -= 0.4f
+		} else if (isHovered(i, j)) {
+			rgb += 0.1f
+		}
 
-        blitk(
-            poseStack, texture,
-            x, y,
-            width = width,
-            height = height,
-            textureWidth = textureWidth,
-            textureHeight = textureHeight,
-            uOffset = uOffset,
-            vOffset = vOffset,
-            red = rgb,
-            green = rgb,
-            blue = rgb
-        )
-    }
+		blitk(
+			poseStack, texture,
+			x, y,
+			width = width,
+			height = height,
+			textureWidth = textureWidth,
+			textureHeight = textureHeight,
+			uOffset = uOffset,
+			vOffset = vOffset,
+			red = rgb,
+			green = rgb,
+			blue = rgb,
+		)
+	}
 }
