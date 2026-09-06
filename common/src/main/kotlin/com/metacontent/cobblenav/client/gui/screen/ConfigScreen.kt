@@ -16,7 +16,7 @@ class ConfigScreen<T : Config<T>>(
 	private val config: T,
 	private val parent: Screen?,
 ) : Screen(
-	lang("edit.context", "${idPrefix(config)}.title"),
+	lang("edit.context", "Config"),
 ) {
 
 	companion object {
@@ -38,25 +38,21 @@ class ConfigScreen<T : Config<T>>(
 		private const val SCROLLBAR_WIDTH = 6
 		private const val SCROLLBAR_GAP = 8
 		private const val MIN_THUMB_HEIGHT = 32
-
-		private fun idPrefix(config: Config<*>): String = config.fileName
-			.removeSuffix(".json")
-			.replace('-', '_')
-
-		private fun textPrefix(config: Config<*>): String = idPrefix(config)
-			.replace('_', ' ')
 	}
 
 	private class Row(
-		val option: ConfigOption<*>,
 		val label: Component,
 		val widget: AbstractWidget,
 		val resetButton: Button,
 		val isAtBaseValue: () -> Boolean,
-		val refreshWidget: () -> Unit,
 	) {
 		var visible: Boolean = true
 	}
+
+	private val idPrefix: String = config.fileName
+		.removeSuffix(".json")
+		.replace('-', '_')
+	private val textPrefix: String = idPrefix.replace('_', ' ')
 
 	private lateinit var layout: HeaderAndFooterLayout
 	private lateinit var searchEdit: EditBox
@@ -85,6 +81,19 @@ class ConfigScreen<T : Config<T>>(
 	private val listBottom: Int
 		get() = height - FOOTER_HEIGHT - PADDING
 
+	private val visibleRows: List<Row>
+		get() = rows.filter { it.visible }
+
+	private val trackHeight: Int
+		get() = listBottom - listTop
+
+	private val contentHeight: Int
+		get() = visibleRows.size * SLOT_HEIGHT
+
+	private fun thumbHeight(trackHeight: Int, contentHeight: Int): Double =
+		(trackHeight.toDouble() * trackHeight / contentHeight)
+			.coerceAtLeast(MIN_THUMB_HEIGHT.toDouble())
+
 	override fun init() {
 		super.init()
 		rows.clear()
@@ -104,7 +113,7 @@ class ConfigScreen<T : Config<T>>(
 
 		searchLayout.addChild(
 			StringWidget(
-				lang("search.context", textPrefix(config)),
+				lang("search.context", textPrefix),
 				font,
 			),
 			searchLayout.newCellSettings().alignHorizontallyCenter(),
@@ -116,7 +125,7 @@ class ConfigScreen<T : Config<T>>(
 			0,
 			SLOT_WIDTH / 2,
 			SLOT_HEIGHT,
-			lang("search.context", textPrefix(config)),
+			lang("search.context", textPrefix),
 		).also { editBox ->
 			editBox.height = WIDGET_HEIGHT
 			editBox.setMaxLength(250)
@@ -137,7 +146,7 @@ class ConfigScreen<T : Config<T>>(
 		//endregion
 		//region Done Button
 		doneButton = Button.builder(CommonComponents.GUI_DONE) {
-			onDone()
+			onClose()
 		}
 			.pos(
 				width / 2 - SLOT_WIDTH / 4,
@@ -169,24 +178,16 @@ class ConfigScreen<T : Config<T>>(
 	private fun buildRows(option: ConfigOption<*>): List<Row> = when (option) {
 		is ConfigOption.BooleanOption ->
 			listOf(
-				createScalarRow(
-					option = option,
-					label = guiLang("${idPrefix(config)}.option.${option.name}"),
-					widgetBuilder = { onChanged ->
-						buildBooleanWidget(option, onChanged)
-					},
-				),
+				createScalarRow(option) { onChanged ->
+					buildBooleanWidget(option, onChanged)
+				},
 			)
 
 		is ConfigOption.EnumOption<*> ->
 			listOf(
-				createScalarRow(
-					option = option,
-					label = guiLang("${idPrefix(config)}.option.${option.name}"),
-					widgetBuilder = { onChanged ->
-						buildEnumWidget(option, onChanged)
-					},
-				),
+				createScalarRow(option) { onChanged ->
+					buildEnumWidget(option, onChanged)
+				},
 			)
 
 		is ConfigOption.IntOption -> listOf(buildParsedTextRow(option, String::toIntOrNull))
@@ -201,15 +202,10 @@ class ConfigScreen<T : Config<T>>(
 			listOf(
 				createTextRow(
 					option = option,
-					label = guiLang("${idPrefix(config)}.option.${option.name}"),
 					initialValue = option.get(),
 					isValid = { true },
-					parseAndSet = { text ->
-						option.set(text)
-					},
-					refresh = { editBox ->
-						editBox.value = option.get()
-					},
+					parseAndSet = { text -> option.set(text) },
+					refresh = { editBox -> editBox.value = option.get() },
 				),
 			)
 	}
@@ -219,45 +215,30 @@ class ConfigScreen<T : Config<T>>(
 		parse: (String) -> T?,
 	): Row = createTextRow(
 		option = option,
-		label = guiLang("${idPrefix(config)}.option.${option.name}"),
 		initialValue = option.get().toString(),
 		isValid = { parse(it) != null },
-		parseAndSet = { text ->
-			parse(text)?.let(option::set)
-		},
-		refresh = { editBox ->
-			editBox.value = option.get().toString()
-		},
+		parseAndSet = { text -> parse(text)?.let(option::set) },
+		refresh = { editBox -> editBox.value = option.get().toString() },
 	)
 
-	private fun createScalarRow(
+	private fun finishRow(
 		option: ConfigOption<*>,
-		label: Component,
-		widgetBuilder: (onChanged: () -> Unit) -> AbstractWidget,
+		widget: AbstractWidget,
+		refresh: () -> Unit,
 	): Row {
 		lateinit var row: Row
 
-		val widget = widgetBuilder {
-			updateResetState(row)
-		}
-
 		val resetButton = createResetButton {
 			option.reset()
-			row.refreshWidget()
+			refresh()
 			updateResetState(row)
 		}
 
 		row = Row(
-			option = option,
-			label = label,
+			label = guiLang("$idPrefix.option.${option.name}"),
 			widget = widget,
 			resetButton = resetButton,
-			isAtBaseValue = {
-				option.isAtBaseValue()
-			},
-			refreshWidget = {
-				refreshWidget(widget, option)
-			},
+			isAtBaseValue = option::isAtBaseValue,
 		)
 
 		updateResetState(row)
@@ -265,9 +246,18 @@ class ConfigScreen<T : Config<T>>(
 		return row
 	}
 
+	private fun createScalarRow(
+		option: ConfigOption<*>,
+		widgetBuilder: (onChanged: () -> Unit) -> AbstractWidget,
+	): Row {
+		lateinit var row: Row
+		val widget = widgetBuilder { updateResetState(row) }
+		row = finishRow(option, widget) { refreshWidget(widget, option) }
+		return row
+	}
+
 	private fun <V : Any> createTextRow(
 		option: ConfigOption<V>,
-		label: Component,
 		initialValue: String,
 		isValid: (String) -> Boolean,
 		parseAndSet: (String) -> Unit,
@@ -280,44 +270,17 @@ class ConfigScreen<T : Config<T>>(
 			isValid = isValid,
 			apply = { text ->
 				parseAndSet(text)
-
-				if (isValid(text)) {
-					updateResetState(row)
-				}
+				if (isValid(text)) updateResetState(row)
 			},
 		)
 
-		val resetButton = createResetButton {
-			option.reset()
-			refresh(editBox)
-			updateResetState(row)
-		}
-
-		row = Row(
-			option = option,
-			label = label,
-			widget = editBox,
-			resetButton = resetButton,
-			isAtBaseValue = {
-				option.isAtBaseValue()
-			},
-			refreshWidget = {
-				refresh(editBox)
-			},
-		)
-
-		updateResetState(row)
-
+		row = finishRow(option, editBox) { refresh(editBox) }
 		return row
 	}
 
 	private fun createResetButton(
 		onReset: () -> Unit,
-	): Button = Button.builder(
-		lang(
-			"reset",
-		),
-	) {
+	): Button = Button.builder(lang("reset")) {
 		onReset()
 	}
 		.bounds(
@@ -390,10 +353,10 @@ class ConfigScreen<T : Config<T>>(
 
 		editBox.setFilter { text ->
 			text.isEmpty() ||
-				text == "-" ||
-				text == "." ||
-				text == "-." ||
-				isValid(text)
+					text == "-" ||
+					text == "." ||
+					text == "-." ||
+					isValid(text)
 		}
 
 		editBox.setResponder { text ->
@@ -406,13 +369,8 @@ class ConfigScreen<T : Config<T>>(
 		option: ConfigOption<*>,
 	) {
 		when (widget) {
-			is CycleButton<*> -> {
-				refreshCycleButton(widget, option.get())
-			}
-
-			is EditBox -> {
-				widget.value = option.get().toString()
-			}
+			is CycleButton<*> -> refreshCycleButton(widget, option.get())
+			is EditBox -> widget.value = option.get().toString()
 		}
 	}
 
@@ -425,15 +383,11 @@ class ConfigScreen<T : Config<T>>(
 	}
 
 	private fun filterRows(search: String) {
-		val query = search
-			.trim()
-			.lowercase()
+		val query = search.trim().lowercase()
 
 		rows.forEach { row ->
-			val label = row.label.string.lowercase()
-
 			row.visible = query.isEmpty() ||
-				label.contains(query)
+					row.label.string.lowercase().contains(query)
 		}
 
 		scrollAmount = 0.0
@@ -441,36 +395,20 @@ class ConfigScreen<T : Config<T>>(
 	}
 
 	private fun layoutWidgets() {
-		val visibleRows = rows.filter { it.visible }
+		val visible = visibleRows
 
-		val availableHeight =
-			(listBottom - listTop).coerceAtLeast(0)
+		val availableHeight = (listBottom - listTop).coerceAtLeast(0)
 
-		val contentHeight =
-			visibleRows.size * SLOT_HEIGHT
+		maxScroll = (visible.size * SLOT_HEIGHT - availableHeight)
+			.coerceAtLeast(0).toDouble()
 
-		maxScroll = (
-			contentHeight - availableHeight
-			).coerceAtLeast(0).toDouble()
+		scrollAmount = scrollAmount.coerceIn(0.0, maxScroll)
 
-		scrollAmount = scrollAmount.coerceIn(
-			0.0,
-			maxScroll,
-		)
+		val widgetX = boxRight - RESET_SLOT_WIDTH - WIDGET_WIDTH - PADDING
+		val resetX = boxRight - RESET_SLOT_WIDTH
 
-		val widgetX = boxRight -
-			RESET_SLOT_WIDTH -
-			WIDGET_WIDTH -
-			PADDING
-
-		val resetX = boxRight -
-			RESET_SLOT_WIDTH
-
-		visibleRows.forEachIndexed { index, row ->
-			val y =
-				listTop +
-					index * SLOT_HEIGHT -
-					scrollAmount.toInt()
+		visible.forEachIndexed { index, row ->
+			val y = listTop + index * SLOT_HEIGHT - scrollAmount.toInt()
 
 			row.widget.x = widgetX
 			row.widget.y = y
@@ -478,20 +416,16 @@ class ConfigScreen<T : Config<T>>(
 			row.resetButton.x = resetX
 			row.resetButton.y = y
 
-			val visible =
-				y + SLOT_HEIGHT >= listTop &&
-					y <= listBottom
+			val onScreen = y + SLOT_HEIGHT >= listTop && y <= listBottom
 
-			row.widget.visible = visible
-			row.resetButton.visible = visible
+			row.widget.visible = onScreen
+			row.resetButton.visible = onScreen
 		}
 
-		rows
-			.filter { !it.visible }
-			.forEach { row ->
-				row.widget.visible = false
-				row.resetButton.visible = false
-			}
+		rows.filter { !it.visible }.forEach { row ->
+			row.widget.visible = false
+			row.resetButton.visible = false
+		}
 	}
 
 	override fun mouseScrolled(
@@ -501,21 +435,11 @@ class ConfigScreen<T : Config<T>>(
 		scrollY: Double,
 	): Boolean {
 		if (maxScroll <= 0) {
-			return super.mouseScrolled(
-				mouseX,
-				mouseY,
-				scrollX,
-				scrollY,
-			)
+			return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY)
 		}
 
-		scrollAmount = (
-			scrollAmount -
-				scrollY * SLOT_HEIGHT
-			).coerceIn(
-			0.0,
-			maxScroll,
-		)
+		scrollAmount = (scrollAmount - scrollY * SLOT_HEIGHT)
+			.coerceIn(0.0, maxScroll)
 
 		layoutWidgets()
 
@@ -527,20 +451,13 @@ class ConfigScreen<T : Config<T>>(
 		mouseY: Double,
 		button: Int,
 	): Boolean {
-		if (
-			maxScroll > 0 &&
-			isMouseOverScrollbar(mouseX, mouseY)
-		) {
+		if (maxScroll > 0 && isMouseOverScrollbar(mouseX, mouseY)) {
 			isDraggingScrollbar = true
 			updateScrollFromMouse(mouseY)
 			return true
 		}
 
-		return super.mouseClicked(
-			mouseX,
-			mouseY,
-			button,
-		)
+		return super.mouseClicked(mouseX, mouseY, button)
 	}
 
 	override fun mouseDragged(
@@ -555,13 +472,7 @@ class ConfigScreen<T : Config<T>>(
 			return true
 		}
 
-		return super.mouseDragged(
-			mouseX,
-			mouseY,
-			button,
-			dragX,
-			dragY,
-		)
+		return super.mouseDragged(mouseX, mouseY, button, dragX, dragY)
 	}
 
 	override fun mouseReleased(
@@ -574,62 +485,32 @@ class ConfigScreen<T : Config<T>>(
 			return true
 		}
 
-		return super.mouseReleased(
-			mouseX,
-			mouseY,
-			button,
-		)
+		return super.mouseReleased(mouseX, mouseY, button)
 	}
 
 	private fun isMouseOverScrollbar(
 		mouseX: Double,
 		mouseY: Double,
 	): Boolean = mouseX >= scrollbarX &&
-		mouseX <= scrollbarX + SCROLLBAR_WIDTH &&
-		mouseY >= listTop &&
-		mouseY <= listBottom
+			mouseX <= scrollbarX + SCROLLBAR_WIDTH &&
+			mouseY >= listTop &&
+			mouseY <= listBottom
 
 	private fun updateScrollFromMouse(mouseY: Double) {
-		val trackHeight =
-			listBottom - listTop
+		val trackHeight = trackHeight
+		val contentHeight = contentHeight
 
-		val contentHeight =
-			rows.count { it.visible } *
-				SLOT_HEIGHT
+		if (contentHeight <= trackHeight) return
 
-		if (contentHeight <= trackHeight) {
-			return
-		}
+		val thumbHeight = thumbHeight(trackHeight, contentHeight)
+		val maxThumbY = trackHeight - thumbHeight
 
-		val thumbHeight =
-			(
-				trackHeight.toDouble() *
-					trackHeight.toDouble() /
-					contentHeight.toDouble()
-				)
-				.coerceAtLeast(
-					MIN_THUMB_HEIGHT.toDouble(),
-				)
+		if (maxThumbY <= 0) return
 
-		val maxThumbY =
-			trackHeight - thumbHeight
+		val relativeY = (mouseY - listTop - thumbHeight / 2)
+			.coerceIn(0.0, maxThumbY)
 
-		if (maxThumbY <= 0) {
-			return
-		}
-
-		val relativeY = (
-			mouseY -
-				listTop -
-				thumbHeight / 2
-			).coerceIn(
-			0.0,
-			maxThumbY,
-		)
-
-		scrollAmount =
-			(relativeY / maxThumbY) *
-			maxScroll
+		scrollAmount = (relativeY / maxThumbY) * maxScroll
 
 		layoutWidgets()
 	}
@@ -640,28 +521,11 @@ class ConfigScreen<T : Config<T>>(
 		mouseY: Int,
 		partialTick: Float,
 	) {
-		super.render(
-			graphics,
-			mouseX,
-			mouseY,
-			partialTick,
-		)
+		super.render(graphics, mouseX, mouseY, partialTick)
 
-		graphics.enableScissor(
-			boxLeft,
-			listTop,
-			boxRight,
-			listBottom,
-		)
+		graphics.enableScissor(boxLeft, listTop, boxRight, listBottom)
 
-		renderRows(
-			graphics,
-			mouseX,
-			mouseY,
-			partialTick,
-			listTop,
-			listBottom,
-		)
+		renderRows(graphics, mouseX, mouseY, partialTick)
 
 		graphics.disableScissor()
 
@@ -675,24 +539,11 @@ class ConfigScreen<T : Config<T>>(
 		mouseX: Int,
 		mouseY: Int,
 		partialTick: Float,
-		listTop: Int,
-		listBottom: Int,
 	) {
-		val visibleRows =
-			rows.filter { it.visible }
-
 		visibleRows.forEachIndexed { index, row ->
-			val y =
-				listTop +
-					index * SLOT_HEIGHT -
-					scrollAmount.toInt()
+			val y = listTop + index * SLOT_HEIGHT - scrollAmount.toInt()
 
-			if (
-				y + SLOT_HEIGHT < listTop ||
-				y > listBottom
-			) {
-				return@forEachIndexed
-			}
+			if (y + SLOT_HEIGHT < listTop || y > listBottom) return@forEachIndexed
 
 			graphics.drawString(
 				font,
@@ -703,38 +554,18 @@ class ConfigScreen<T : Config<T>>(
 				false,
 			)
 
-			row.widget.render(
-				graphics,
-				mouseX,
-				mouseY,
-				partialTick,
-			)
-
-			row.resetButton.render(
-				graphics,
-				mouseX,
-				mouseY,
-				partialTick,
-			)
+			row.widget.render(graphics, mouseX, mouseY, partialTick)
+			row.resetButton.render(graphics, mouseX, mouseY, partialTick)
 		}
 	}
 
-	private fun drawScrollbar(
-		graphics: GuiGraphics,
-	) {
-		val trackHeight =
-			listBottom - listTop
+	private fun drawScrollbar(graphics: GuiGraphics) {
+		val trackHeight = trackHeight
+		val contentHeight = contentHeight
 
-		val contentHeight =
-			rows.count { it.visible } *
-				SLOT_HEIGHT
+		if (contentHeight <= trackHeight) return
 
-		if (contentHeight <= trackHeight) {
-			return
-		}
-
-		val scrollbarRight =
-			scrollbarX + SCROLLBAR_WIDTH
+		val scrollbarRight = scrollbarX + SCROLLBAR_WIDTH
 
 		graphics.fill(
 			scrollbarX,
@@ -744,29 +575,16 @@ class ConfigScreen<T : Config<T>>(
 			0xFF000000.toInt(),
 		)
 
-		val thumbHeight =
-			(
-				trackHeight.toDouble() *
-					trackHeight.toDouble() /
-					contentHeight.toDouble()
-				)
-				.coerceAtLeast(
-					MIN_THUMB_HEIGHT.toDouble(),
-				)
+		val thumbHeight = thumbHeight(trackHeight, contentHeight)
+		val maxThumbOffset = trackHeight - thumbHeight
 
-		val maxThumbOffset =
-			trackHeight - thumbHeight
+		val thumbOffset = if (maxScroll > 0) {
+			(scrollAmount / maxScroll) * maxThumbOffset
+		} else {
+			0.0
+		}
 
-		val thumbOffset =
-			if (maxScroll > 0) {
-				(scrollAmount / maxScroll) *
-					maxThumbOffset
-			} else {
-				0.0
-			}
-
-		val thumbY =
-			listTop + thumbOffset
+		val thumbY = listTop + thumbOffset
 
 		graphics.fill(
 			scrollbarX,
@@ -783,11 +601,6 @@ class ConfigScreen<T : Config<T>>(
 			(thumbY + thumbHeight).toInt(),
 			-4144960,
 		)
-	}
-
-	private fun onDone() {
-		config.save()
-		minecraft?.setScreen(parent)
 	}
 
 	override fun onClose() {
