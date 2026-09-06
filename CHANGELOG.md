@@ -11,6 +11,7 @@
 * Removed Unused Files
 
 ### Fixes
+* Fix concurrent modification during spawn catalogue encoding
 
 ### Developer
 
