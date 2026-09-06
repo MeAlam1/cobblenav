@@ -1,9 +1,8 @@
 package com.metacontent.cobblenav.spawndata.collector
 
 import com.cobblemon.mod.common.api.spawning.condition.SpawningCondition
-import com.metacontent.cobblenav.util.ModDependant
 
-interface Collector<T : SpawningCondition<*>> : ModDependant {
+interface Collector<T : SpawningCondition<*>> {
 	val name: String
 	val color: Int
 	val conditionClass: Class<T>

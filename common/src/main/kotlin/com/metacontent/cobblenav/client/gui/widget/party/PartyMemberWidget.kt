@@ -10,7 +10,6 @@ import net.minecraft.client.gui.components.Renderable
 import org.joml.Quaternionf
 import org.joml.Vector3f
 
-// TODO: Unused
 class PartyMemberWidget(var x: Int, var y: Int, val width: Int, val height: Int, val pokemon: RenderablePokemon, rotationY: Float) : Renderable {
 
 	private val rotationVec = Vector3f(0f, rotationY, 0f)

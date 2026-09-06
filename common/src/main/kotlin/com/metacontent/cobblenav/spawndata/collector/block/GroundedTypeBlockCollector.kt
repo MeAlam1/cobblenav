@@ -2,7 +2,6 @@ package com.metacontent.cobblenav.spawndata.collector.block
 
 import com.cobblemon.mod.common.api.spawning.condition.GroundedTypeSpawningCondition
 import com.metacontent.cobblenav.spawndata.collector.BlockConditionCollector
-import com.metacontent.cobblenav.util.ModDependency
 import net.minecraft.resources.ResourceLocation
 
 class GroundedTypeBlockCollector : BlockConditionCollector<GroundedTypeSpawningCondition<*>> {
@@ -12,8 +11,6 @@ class GroundedTypeBlockCollector : BlockConditionCollector<GroundedTypeSpawningC
 
 	override val name = NAME
 	override val conditionClass = GroundedTypeSpawningCondition::class.java
-	override var neededInstalledMods: List<ModDependency> = emptyList()
-	override var neededUninstalledMods: List<ModDependency> = emptyList()
 
 	override fun collect(condition: GroundedTypeSpawningCondition<*>): Set<ResourceLocation> = condition.neededBaseBlocks?.toBlockSet() ?: emptySet()
 }

@@ -1,6 +1,5 @@
 package com.metacontent.cobblenav
 
-import com.metacontent.cobblenav.util.ModDependency
 import com.metacontent.cobblenav.util.cobblenavResource
 import com.mojang.brigadier.arguments.ArgumentType
 import net.fabricmc.api.ModInitializer
@@ -9,8 +8,6 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents
 import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
-import net.fabricmc.loader.api.FabricLoader
-import net.fabricmc.loader.api.SemanticVersion
 import net.minecraft.commands.synchronization.ArgumentTypeInfo
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
@@ -21,7 +18,7 @@ import kotlin.reflect.KClass
 
 class CobblenavFabric :
 	ModInitializer,
-	Implementation {
+	CobblenavImplementation {
 	override val networkManager = CobblenavFabricNetworkManager
 
 	override fun onInitialize() {
@@ -70,10 +67,4 @@ class CobblenavFabric :
 			CobblenavLootInjector.inject(id.location(), tableBuilder::withPool)
 		}
 	}
-
-	override fun isModInstalled(mod: ModDependency): Boolean = FabricLoader
-		.getInstance()
-		.getModContainer(mod.id)
-		.map { it.metadata.version.compareTo(SemanticVersion.parse(mod.version)) }
-		.orElse(-1) >= 0
 }

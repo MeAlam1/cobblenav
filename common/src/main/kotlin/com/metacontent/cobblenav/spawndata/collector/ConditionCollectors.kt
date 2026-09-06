@@ -38,13 +38,11 @@ object ConditionCollectors {
 
 	internal fun register(collector: ConditionCollector<*>) {
 		if (collector.isConfigurable() && !Cobblenav.config.collectorEnabled(collector)) return
-		if (!collector.isModDependencySatisfied()) return
 		collectors += collector
 	}
 
 	internal fun register(collector: BlockConditionCollector<*>) {
 		if (collector.isConfigurable() && !Cobblenav.config.collectorEnabled(collector)) return
-		if (!collector.isModDependencySatisfied()) return
 		blockCollectors += collector
 	}
 

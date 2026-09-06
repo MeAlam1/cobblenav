@@ -8,8 +8,10 @@ import java.io.FileReader
 import java.io.FileWriter
 
 abstract class Config<T : Config<T>> {
+
 	companion object {
 		private const val PATH = "config/cobblenav"
+
 		private val GSON: Gson = GsonBuilder()
 			.disableHtmlEscaping()
 			.setPrettyPrinting()
@@ -25,6 +27,7 @@ abstract class Config<T : Config<T>> {
 				if (!configFile.exists()) {
 					configFile.createNewFile()
 				}
+
 				FileReader(configFile).use {
 					GSON.fromJson(it, clazz) ?: default
 				}
@@ -33,7 +36,6 @@ abstract class Config<T : Config<T>> {
 			}.getOrDefault(default)
 
 			config.applyToLoadedConfig(default)
-
 			config.save()
 
 			return config
@@ -44,15 +46,23 @@ abstract class Config<T : Config<T>> {
 
 	fun save() {
 		val configFile = File("$PATH/$fileName")
+
 		try {
-			val fileWriter = FileWriter(configFile)
-			GSON.toJson(this, fileWriter)
-			fileWriter.flush()
-			fileWriter.close()
+			FileWriter(configFile).use {
+				GSON.toJson(this, it)
+			}
 		} catch (e: Exception) {
 			Cobblenav.LOGGER.error(e.message, e)
 		}
 	}
 
+	@Suppress("UNCHECKED_CAST")
+	fun clone(): T = GSON.fromJson(
+		GSON.toJson(this),
+		this.javaClass,
+	) as T
+
 	protected open fun applyToLoadedConfig(default: T) {}
+
+	open fun options(): List<ConfigOption<*>> = emptyList()
 }

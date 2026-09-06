@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.registry
+package com.metacontent.cobblenav.platform
 
 import com.cobblemon.mod.common.platform.PlatformRegistry
 import com.metacontent.cobblenav.util.cobblenavResource
