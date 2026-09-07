@@ -1,6 +1,7 @@
 package com.metacontent.cobblenav.client.gui.config
 
 import com.metacontent.cobblenav.config.ConfigOption
+import com.metacontent.cobblenav.util.I18nUtil.label
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
@@ -49,7 +50,7 @@ class ConfigVariableList(private val idPrefix: String, y: Int, height: Int, scre
 
 	class Entry(private val option: ConfigOption<*>, idPrefix: String) : ContainerObjectSelectionList.Entry<Entry>() {
 
-		private val label: Component = Component.translatable("$idPrefix.option.${option.name}") // TODO
+		private val label: Component = label("$idPrefix.option.${option.name}")
 		private val labelQuery: String = label.string.lowercase()
 
 		private val widget: AbstractWidget = buildWidget()
@@ -114,8 +115,7 @@ class ConfigVariableList(private val idPrefix: String, y: Int, height: Int, scre
 			}
 		}
 
-		private fun buildResetButton(): Button = Button.builder(Component.translatable("reset")) {
-			// TODO
+		private fun buildResetButton(): Button = Button.builder(label("reset")) {
 			option.reset()
 			refreshWidgetValue()
 			updateResetState()

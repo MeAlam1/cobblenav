@@ -1,9 +1,36 @@
 {
-  "category.cobblenav.general": "Cobblenav",
-  "itemGroup.cobblenav.general": "Cobblenav",
-  "tag.item.cobblenav.pokenav": "PokéNav",
-  "tag.item.cobblenav.dyed_pokenav": "Dyed PokéNav",
-  "tag.item.cobblenav.pokefinder": "PokéFinder",
+  "category.cobblenav.general": "CobbleNav",
+  
+  "gui.cobblenav.config.title": "Config Screen",
+  "gui.cobblenav.edit.context": "Edit %1$s",
+  "gui.cobblenav.search.context": "Search %1$s",
+  "gui.cobblenav.reset": "Reset",
+  
+  "gui.cobblenav.client_config.option.screen_scale": "Screen Scale",
+  "gui.cobblenav.client_config.option.enable_blur_effect": "Enable Blur Effect",
+  "gui.cobblenav.client_config.option.send_error_messages_to_chat": "Send Error Messages to Chat",
+  "gui.cobblenav.client_config.option.pokefinder_screen_scale": "PokéFinder Screen Scale",
+  "gui.cobblenav.client_config.option.pokefinder_overlay_scale": "PokéFinder Overlay Scale",
+  "gui.cobblenav.client_config.option.pokefinder_overlay_offset_x": "PokéFinder Overlay Offset X",
+  "gui.cobblenav.client_config.option.pokefinder_overlay_offset_y": "PokéFinder Overlay Offset Y",
+  "gui.cobblenav.client_config.option.enable_display_of_names_on_radar": "Enable Display of Names on Radar",
+  "gui.cobblenav.client_config.option.track_arrow_y_offset": "Track Arrow Y Offset",
+  "gui.cobblenav.client_config.option.max_cloud_number": "Max Cloud Number",
+  "gui.cobblenav.client_config.option.max_cloud_velocity": "Max Cloud Velocity",
+  "gui.cobblenav.client_config.option.enable_item_shaking": "Enable Item Shaking",
+  "gui.cobblenav.client_config.option.enable_multiple_model_items": "Enable Multiple Model Items",
+
+  "gui.cobblenav.server_config.option.hide_unknown_pokemon": "Hide Unknown Pokémon",
+  "gui.cobblenav.server_config.option.hide_conditions_of_unknown_spawns": "Hide Conditions of Unknown Spawns",
+  "gui.cobblenav.server_config.option.hide_natural_block_conditions": "Hide Natural Block Conditions",
+  "gui.cobblenav.server_config.option.percentage_for_known_herd": "Percentage for Known Herd",
+  "gui.cobblenav.server_config.option.sync_labels_with_client": "Sync Labels with Client",
+  "gui.cobblenav.server_config.option.sync_ev_yield_with_client": "Sync EV Yield with Client",
+  "gui.cobblenav.server_config.option.search_area_width": "Search Area Width",
+  "gui.cobblenav.server_config.option.search_area_height": "Search Area Height",
+  
+  "itemGroup.cobblenav.general": "CobbleNav",
+
   "item.cobblenav.pokenav_item": "PokéNav",
   "item.cobblenav.pokefinder_item": "PokéFinder",
   "item.cobblenav.fishingnav_item": "FishingNav",
@@ -32,10 +59,14 @@
   "item.cobblenav.pokenav_item.wanderer": "Wanderer",
   "item.cobblenav.pokenav_item_old": "Old PokéNav",
 
+  "tag.item.cobblenav.pokenav": "PokéNav",
+  "tag.item.cobblenav.dyed_pokenav": "Dyed PokéNav",
+  "tag.item.cobblenav.pokefinder": "PokéFinder",
+  
+  "__comment": "maybe remove?",
   "gui.cobblenav.menu.location.screen": "The location screen displays all possible Pokémon that can spawn in your area, separated by buckets. Tooltips that appear when you hover over a Pokémon display more detailed information, as well as the conditions that affected the chance of spawning in your particular case.",
   "gui.cobblenav.menu.location.bucket_checkbox": "The checkbox at the bottom allows you to decide whether the probability of triggering a bucket should be considered when calculating the odds. If checked, your actual chance of spawning will be displayed. If not, the chance of a Pokémon spawning when a specific bucket is triggered will be shown instead.",
-
-  "__comment": "maybe remove?",
+  
   "gui.cobblenav.support_button.header.location_screen": "Location - Support",
   "gui.cobblenav.support.finder_screen": "The finder screen shows the best Pokémon in the area. Pokémon are ranked by the number of perfect stats, the presence of a hidden ability and egg move, and whether they are shiny. If there is no Pokémon on the screen, then there are none in the area.",
   "gui.cobblenav.support.potential_stars": "The stars that appear on the top left represent the number of perfect stats.",

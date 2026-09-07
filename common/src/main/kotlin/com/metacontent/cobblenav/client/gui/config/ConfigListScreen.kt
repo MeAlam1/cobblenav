@@ -9,7 +9,7 @@ import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
-class ConfigListScreen(private val parent: Screen?, private val entries: List<Entry>) : Screen(label("config_list.title")) {
+class ConfigListScreen(private val parent: Screen?, private val entries: List<Entry>) : Screen(label("config.title")) {
 	class Entry(val label: Component, val open: (parent: Screen) -> Screen)
 
 	companion object {
@@ -21,7 +21,7 @@ class ConfigListScreen(private val parent: Screen?, private val entries: List<En
 			parent,
 			listOf(
 				Entry(
-					Component.translatable("cobblenav.config_list.client"), // TODO
+					label("edit.context", "Client Config"),
 				) { screenParent ->
 					ConfigScreen(
 						Config.load(ClientCobblenavConfig::class.java),
@@ -29,7 +29,7 @@ class ConfigListScreen(private val parent: Screen?, private val entries: List<En
 					)
 				},
 				Entry(
-					Component.translatable("cobblenav.config_list.server"), // TODO
+					label("edit.context", "Server Config"),
 				) { screenParent ->
 					ConfigScreen(
 						Config.load(CobblenavConfig::class.java),
