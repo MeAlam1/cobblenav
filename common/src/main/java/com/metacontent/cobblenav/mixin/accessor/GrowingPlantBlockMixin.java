@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.mixin;
+package com.metacontent.cobblenav.mixin.accessor;
 
 import net.minecraft.world.level.block.GrowingPlantBlock;
 import net.minecraft.world.level.block.GrowingPlantHeadBlock;

@@ -4,7 +4,7 @@ import com.cobblemon.mod.common.api.text.onHover
 import com.cobblemon.mod.common.api.text.red
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
-import com.metacontent.cobblenav.client.gui.screen.LocationScreen
+import com.metacontent.cobblenav.client.gui.pokenav.LocationScreen
 import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.util.tryTranslating
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton

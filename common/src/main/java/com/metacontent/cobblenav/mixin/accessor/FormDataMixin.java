@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.mixin;
+package com.metacontent.cobblenav.mixin.accessor;
 
 import com.cobblemon.mod.common.api.pokemon.stats.Stat;
 import com.cobblemon.mod.common.pokemon.FormData;

@@ -3,7 +3,7 @@ package com.metacontent.cobblenav.client.gui.widget.finder
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
-import com.metacontent.cobblenav.client.gui.screen.PokenavScreen
+import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.client.gui.util.drawBlurredArea
 import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.button.InfoButton

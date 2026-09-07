@@ -1,7 +1,7 @@
 package com.metacontent.cobblenav.item
 
-import com.metacontent.cobblenav.client.gui.screen.PokefinderScreen
-import com.metacontent.cobblenav.cobblenavResource
+import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen
+import com.metacontent.cobblenav.util.cobblenavResource
 import net.minecraft.client.Minecraft
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder

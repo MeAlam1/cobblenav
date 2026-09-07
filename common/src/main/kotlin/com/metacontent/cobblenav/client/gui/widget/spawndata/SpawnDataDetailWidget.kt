@@ -1,8 +1,8 @@
 package com.metacontent.cobblenav.client.gui.widget.spawndata
 
 import com.cobblemon.mod.common.api.gui.blitk
-import com.metacontent.cobblenav.client.gui.screen.PokenavScreen
-import com.metacontent.cobblenav.client.gui.screen.SpawnDataDisplayer
+import com.metacontent.cobblenav.client.gui.SpawnDataDisplayer
+import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.util.pushAndPop
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton

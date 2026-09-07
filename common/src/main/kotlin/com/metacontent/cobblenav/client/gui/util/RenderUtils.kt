@@ -6,10 +6,10 @@ import com.cobblemon.mod.common.entity.PoseType
 import com.cobblemon.mod.common.pokemon.RenderablePokemon
 import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.gui.screen.PokefinderScreen
-import com.metacontent.cobblenav.client.gui.screen.PokenavScreen
-import com.metacontent.cobblenav.cobblenavResource
-import com.metacontent.cobblenav.util.CustomizableBlurEffectProcessor
+import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen
+import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
+import com.metacontent.cobblenav.duck.GameRendererDuck
+import com.metacontent.cobblenav.util.cobblenavResource
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -82,7 +82,7 @@ fun GuiGraphics.cobblenavScissor(
 	(y2 * scale).toInt(),
 )
 
-fun GameRenderer.processBlurEffect(blur: Float, delta: Float) = (this as CustomizableBlurEffectProcessor).`cobblenav$processBlurEffect`(blur, delta)
+fun GameRenderer.processBlurEffect(blur: Float, delta: Float) = (this as GameRendererDuck).`cobblenav$processBlurEffect`(blur, delta)
 
 fun getTimeString(period: IntRange): String = String.format("%s - %s", getTimeString(period.first.toLong()), getTimeString(period.last.toLong()))
 

@@ -1,7 +1,6 @@
 package com.metacontent.cobblenav.client.gui.widget.stateful
 
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
-import com.metacontent.cobblenav.client.gui.screen.PokenavScreen
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.screens.Screen

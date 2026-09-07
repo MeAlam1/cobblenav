@@ -1,6 +1,6 @@
 package com.metacontent.cobblenav.client.gui.widget.button
 
-import com.metacontent.cobblenav.client.gui.screen.PokenavScreen
+import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.util.renderMultilineTextTooltip
 import net.minecraft.client.gui.GuiGraphics

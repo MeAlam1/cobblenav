@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.client.gui.screen
+package com.metacontent.cobblenav.client.gui.pokenav
 
 import com.metacontent.cobblenav.client.gui.widget.StatusBarWidget
 import com.metacontent.cobblenav.client.gui.widget.radialmenu.RadialMenuState
@@ -7,7 +7,6 @@ import com.metacontent.cobblenav.os.PokenavOS
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor
-import java.awt.Color
 
 class MainScreen(os: PokenavOS, makeOpeningSound: Boolean = false, animateOpening: Boolean = false) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Main")) {
 	override val color = FastColor.ARGB32.color(255, 79, 189, 201)
