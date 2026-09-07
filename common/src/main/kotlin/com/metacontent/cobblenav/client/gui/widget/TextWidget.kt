@@ -17,8 +17,7 @@ open class TextWidget(
 	val lineOffset: Int = 1,
 	val centered: Boolean = false,
 	val shadow: Boolean = false,
-	// @TODO: get rid of empty?
-) : SoundlessWidget(x, y, width, 0, Component.empty()) {
+) : SoundlessWidget(x, y, width, 0, text) {
 	val splittedText = splitText(text, width)
 
 	init {

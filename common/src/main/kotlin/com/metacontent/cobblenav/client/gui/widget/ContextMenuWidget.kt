@@ -25,8 +25,7 @@ class ContextMenuWidget(
 	private val centerText: Boolean = true,
 	acceptAction: ((ContextMenuWidget, PokenavButton) -> Unit)? = null,
 	cancelAction: (ContextMenuWidget, PokenavButton) -> Unit,
-	// @TODO: move literal to lang?
-) : SoundlessWidget(pX, pY, WIDTH, 0, Component.literal("Context Menu")) {
+) : SoundlessWidget(pX, pY, WIDTH, 0, text.first()) {
 	companion object {
 		const val WIDTH: Int = 220
 		const val TOP_HEIGHT: Int = 9

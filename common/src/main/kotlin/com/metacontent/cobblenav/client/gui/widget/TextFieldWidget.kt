@@ -22,8 +22,7 @@ class TextFieldWidget(
 	textColor: Int = 0xffffff,
 	private val textureSheet: ResourceLocation,
 	private val onChange: (String) -> Unit,
-	// @TODO: get rid of empty?
-) : SoundlessWidget(x, y, width, height, Component.empty()) {
+) : SoundlessWidget(x, y, width, height, Component.literal(default)) {
 	private val editBox: EditBox =
 		EditBox(
 			Minecraft.getInstance().font,
