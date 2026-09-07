@@ -17,6 +17,7 @@
 * Changed RadarFilterTypes to ResourceLocation in stead of String
     * This allows for better compatibility with other mods that may add their own radar filter types
 * Fixed typing any special characters in the pokefinder filterbar causing a crash
+* Moved SpawnDataHelper inside ServerStartedEvent since it needs the server to exist
 
 ### Fixes
 

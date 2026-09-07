@@ -89,6 +89,8 @@ object Cobblenav {
 				.infiniteIterations()
 				.tracker(ServerTaskTracker)
 				.build()
+
+			SpawnDataHelper.onInit()
 		}
 
 		PlatformEvents.SERVER_STARTED.subscribe { (server) ->
@@ -100,11 +102,21 @@ object Cobblenav {
 			BiomePlatforms.onServerStarted(server)
 		}
 
-		SpawnResultData.register(PokemonSpawnDetail.TYPE, PokemonSpawnResultData::transform, PokemonSpawnResultData::decodeResultData)
-		SpawnResultData.register(PokemonHerdSpawnDetail.TYPE, PokemonHerdSpawnResultData::transform, PokemonHerdSpawnResultData::decodeResultData)
-		SpawnResultData.register(UnknownSpawnResultData.TYPE, UnknownSpawnResultData::transform, UnknownSpawnResultData::decodeResultData)
-
-		SpawnDataHelper.onInit()
+		SpawnResultData.register(
+			PokemonSpawnDetail.TYPE,
+			PokemonSpawnResultData::transform,
+			PokemonSpawnResultData::decodeResultData,
+		)
+		SpawnResultData.register(
+			PokemonHerdSpawnDetail.TYPE,
+			PokemonHerdSpawnResultData::transform,
+			PokemonHerdSpawnResultData::decodeResultData,
+		)
+		SpawnResultData.register(
+			UnknownSpawnResultData.TYPE,
+			UnknownSpawnResultData::transform,
+			UnknownSpawnResultData::decodeResultData,
+		)
 
 		registerCustomProperties()
 	}
