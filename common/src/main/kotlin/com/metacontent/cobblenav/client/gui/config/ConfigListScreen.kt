@@ -11,7 +11,7 @@ import net.minecraft.network.chat.Component
 class ConfigListScreen(
 	private val parent: Screen?,
 	private val entries: List<Entry>,
-) : Screen(Component.translatableWithFallback("cobblenav.config_list.title", "Cobblenav Config")) {
+) : Screen(Component.translatable("cobblenav.config_list.title")) { // TODO
 
 	class Entry(
 		val label: Component,
@@ -27,14 +27,20 @@ class ConfigListScreen(
 			parent,
 			listOf(
 				Entry(
-					Component.translatableWithFallback("cobblenav.config_list.client", "Edit Client Config"),
+					Component.translatable("cobblenav.config_list.client"), // TODO
 				) { screenParent ->
-					ConfigScreen(Config.load(ClientCobblenavConfig::class.java), screenParent)
+					ConfigScreen(
+						Config.load(ClientCobblenavConfig::class.java),
+						screenParent,
+					)
 				},
 				Entry(
-					Component.translatableWithFallback("cobblenav.config_list.server", "Edit Server Config"),
+					Component.translatable("cobblenav.config_list.server"), // TODO
 				) { screenParent ->
-					ConfigScreen(Config.load(CobblenavConfig::class.java), screenParent)
+					ConfigScreen(
+						Config.load(CobblenavConfig::class.java),
+						screenParent,
+					)
 				},
 			),
 		)
@@ -46,7 +52,9 @@ class ConfigListScreen(
 
 		entries.forEachIndexed { index, entry ->
 			addRenderableWidget(
-				Button.builder(entry.label) { minecraft?.setScreen(entry.open(this)) }
+				Button.builder(entry.label) {
+					minecraft?.setScreen(entry.open(this))
+				}
 					.bounds(
 						width / 2 - BUTTON_WIDTH / 2,
 						startY + index * BUTTON_SPACING,
@@ -58,15 +66,35 @@ class ConfigListScreen(
 		}
 
 		addRenderableWidget(
-			Button.builder(Component.translatable("gui.back")) { onClose() }
-				.bounds(width / 2 - BUTTON_WIDTH / 2, height - 28, BUTTON_WIDTH, BUTTON_HEIGHT)
+			Button.builder(Component.translatable("gui.back")) {
+				onClose()
+			}
+				.bounds(
+					width / 2 - BUTTON_WIDTH / 2,
+					height - 28,
+					BUTTON_WIDTH,
+					BUTTON_HEIGHT,
+				)
 				.build(),
 		)
 	}
 
-	override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+	override fun render(
+		graphics: GuiGraphics,
+		mouseX: Int,
+		mouseY: Int,
+		partialTick: Float,
+	) {
 		renderBackground(graphics, mouseX, mouseY, partialTick)
-		graphics.drawCenteredString(font, title, width / 2, 12, 0xFFFFFF)
+
+		graphics.drawCenteredString(
+			font,
+			title,
+			width / 2,
+			12,
+			0xFFFFFF,
+		)
+
 		super.render(graphics, mouseX, mouseY, partialTick)
 	}
 

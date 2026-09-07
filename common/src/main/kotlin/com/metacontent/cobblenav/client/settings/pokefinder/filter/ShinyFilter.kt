@@ -1,10 +1,13 @@
 package com.metacontent.cobblenav.client.settings.pokefinder.filter
 
 import com.cobblemon.mod.common.pokemon.Pokemon
+import com.metacontent.cobblenav.util.cobblenavResource
+import net.minecraft.resources.ResourceLocation
 
+// TODO: Unused
 class ShinyFilter : RadarFilter {
 	companion object {
-		const val TYPE = "shiny"
+		val TYPE: ResourceLocation = cobblenavResource("shiny")
 	}
 
 	override val type = TYPE

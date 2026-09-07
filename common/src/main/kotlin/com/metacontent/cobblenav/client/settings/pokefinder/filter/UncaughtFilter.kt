@@ -3,10 +3,12 @@ package com.metacontent.cobblenav.client.settings.pokefinder.filter
 import com.cobblemon.mod.common.api.pokedex.PokedexEntryProgress
 import com.cobblemon.mod.common.client.CobblemonClient
 import com.cobblemon.mod.common.pokemon.Pokemon
+import com.metacontent.cobblenav.util.cobblenavResource
+import net.minecraft.resources.ResourceLocation
 
 class UncaughtFilter : RadarFilter {
 	companion object {
-		const val TYPE = "uncaught"
+		val TYPE: ResourceLocation = cobblenavResource("uncaught")
 	}
 
 	override val type = TYPE
