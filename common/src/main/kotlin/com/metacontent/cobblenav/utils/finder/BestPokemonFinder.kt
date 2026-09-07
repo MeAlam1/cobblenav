@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.util.finder
+package com.metacontent.cobblenav.utils.finder
 
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.metacontent.cobblenav.Cobblenav

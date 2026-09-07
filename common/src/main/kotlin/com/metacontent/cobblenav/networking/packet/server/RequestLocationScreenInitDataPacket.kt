@@ -1,7 +1,7 @@
 package com.metacontent.cobblenav.networking.packet.server
 
 import com.metacontent.cobblenav.networking.packet.CobblenavNetworkPacket
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.cobblenavResource
 import net.minecraft.network.RegistryFriendlyByteBuf
 
 class RequestLocationScreenInitDataPacket : CobblenavNetworkPacket<RequestLocationScreenInitDataPacket> {

@@ -14,8 +14,8 @@ import com.metacontent.cobblenav.client.gui.widget.finder.FoundPokemonWidget
 import com.metacontent.cobblenav.client.gui.widget.finder.StatsTableWidget
 import com.metacontent.cobblenav.os.PokenavOS
 import com.metacontent.cobblenav.spawndata.SpawnData
-import com.metacontent.cobblenav.util.I18nUtil.label
-import com.metacontent.cobblenav.util.finder.FoundPokemon
+import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.finder.FoundPokemon
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor

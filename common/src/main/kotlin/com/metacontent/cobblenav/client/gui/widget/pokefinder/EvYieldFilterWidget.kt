@@ -16,7 +16,7 @@ import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen.Companio
 import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.button.CheckBox
 import com.metacontent.cobblenav.client.settings.pokefinder.filter.EvYieldFilter
-import com.metacontent.cobblenav.util.I18nUtil.label
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import java.util.*

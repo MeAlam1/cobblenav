@@ -2,7 +2,7 @@ package com.metacontent.cobblenav.spawndata
 
 import com.cobblemon.mod.common.api.net.Encodable
 import com.metacontent.cobblenav.client.gui.util.renderAdvancedTooltip
-import com.metacontent.cobblenav.util.I18nUtil.label
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.RegistryFriendlyByteBuf
 

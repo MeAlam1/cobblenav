@@ -5,7 +5,7 @@ import com.cobblemon.mod.common.api.reactive.SimpleObservable
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.cobblenavResource
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.packs.PackType

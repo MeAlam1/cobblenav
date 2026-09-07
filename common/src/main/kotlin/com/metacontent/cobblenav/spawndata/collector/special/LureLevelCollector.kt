@@ -2,8 +2,8 @@ package com.metacontent.cobblenav.spawndata.collector.special
 
 import com.cobblemon.mod.common.api.spawning.condition.FishingSpawningCondition
 import com.cobblemon.mod.common.api.spawning.detail.SpawnDetail
-import com.metacontent.cobblenav.client.gui.util.literal
 import com.metacontent.cobblenav.spawndata.collector.ConditionCollector
+import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
@@ -18,6 +18,6 @@ class LureLevelCollector : ConditionCollector<FishingSpawningCondition>() {
 
 	override fun collectValues(detail: SpawnDetail, condition: FishingSpawningCondition, player: ServerPlayer): List<MutableComponent>? =
 		formatValueRange(condition.minLureLevel, condition.maxLureLevel)?.let {
-			listOf(literal(it))
+			listOf(Component.literal(it))
 		}
 }

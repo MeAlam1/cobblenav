@@ -6,24 +6,23 @@ import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
 import com.metacontent.cobblenav.client.gui.pokenav.LocationScreen
 import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.tryTranslating
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
+import com.metacontent.cobblenav.utils.I18nUtil.bucket
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 
 class BucketSelectorWidget(
 	x: Int,
 	y: Int,
 	private val parent: LocationScreen,
 	// @TODO: move literal to lang?
-) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Bucket Selector")) {
+) : SoundlessWidget(x, y, WIDTH, HEIGHT, label("bucket_selector")) {
 	companion object {
 		const val WIDTH: Int = 80
 		const val HEIGHT: Int = 16
 		const val BUTTON_WIDTH: Int = 12
 		const val BUTTON_HEIGHT: Int = 10
 		const val SPACE: Int = 1
-		const val BUCKET_KEY_BASE: String = "bucket.cobblenav"
 		val NEXT = gui("button/next_button")
 		val PREV = gui("button/prev_button")
 	}
@@ -54,15 +53,9 @@ class BucketSelectorWidget(
 		nextButton.disabled = parent.bucketIndex >= parent.buckets.size - 1
 		prevButton.render(guiGraphics, i, j, f)
 		val bucketName = parent.currentBucket
-		val pair =
-			tryTranslating(
-				"$BUCKET_KEY_BASE.$bucketName",
-				Component.literal(bucketName),
-			)
-		val text = pair.second
-		if (!pair.first) {
-			text.onHover("$BUCKET_KEY_BASE.$bucketName").red()
-		}
+		val text = bucket(bucketName)
+		text.onHover(text).red()
+
 		drawScaledText(
 			context = guiGraphics,
 			text = text,

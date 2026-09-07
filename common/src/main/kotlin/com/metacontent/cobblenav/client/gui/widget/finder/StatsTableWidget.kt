@@ -9,9 +9,9 @@ import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.button.InfoButton
 import com.metacontent.cobblenav.client.gui.widget.layout.TableView
 import com.metacontent.cobblenav.spawndata.SpawnData
-import com.metacontent.cobblenav.util.I18nUtil.label
-import com.metacontent.cobblenav.util.finder.FoundPokemon
-import com.metacontent.cobblenav.util.finder.PokemonFinder
+import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.finder.FoundPokemon
+import com.metacontent.cobblenav.utils.finder.PokemonFinder
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component

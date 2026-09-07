@@ -9,7 +9,7 @@ import com.metacontent.cobblenav.client.CobblenavClient
 import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen
 import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.duck.GameRendererDuck
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.cobblenavResource
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics

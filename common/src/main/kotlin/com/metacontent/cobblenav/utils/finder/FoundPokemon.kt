@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.util.finder
+package com.metacontent.cobblenav.utils.finder
 
 import com.cobblemon.mod.common.api.net.Encodable
 import com.cobblemon.mod.common.util.readString

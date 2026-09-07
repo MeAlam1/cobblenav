@@ -1,8 +1,7 @@
 package com.metacontent.cobblenav.client.gui.config
 
 import com.metacontent.cobblenav.config.Config
-import com.metacontent.cobblenav.util.I18nUtil.label
-import net.minecraft.client.gui.GuiGraphics
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.components.EditBox
 import net.minecraft.client.gui.components.StringWidget
@@ -10,7 +9,6 @@ import net.minecraft.client.gui.layouts.HeaderAndFooterLayout
 import net.minecraft.client.gui.layouts.LinearLayout
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.CommonComponents
-import net.minecraft.network.chat.Component
 
 class ConfigScreen<T : Config<T>>(private val config: T, private val parent: Screen?) :
 	Screen(

@@ -1,6 +1,6 @@
 package com.metacontent.cobblenav.spawndata
 
-import com.metacontent.cobblenav.util.I18nUtil.label
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.network.RegistryFriendlyByteBuf

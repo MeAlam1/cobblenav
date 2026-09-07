@@ -6,7 +6,7 @@ import com.metacontent.cobblenav.client.gui.util.*
 import com.metacontent.cobblenav.client.gui.widget.layout.TableView
 import com.metacontent.cobblenav.client.gui.widget.layout.scrollable.ScrollableItemWidget
 import com.metacontent.cobblenav.client.gui.widget.spawndata.SpawnDataWidget
-import com.metacontent.cobblenav.util.I18nUtil.bucket
+import com.metacontent.cobblenav.utils.I18nUtil.bucket
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.util.FastColor

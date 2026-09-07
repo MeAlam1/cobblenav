@@ -6,8 +6,8 @@ import com.metacontent.cobblenav.CobblenavImplementation
 import com.metacontent.cobblenav.CobblenavItems
 import com.metacontent.cobblenav.CobblenavLootInjector
 import com.metacontent.cobblenav.neoforge.client.CobblenavNeoForgeClient
-import com.metacontent.cobblenav.util.I18nUtil.itemGroup
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.I18nUtil.itemGroup
+import com.metacontent.cobblenav.utils.cobblenavResource
 import com.mojang.brigadier.arguments.ArgumentType
 import net.minecraft.commands.synchronization.ArgumentTypeInfo
 import net.minecraft.commands.synchronization.ArgumentTypeInfos

@@ -8,7 +8,7 @@ import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
 import com.metacontent.cobblenav.Cobblenav
 import com.metacontent.cobblenav.client.CobblenavClient
 import com.metacontent.cobblenav.client.gui.util.drawPokemon
-import com.metacontent.cobblenav.util.I18nUtil.label
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.Minecraft
 import org.joml.Quaternionf

@@ -2,7 +2,7 @@ package com.metacontent.cobblenav.client.settings.pokefinder
 
 import com.google.gson.*
 import com.metacontent.cobblenav.client.settings.pokefinder.filter.RadarFilter
-import com.metacontent.cobblenav.util.asIdentifier
+import com.metacontent.cobblenav.utils.asIdentifier
 import java.lang.reflect.Type
 
 object RadarFilterAdapter : JsonSerializer<RadarFilter>, JsonDeserializer<RadarFilter> {

@@ -1,7 +1,7 @@
 package com.metacontent.cobblenav
 
-import com.metacontent.cobblenav.util.I18nUtil.itemGroup
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.I18nUtil.itemGroup
+import com.metacontent.cobblenav.utils.cobblenavResource
 import com.mojang.brigadier.arguments.ArgumentType
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry

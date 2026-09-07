@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.util
+package com.metacontent.cobblenav.utils
 
 import com.cobblemon.mod.common.api.pokemon.feature.GlobalSpeciesFeatures
 import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeatureProvider

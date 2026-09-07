@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.util
+package com.metacontent.cobblenav.utils
 
 import com.cobblemon.mod.common.api.conditional.RegistryLikeCondition
 import com.cobblemon.mod.common.api.conditional.RegistryLikeIdentifierCondition
@@ -9,10 +9,8 @@ import com.cobblemon.mod.common.pokemon.RenderablePokemon
 import com.cobblemon.mod.common.pokemon.feature.SeasonFeatureHandler
 import com.metacontent.cobblenav.Cobblenav
 import net.minecraft.core.BlockPos
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.server.level.ServerPlayer
 
 fun cobblenavResource(name: String, namespace: String = Cobblenav.ID): ResourceLocation =
 	ResourceLocation.fromNamespaceAndPath(namespace, name)

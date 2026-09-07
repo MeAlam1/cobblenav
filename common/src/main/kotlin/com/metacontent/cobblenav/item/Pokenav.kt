@@ -6,8 +6,8 @@ import com.metacontent.cobblenav.client.gui.pokenav.FishingnavScreen
 import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.networking.packet.client.OpenPokenavPacket
 import com.metacontent.cobblenav.os.PokenavOS
-import com.metacontent.cobblenav.util.I18nUtil.item
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.I18nUtil.item
+import com.metacontent.cobblenav.utils.cobblenavResource
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component

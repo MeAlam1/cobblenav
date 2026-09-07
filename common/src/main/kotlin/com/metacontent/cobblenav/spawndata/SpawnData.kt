@@ -13,8 +13,8 @@ import com.metacontent.cobblenav.client.gui.widget.spawndata.SpawnDataDetailWidg
 import com.metacontent.cobblenav.event.CobblenavEvents
 import com.metacontent.cobblenav.event.SpawnDataWidgetsCreatedEvent
 import com.metacontent.cobblenav.spawndata.resultdata.SpawnResultData
-import com.metacontent.cobblenav.util.I18nUtil.bucket
-import com.metacontent.cobblenav.util.I18nUtil.label
+import com.metacontent.cobblenav.utils.I18nUtil.bucket
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation

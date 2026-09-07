@@ -1,6 +1,6 @@
 package com.metacontent.cobblenav
 
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.cobblenavResource
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
