@@ -2,41 +2,33 @@ package com.metacontent.cobblenav.client.settings.pokefinder.filter
 
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties
 import com.cobblemon.mod.common.pokemon.Pokemon
-import com.metacontent.cobblenav.Cobblenav
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.settings.pokefinder.filter.EditableTextFilter
+import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.util.matchesOnClient
+import net.minecraft.resources.ResourceLocation
 
 class PokemonPropertiesFilter(private var properties: PokemonProperties = PokemonProperties()) : EditableTextFilter() {
 	companion object {
-		const val TYPE = "properties"
+		val TYPE: ResourceLocation = cobblenavResource("properties")
 	}
 
-	override val type = "properties"
+	override val type = TYPE
 
-	override fun test(pokemon: Pokemon): Boolean = properties.test(pokemon)
-
-	private fun PokemonProperties.test(pokemon: Pokemon): Boolean = if (level != null && pokemon.level != level) {
-		false
-	} else if (shiny != null && pokemon.shiny != shiny) {
-		false
-	} else if (gender != null && pokemon.gender != gender) {
-		false
-	} else if (species != null && !pokemon.species.name.equals(species, true)) {
-		false
-	} else if (form != null && !pokemon.form.name.equals(form, true)) {
-		false
-	} else if (type != null && pokemon.types.none { it.name.equals(type, true) }) {
-		false
-	} else if (scaleModifier != null && pokemon.scaleModifier != scaleModifier) {
-		false
-	} else if (!pokemon.aspects.containsAll(aspects)) {
-		false
-	} else {
-		true
+	override fun test(pokemon: Pokemon): Boolean {
+		val result = properties.matchesOnClient(pokemon)
+		return result
 	}
 
 	override fun update(value: String) {
-		properties = PokemonProperties.parse(value)
+		try {
+			properties = if (value.isBlank()) {
+				PokemonProperties()
+			} else {
+				PokemonProperties.parse(value)
+			}
+		} catch (_: Exception) {
+		}
+
 		CobblenavClient.pokefinderSettings?.changed = true
 	}
 

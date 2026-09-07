@@ -30,5 +30,5 @@ class PokefinderSettings : Settings<PokefinderSettings>() {
 		filters.clear()
 	}
 
-	fun test(pokemon: Pokemon): Boolean = filters.any { it.test(pokemon) } || filters.isEmpty()
+	fun test(pokemon: Pokemon): Boolean = filters.all { it.test(pokemon) } || filters.isEmpty()
 }

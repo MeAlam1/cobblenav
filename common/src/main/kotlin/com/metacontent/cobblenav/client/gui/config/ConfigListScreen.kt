@@ -27,14 +27,20 @@ class ConfigListScreen(
 			parent,
 			listOf(
 				Entry(
-					Component.translatableWithFallback("cobblenav.config_list.client", "Edit Client Config"),
+					Component.translatable("cobblenav.config_list.client"), // TODO
 				) { screenParent ->
-					ConfigScreen(Config.load(ClientCobblenavConfig::class.java), screenParent)
+					ConfigScreen(
+						Config.load(ClientCobblenavConfig::class.java),
+						screenParent,
+					)
 				},
 				Entry(
-					Component.translatableWithFallback("cobblenav.config_list.server", "Edit Server Config"),
+					Component.translatable("cobblenav.config_list.server"), // TODO
 				) { screenParent ->
-					ConfigScreen(Config.load(CobblenavConfig::class.java), screenParent)
+					ConfigScreen(
+						Config.load(CobblenavConfig::class.java),
+						screenParent,
+					)
 				},
 			),
 		)
@@ -72,7 +78,15 @@ class ConfigListScreen(
 		partialTick: Float,
 	) {
 		renderBackground(graphics, mouseX, mouseY, partialTick)
-		graphics.drawCenteredString(font, title, width / 2, 12, 0xFFFFFF)
+
+		graphics.drawCenteredString(
+			font,
+			title,
+			width / 2,
+			12,
+			0xFFFFFF,
+		)
+
 		super.render(graphics, mouseX, mouseY, partialTick)
 	}
 

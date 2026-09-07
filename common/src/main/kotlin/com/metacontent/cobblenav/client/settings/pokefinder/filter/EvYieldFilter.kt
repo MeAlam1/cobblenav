@@ -3,10 +3,12 @@ package com.metacontent.cobblenav.client.settings.pokefinder.filter
 import com.cobblemon.mod.common.api.pokemon.stats.Stats
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.metacontent.cobblenav.client.CobblenavClient
+import com.metacontent.cobblenav.util.cobblenavResource
+import net.minecraft.resources.ResourceLocation
 
 class EvYieldFilter(private var evYield: Set<Stats> = emptySet()) : RadarFilter {
 	companion object {
-		const val TYPE = "ev"
+		val TYPE: ResourceLocation = cobblenavResource("ev")
 	}
 
 	override val type = TYPE
