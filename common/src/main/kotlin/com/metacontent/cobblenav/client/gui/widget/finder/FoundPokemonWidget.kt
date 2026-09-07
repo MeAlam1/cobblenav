@@ -16,7 +16,13 @@ import net.minecraft.util.FastColor
 import org.joml.Quaternionf
 import org.joml.Vector3f
 
-class FoundPokemonWidget(x: Int, y: Int, val spawnData: SpawnData, val pokemon: FoundPokemon) : SoundlessWidget(x, y, 0, 0, Component.literal("Found Pokemon")) {
+class FoundPokemonWidget(
+	x: Int,
+	y: Int,
+	val spawnData: SpawnData,
+	val pokemon: FoundPokemon,
+	// @TODO: move literal to lang?
+) : SoundlessWidget(x, y, 0, 0, Component.literal("Found Pokemon")) {
 	companion object {
 		const val RADIUS = 60
 		const val POKEMON_OFFSET = 45
@@ -39,7 +45,12 @@ class FoundPokemonWidget(x: Int, y: Int, val spawnData: SpawnData, val pokemon: 
 	private val openingTimer = Timer(OPENING)
 	private val loopTimer = Timer(LOOP, true)
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, delta: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		delta: Float,
+	) {
 		val poseStack = guiGraphics.pose()
 
 		poseStack.pushAndPop {

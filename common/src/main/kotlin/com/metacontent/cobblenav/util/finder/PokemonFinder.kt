@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.pokemon.IVs
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemon.mod.common.pokemon.abilities.HiddenAbilityType
 import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.util.I18nUtil.label
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -12,12 +13,20 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions
 
 abstract class PokemonFinder {
 	companion object {
-		val NO_EGG_MOVE: Component = Component.translatable("gui.cobblenav.finder.no_egg_move")
+		val NO_EGG_MOVE: Component = label("finder.no_egg_move")
 	}
 
-	abstract fun select(pokemonEntities: List<PokemonEntity>, player: ServerPlayer, serverLevel: ServerLevel = player.serverLevel()): FoundPokemon
+	abstract fun select(
+		pokemonEntities: List<PokemonEntity>,
+		player: ServerPlayer,
+		serverLevel: ServerLevel = player.serverLevel(),
+	): FoundPokemon
 
-	protected fun selectNearest(pokemonEntities: Collection<PokemonEntity>, player: ServerPlayer, level: ServerLevel = player.serverLevel()): PokemonEntity? {
+	protected fun selectNearest(
+		pokemonEntities: Collection<PokemonEntity>,
+		player: ServerPlayer,
+		level: ServerLevel = player.serverLevel(),
+	): PokemonEntity? {
 		val width = Cobblenav.config.searchAreaWidth
 		val height = Cobblenav.config.searchAreaHeight
 		return level.getNearestEntity(
@@ -31,9 +40,12 @@ abstract class PokemonFinder {
 	}
 
 	fun getEggMoveName(pokemon: Pokemon): Component? {
-		val allMoves = (pokemon.moveSet.getMoves().map { it.template } + pokemon.benchedMoves.map { it.moveTemplate })
-			.toSet()
-		val notEggMoves = pokemon.form.moves.levelUpMoves.flatMap { it.value } + pokemon.form.moves.evolutionMoves
+		val allMoves =
+			(pokemon.moveSet.getMoves().map { it.template } + pokemon.benchedMoves.map { it.moveTemplate })
+				.toSet()
+		val notEggMoves =
+			pokemon.form.moves.levelUpMoves
+				.flatMap { it.value } + pokemon.form.moves.evolutionMoves
 		val eggMoves = pokemon.form.moves.eggMoves
 		val eggMove = allMoves.firstOrNull { eggMoves.contains(it) && !notEggMoves.contains(it) }
 		eggMove?.let { return it.displayName }

@@ -6,17 +6,21 @@ import com.cobblemon.mod.common.api.pokemon.PokemonProperties
 import com.cobblemon.mod.common.api.spawning.detail.PokemonSpawnDetail
 import com.cobblemon.mod.common.api.spawning.detail.SpawnDetail
 import com.cobblemon.mod.common.pokemon.RenderablePokemon
-import com.cobblemon.mod.common.util.*
+import com.cobblemon.mod.common.util.pokedex
+import com.cobblemon.mod.common.util.readIdentifier
+import com.cobblemon.mod.common.util.readString
+import com.cobblemon.mod.common.util.writeIdentifier
+import com.cobblemon.mod.common.util.writeString
 import com.metacontent.cobblenav.Cobblenav
 import com.metacontent.cobblenav.client.gui.util.RGB
 import com.metacontent.cobblenav.client.gui.widget.TextWidget
 import com.metacontent.cobblenav.client.gui.widget.section.SectionWidget
 import com.metacontent.cobblenav.client.gui.widget.spawndata.SpawnDataDetailWidget
+import com.metacontent.cobblenav.util.I18nUtil.label
 import com.metacontent.cobblenav.util.createAndGetAsRenderable
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
@@ -31,7 +35,10 @@ class PokemonSpawnResultData(
 	val positionType: String,
 ) : SpawnResultData {
 	companion object {
-		fun transform(detail: SpawnDetail, player: ServerPlayer): SpawnResultData? {
+		fun transform(
+			detail: SpawnDetail,
+			player: ServerPlayer,
+		): SpawnResultData? {
 			if (detail !is PokemonSpawnDetail) {
 				Cobblenav.LOGGER.error(
 					"The provided SpawnDetail type (${detail.type}) does not match the key under which it is registered (${PokemonSpawnDetail.TYPE}).",
@@ -42,9 +49,12 @@ class PokemonSpawnResultData(
 			val renderablePokemon = detail.pokemon.createAndGetAsRenderable(player.serverLevel(), player.onPos)
 			val positionType = detail.spawnablePositionType.name
 
-			val knowledge = player.pokedex()
-				.getSpeciesRecord(renderablePokemon.species.resourceIdentifier)
-				?.getFormRecord(renderablePokemon.form.name)?.knowledge ?: PokedexEntryProgress.UNREGISTERED
+			val knowledge =
+				player
+					.pokedex()
+					.getSpeciesRecord(renderablePokemon.species.resourceIdentifier)
+					?.getFormRecord(renderablePokemon.form.name)
+					?.knowledge ?: PokedexEntryProgress.UNREGISTERED
 			if (knowledge == PokedexEntryProgress.UNREGISTERED && Cobblenav.config.hideUnknownPokemon) {
 				return UnknownSpawnResultData(
 					positionType,
@@ -55,10 +65,12 @@ class PokemonSpawnResultData(
 				pokemon = renderablePokemon,
 				originalProperties = detail.pokemon,
 				level = detail.levelRange,
-				drops = detail.drops?.entries?.filterIsInstance<ItemDropEntry>()?.associate {
+				drops =
+				detail.drops?.entries?.filterIsInstance<ItemDropEntry>()?.associate {
 					it.item to it.percentage
 				},
-				heldItems = detail.heldItems?.associate {
+				heldItems =
+				detail.heldItems?.associate {
 					ResourceLocation.parse(it.item) to it.percentage.toFloat()
 				},
 				knowledge = knowledge,
@@ -70,13 +82,15 @@ class PokemonSpawnResultData(
 			pokemon = RenderablePokemon.loadFromBuffer(buffer),
 			originalProperties = PokemonProperties.parse(buffer.readString()),
 			level = buffer.readNullable { it.readVarInt()..it.readVarInt() },
-			drops = buffer.readNullable { buf ->
+			drops =
+			buffer.readNullable { buf ->
 				buf.readMap(
 					{ it.readIdentifier() },
 					{ it.readFloat() },
 				)
 			},
-			heldItems = buffer.readNullable { buf ->
+			heldItems =
+			buffer.readNullable { buf ->
 				buf.readMap(
 					{ it.readIdentifier() },
 					{ it.readFloat() },
@@ -90,22 +104,22 @@ class PokemonSpawnResultData(
 	override val type = PokemonSpawnDetail.TYPE
 
 	override val dataWidgets: List<AbstractWidget>? by lazy {
-		val widgets = mutableListOf<AbstractWidget>(
-			TextWidget(
-				x = 0,
-				y = 0,
-				width = SpawnDataDetailWidget.SECTION_WIDTH - 2,
-				text = Component.translatable("gui.cobblenav.spawn_data.pokemon")
-					.append(pokemon.species.translatedName),
-			),
-		)
+		val widgets =
+			mutableListOf<AbstractWidget>(
+				TextWidget(
+					x = 0,
+					y = 0,
+					width = SpawnDataDetailWidget.SECTION_WIDTH - 2,
+					text = label("spawn_data.pokemon").append(pokemon.species.translatedName),
+				),
+			)
 		level?.let {
 			widgets.add(
 				TextWidget(
 					x = 0,
 					y = 0,
 					width = SpawnDataDetailWidget.SECTION_WIDTH - 2,
-					text = Component.translatable("gui.cobblenav.spawn_data.level", "${it.first} - ${it.last}"),
+					text = label("spawn_data.level", "${it.first} - ${it.last}"),
 				),
 			)
 		}
@@ -114,7 +128,7 @@ class PokemonSpawnResultData(
 				x = 0,
 				y = 0,
 				width = SpawnDataDetailWidget.SECTION_WIDTH,
-				title = Component.translatable("gui.cobblenav.spawn_data.title.result"),
+				title = label("spawn_data.title.result"),
 				widgets = widgets,
 				color = RGB(144, 213, 255),
 			),
@@ -128,7 +142,13 @@ class PokemonSpawnResultData(
 		}
 	}
 
-	override fun drawResult(poseStack: PoseStack, x: Float, y: Float, z: Float, delta: Float) {
+	override fun drawResult(
+		poseStack: PoseStack,
+		x: Float,
+		y: Float,
+		z: Float,
+		delta: Float,
+	) {
 		renderer.render(pokemon, poseStack, x, y, z, delta)
 	}
 

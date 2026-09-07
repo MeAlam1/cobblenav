@@ -7,12 +7,22 @@ import net.minecraft.client.sounds.SoundManager
 import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor
 
-class ScrollThumbWidget(x: Int, y: Int, val parent: ScrollableView) : PokenavButton(x, y, WIDTH, 0, Component.literal(" Scroll Thumb"), false, {}) {
+class ScrollThumbWidget(
+	x: Int,
+	y: Int,
+	val parent: ScrollableView,
+	// @TODO: move literal to lang?
+) : PokenavButton(x, y, WIDTH, 0, Component.literal(" Scroll Thumb"), false, {}) {
 	companion object {
 		const val WIDTH: Int = 2
 	}
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		if (parent.child.height < parent.height) return
 		height = parent.height * parent.height / parent.child.height
 		guiGraphics.fill(
@@ -24,15 +34,27 @@ class ScrollThumbWidget(x: Int, y: Int, val parent: ScrollableView) : PokenavBut
 		)
 	}
 
-	override fun onClick(d: Double, e: Double) {
+	override fun onClick(
+		d: Double,
+		e: Double,
+	) {
 		isFocused = true
 	}
 
-	override fun onRelease(d: Double, e: Double) {
+	override fun onRelease(
+		d: Double,
+		e: Double,
+	) {
 		isFocused = false
 	}
 
-	override fun mouseDragged(d: Double, e: Double, i: Int, f: Double, g: Double): Boolean {
+	override fun mouseDragged(
+		d: Double,
+		e: Double,
+		i: Int,
+		f: Double,
+		g: Double,
+	): Boolean {
 		if (isValidClickButton(i) && isFocused && g != 0.0) {
 			onDrag(d, e, f, g)
 			return true
@@ -40,10 +62,16 @@ class ScrollThumbWidget(x: Int, y: Int, val parent: ScrollableView) : PokenavBut
 		return false
 	}
 
-	override fun onDrag(d: Double, e: Double, f: Double, g: Double) {
+	override fun onDrag(
+		d: Double,
+		e: Double,
+		f: Double,
+		g: Double,
+	) {
 		if (parent.child.height < parent.height) return
 		// TODO: improve scrolling
-		parent.scrolled = ((e - height / 2.0 - parent.y) * (parent.child.height - parent.height) / (parent.height - height)).toInt()
+		parent.scrolled =
+			((e - height / 2.0 - parent.y) * (parent.child.height - parent.height) / (parent.height - height)).toInt()
 	}
 
 	override fun playDownSound(soundManager: SoundManager) {}

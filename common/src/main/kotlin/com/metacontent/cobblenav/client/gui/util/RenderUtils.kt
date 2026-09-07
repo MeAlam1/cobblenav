@@ -21,7 +21,14 @@ import org.joml.Quaternionf
 import org.joml.Vector3d
 import org.joml.Vector3f
 
-fun GuiGraphics.fillWithOutline(x1: Int, y1: Int, x2: Int, y2: Int, fillColor: Int, outlineColor: Int) {
+fun GuiGraphics.fillWithOutline(
+	x1: Int,
+	y1: Int,
+	x2: Int,
+	y2: Int,
+	fillColor: Int,
+	outlineColor: Int,
+) {
 	this.renderOutline(x1, y1, x2 - x1, y2 - y1, outlineColor)
 	this.fill(x1 + 1, y1 + 1, x2 - 1, y2 - 1, fillColor)
 }
@@ -57,7 +64,14 @@ fun drawPokemon(
 	poseStack.popPose()
 }
 
-fun GuiGraphics.drawBlurredArea(x1: Int, y1: Int, x2: Int, y2: Int, blur: Float = 1f, delta: Float) {
+fun GuiGraphics.drawBlurredArea(
+	x1: Int,
+	y1: Int,
+	x2: Int,
+	y2: Int,
+	blur: Float = 1f,
+	delta: Float,
+) {
 	if (!CobblenavClient.config.enableBlurEffect) return
 	this.cobblenavScissor(x1, y1, x2, y2)
 	Minecraft.getInstance().gameRenderer.processBlurEffect(blur, delta)
@@ -70,11 +84,12 @@ fun GuiGraphics.cobblenavScissor(
 	y1: Int,
 	x2: Int,
 	y2: Int,
-	scale: Float = when (Minecraft.getInstance().screen) {
-		is PokenavScreen -> CobblenavClient.config.screenScale
-		is PokefinderScreen -> CobblenavClient.config.pokefinderScreenScale
-		else -> 1f
-	},
+	scale: Float =
+		when (Minecraft.getInstance().screen) {
+			is PokenavScreen -> CobblenavClient.config.screenScale
+			is PokefinderScreen -> CobblenavClient.config.pokefinderScreenScale
+			else -> 1f
+		},
 ) = this.enableScissor(
 	(x1 * scale).toInt(),
 	(y1 * scale).toInt(),
@@ -82,7 +97,10 @@ fun GuiGraphics.cobblenavScissor(
 	(y2 * scale).toInt(),
 )
 
-fun GameRenderer.processBlurEffect(blur: Float, delta: Float) = (this as GameRendererDuck).`cobblenav$processBlurEffect`(blur, delta)
+fun GameRenderer.processBlurEffect(
+	blur: Float,
+	delta: Float,
+) = (this as GameRendererDuck).`cobblenav$processBlurEffect`(blur, delta)
 
 fun getTimeString(period: IntRange): String = String.format("%s - %s", getTimeString(period.first.toLong()), getTimeString(period.last.toLong()))
 
@@ -93,27 +111,46 @@ fun getTimeString(time: Long): String {
 	val minutes = ((adjusted % 1000) * 60) / 1000
 
 	val period = if (hours24 < 12) "AM" else "PM"
-	val hours12 = when {
-		hours24 == 0L -> 12
-		hours24 > 12L -> hours24 - 12
-		else -> hours24
-	}
+	val hours12 =
+		when {
+			hours24 == 0L -> 12
+			hours24 > 12L -> hours24 - 12
+			else -> hours24
+		}
 
 	return String.format("%02d:%02d %s", hours12, minutes, period)
 }
 
-fun splitText(text: MutableComponent, targetWidth: Int): List<MutableComponent> = Minecraft.getInstance().font.splitter.splitLines(text, targetWidth, Style.EMPTY)
+fun splitText(
+	text: MutableComponent,
+	targetWidth: Int,
+): List<MutableComponent> = Minecraft
+	.getInstance()
+	.font.splitter
+	.splitLines(text, targetWidth, Style.EMPTY)
 	.map { Component.literal(it.string).withStyle(text.style) }
 
-fun interpolate(start: RGB, end: RGB, progress: Float): RGB = RGB(
+fun interpolate(
+	start: RGB,
+	end: RGB,
+	progress: Float,
+): RGB = RGB(
 	interpolateChannel(start.r, end.r, progress),
 	interpolateChannel(start.g, end.g, progress),
 	interpolateChannel(start.b, end.b, progress),
 )
 
-fun interpolateChannel(start: Int, end: Int, progress: Float): Int = (start + (end - start) * progress).toInt().coerceIn(0, 255)
+fun interpolateChannel(
+	start: Int,
+	end: Int,
+	progress: Float,
+): Int = (start + (end - start) * progress).toInt().coerceIn(0, 255)
 
-fun dayCycleColor(dayTime: Long, dayColor: RGB, nightColor: RGB): RGB = when (val normalizedTime = dayTime % 24000) {
+fun dayCycleColor(
+	dayTime: Long,
+	dayColor: RGB,
+	nightColor: RGB,
+): RGB = when (val normalizedTime = dayTime % 24000) {
 	in 12040..13670 -> {
 		val progress = (normalizedTime - 12040) / 1630f
 		interpolate(dayColor, nightColor, progress)
@@ -124,12 +161,21 @@ fun dayCycleColor(dayTime: Long, dayColor: RGB, nightColor: RGB): RGB = when (va
 		interpolate(nightColor, dayColor, progress)
 	}
 
-	in 13670..22331 -> nightColor
+	in 13670..22331 -> {
+		nightColor
+	}
 
-	else -> dayColor
+	else -> {
+		dayColor
+	}
 }
 
-fun PoseStack.pushAndPop(translate: Vector3d? = null, mulPose: Quaternionf? = null, scale: Vector3f? = null, render: () -> Unit) {
+fun PoseStack.pushAndPop(
+	translate: Vector3d? = null,
+	mulPose: Quaternionf? = null,
+	scale: Vector3f? = null,
+	render: () -> Unit,
+) {
 	this.pushPose()
 	translate?.let { this.translate(it.x, it.y, it.z) }
 	mulPose?.let { this.mulPose(it) }

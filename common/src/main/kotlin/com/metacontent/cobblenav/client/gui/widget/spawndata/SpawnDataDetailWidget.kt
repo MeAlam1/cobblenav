@@ -11,7 +11,13 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import org.joml.Vector3d
 
-class SpawnDataDetailWidget(val displayer: SpawnDataDisplayer, val pokenavScreen: PokenavScreen, x: Int, y: Int) : StatefulWidget(pokenavScreen, x, y, WIDTH, HEIGHT, Component.literal("Spawn Data Details")) {
+class SpawnDataDetailWidget(
+	val displayer: SpawnDataDisplayer,
+	val pokenavScreen: PokenavScreen,
+	x: Int,
+	y: Int,
+	// @TODO: move literal to lang?
+) : StatefulWidget(pokenavScreen, x, y, WIDTH, HEIGHT, Component.literal("Spawn Data Details")) {
 	companion object {
 		const val WIDTH = PokenavScreen.SCREEN_WIDTH
 		const val HEIGHT = PokenavScreen.SCREEN_HEIGHT
@@ -34,18 +40,24 @@ class SpawnDataDetailWidget(val displayer: SpawnDataDisplayer, val pokenavScreen
 	val sectionY: Int
 		get() = menuY + 7
 
-	val closeButton = IconButton(
-		pX = menuX,
-		pY = menuY + (height - CLOSE_HEIGHT) / 2,
-		pWidth = CLOSE_WIDTH,
-		pHeight = CLOSE_HEIGHT,
-		action = { displayer.selectedData = null },
-		texture = CLOSE,
-	)
+	val closeButton =
+		IconButton(
+			pX = menuX,
+			pY = menuY + (height - CLOSE_HEIGHT) / 2,
+			pWidth = CLOSE_WIDTH,
+			pHeight = CLOSE_HEIGHT,
+			action = { displayer.selectedData = null },
+			texture = CLOSE,
+		)
 
 	override var state = initState(ClosedSpawnDataDetail(this, x, y))
 
-	fun renderMenu(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
+	fun renderMenu(
+		guiGraphics: GuiGraphics,
+		mouseX: Int,
+		mouseY: Int,
+		delta: Float,
+	) {
 		val poseStack = guiGraphics.pose()
 		poseStack.pushAndPop(
 			translate = Vector3d(0.0, 0.0, 3000.0),

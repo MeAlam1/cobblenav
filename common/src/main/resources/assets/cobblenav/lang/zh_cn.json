@@ -1,6 +1,6 @@
 {
   "key.cobblenav.open_pokenav": "打开Pokenav",
-  "key.cobblenav.open_location": "打开位置屏幕",
+  "action.cobblenav.open_location": "打开位置屏幕",
   "category.cobblenav": "Cobblenav",
   "itemGroup.cobblenav.pokenav_group": "Cobblenav",
   "tag.item.cobblenav.pokenav": "宝可导航器",

@@ -1,6 +1,6 @@
 {
   "key.cobblenav.open_pokenav": "Открыть PokéNav",
-  "key.cobblenav.open_location": "Открыть экран локации",
+  "action.cobblenav.open_location": "Открыть экран локации",
   "category.cobblenav": "Cobblenav",
   "itemGroup.cobblenav.pokenav_group": "Cobblenav",
   "tag.item.cobblenav.pokenav": "PokéNav",

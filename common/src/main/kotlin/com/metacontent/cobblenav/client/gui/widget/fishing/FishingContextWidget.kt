@@ -8,7 +8,12 @@ import com.cobblemon.mod.common.entity.PoseType
 import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
 import com.metacontent.cobblenav.api.generalresources.CloudRepository
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.gui.util.*
+import com.metacontent.cobblenav.client.gui.util.RGB
+import com.metacontent.cobblenav.client.gui.util.cobblenavScissor
+import com.metacontent.cobblenav.client.gui.util.dayCycleColor
+import com.metacontent.cobblenav.client.gui.util.drawPokemon
+import com.metacontent.cobblenav.client.gui.util.gui
+import com.metacontent.cobblenav.client.gui.util.pushAndPop
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -24,7 +29,14 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
 
-class FishingContextWidget(x: Int, y: Int, width: Int, height: Int, val level: ClientLevel? = Minecraft.getInstance().level) : SoundlessWidget(x, y, width, height, Component.literal("Weather")) {
+class FishingContextWidget(
+	x: Int,
+	y: Int,
+	width: Int,
+	height: Int,
+	val level: ClientLevel? = Minecraft.getInstance().level,
+	// @TODO: move literal to lang?
+) : SoundlessWidget(x, y, width, height, Component.literal("Weather")) {
 	companion object {
 		const val SUN_WIDTH = 20
 		const val SUN_HEIGHT = 21
@@ -81,7 +93,12 @@ class FishingContextWidget(x: Int, y: Int, width: Int, height: Int, val level: C
 		}
 	}
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		val poseStack = guiGraphics.pose()
 		guiGraphics.cobblenavScissor(
 			x1 = x,
@@ -205,7 +222,12 @@ class FishingContextWidget(x: Int, y: Int, width: Int, height: Int, val level: C
 		}
 	}
 
-	private fun renderClouds(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	private fun renderClouds(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		clouds.forEach { cloud ->
 			blitk(
 				matrixStack = guiGraphics.pose(),
@@ -223,5 +245,9 @@ class FishingContextWidget(x: Int, y: Int, width: Int, height: Int, val level: C
 		}
 	}
 
-	private data class Cloud(val position: Vector2f, var velocity: Float, val type: Int)
+	private data class Cloud(
+		val position: Vector2f,
+		var velocity: Float,
+		val type: Int,
+	)
 }

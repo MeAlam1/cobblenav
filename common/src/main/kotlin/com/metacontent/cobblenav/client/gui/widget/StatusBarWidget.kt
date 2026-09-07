@@ -10,7 +10,11 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 
-class StatusBarWidget(x: Int, y: Int) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Status Bar")) {
+class StatusBarWidget(
+	x: Int,
+	y: Int,
+	// @TODO: move literal to lang?
+) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Status Bar")) {
 	companion object {
 		const val DECORATION_WIDTH: Int = 16
 		const val CLOCKS_WIDTH: Int = 30
@@ -21,7 +25,12 @@ class StatusBarWidget(x: Int, y: Int) : SoundlessWidget(x, y, WIDTH, HEIGHT, Com
 		val TEXTURE = gui("status_bar")
 	}
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		val poseStack = guiGraphics.pose()
 
 		val dayTime = Minecraft.getInstance().level?.dayTime ?: 0L

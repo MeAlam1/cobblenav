@@ -25,7 +25,13 @@ import org.joml.Vector3f
 import java.text.DecimalFormat
 import kotlin.math.PI
 
-open class SpawnDataWidget(x: Int, y: Int, val spawnData: CheckedSpawnData, private val displayer: SpawnDataDisplayer) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Spawn Data Widget")) {
+open class SpawnDataWidget(
+	x: Int,
+	y: Int,
+	val spawnData: CheckedSpawnData,
+	private val displayer: SpawnDataDisplayer,
+	// @TODO: move literal to lang?
+) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Spawn Data Widget")) {
 	companion object {
 		const val WIDTH = 45
 		const val HEIGHT = 45
@@ -38,38 +44,53 @@ open class SpawnDataWidget(x: Int, y: Int, val spawnData: CheckedSpawnData, priv
 	}
 
 	private var isModelBroken = false
-	protected open val platform = if (spawnData.data.result.shouldRenderPlatform()) {
-		BiomePlatformRenderDataRepository.get(spawnData.data.platformId)
-	} else if (spawnData.data.positionType == "fishing") {
-		BiomePlatformRenderDataRepository.FISHING
-	} else {
-		BiomePlatformRenderDataRepository.EMPTY
-	}
-	protected open val plate = if (spawnData.data.result.shouldRenderPlatform()) {
-		DimensionPlateRepository.get(Minecraft.getInstance().level?.dimension()?.location())
-	} else {
-		DimensionPlateRepository.EMPTY
-	}
+	protected open val platform =
+		if (spawnData.data.result.shouldRenderPlatform()) {
+			BiomePlatformRenderDataRepository.get(spawnData.data.platformId)
+		} else if (spawnData.data.positionType == "fishing") {
+			BiomePlatformRenderDataRepository.FISHING
+		} else {
+			BiomePlatformRenderDataRepository.EMPTY
+		}
+	protected open val plate =
+		if (spawnData.data.result.shouldRenderPlatform()) {
+			DimensionPlateRepository.get(
+				Minecraft
+					.getInstance()
+					.level
+					?.dimension()
+					?.location(),
+			)
+		} else {
+			DimensionPlateRepository.EMPTY
+		}
 	private val stack by lazy { ItemStack(CobblemonItems.POKE_BALL) }
 	var nearbyEntityIds = emptyList<Int>()
 
-	private val trackButton = IconButton(
-		pX = x + width - TRACK_SIZE + 1,
-		pY = y + 1,
-		pWidth = TRACK_SIZE,
-		pHeight = TRACK_SIZE,
-		texture = TRACK,
-		action = {
-			val player = Minecraft.getInstance().player ?: return@IconButton
-			val entities = nearbyEntityIds.mapNotNull { player.clientLevel?.getEntity(it) }
-			CobblenavClient.trackArrowOverlay.entityId = entities.minByOrNull {
-				it.distanceTo(player)
-			}?.id ?: -1
-			(Minecraft.getInstance().screen as? PokenavScreen)?.onClose()
-		},
-	)
+	private val trackButton =
+		IconButton(
+			pX = x + width - TRACK_SIZE + 1,
+			pY = y + 1,
+			pWidth = TRACK_SIZE,
+			pHeight = TRACK_SIZE,
+			texture = TRACK,
+			action = {
+				val player = Minecraft.getInstance().player ?: return@IconButton
+				val entities = nearbyEntityIds.mapNotNull { player.clientLevel?.getEntity(it) }
+				CobblenavClient.trackArrowOverlay.entityId = entities
+					.minByOrNull {
+						it.distanceTo(player)
+					}?.id ?: -1
+				(Minecraft.getInstance().screen as? PokenavScreen)?.onClose()
+			},
+		)
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, delta: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		delta: Float,
+	) {
 		val poseStack = guiGraphics.pose()
 		val hovered = ishHovered(i, j) && isFocused && !displayer.isBlockingTooltip()
 
@@ -153,7 +174,11 @@ open class SpawnDataWidget(x: Int, y: Int, val spawnData: CheckedSpawnData, priv
 		}
 	}
 
-	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean {
+	override fun mouseClicked(
+		pMouseX: Double,
+		pMouseY: Double,
+		pButton: Int,
+	): Boolean {
 		if (clicked(pMouseX, pMouseY) && isValidClickButton(pButton)) {
 			trackButton.mouseClicked(pMouseX, pMouseY, pButton).takeIf { it }?.let {
 				return true
@@ -169,12 +194,17 @@ open class SpawnDataWidget(x: Int, y: Int, val spawnData: CheckedSpawnData, priv
 		return if (finalChance <= 0.005f) "<0.01%" else FORMAT.format(finalChance) + "%"
 	}
 
-	private fun renderPokeBall(guiGraphics: GuiGraphics, x: Double, y: Double) {
+	private fun renderPokeBall(
+		guiGraphics: GuiGraphics,
+		x: Double,
+		y: Double,
+	) {
 		val poseStack = guiGraphics.pose()
 
 		poseStack.pushAndPop(
 			translate = Vector3d(x, y, 2.0),
-			mulPose = Quaternionf()
+			mulPose =
+			Quaternionf()
 				.rotateZ(PI.toFloat())
 				.fromEulerXYZDegrees(spawnData.data.result.getRotation()),
 			scale = Vector3f(15f, 15f, -15f),

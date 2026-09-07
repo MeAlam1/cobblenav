@@ -7,12 +7,18 @@ import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledTextJustifiedRight
 import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.util.tryTranslating
+import com.metacontent.cobblenav.util.I18nUtil.label
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 
-class LocationInfoWidget(x: Int, y: Int, biome: String) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Location Info")) {
+class LocationInfoWidget(
+	x: Int,
+	y: Int,
+	biome: String,
+	// @TODO: move literal to lang?
+) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Location Info")) {
 	companion object {
 		const val SYMBOL_WIDTH: Int = 13
 		const val SYMBOL_HEIGHT: Int = 14
@@ -28,13 +34,18 @@ class LocationInfoWidget(x: Int, y: Int, biome: String) : SoundlessWidget(x, y, 
 
 	private val biomeResourceLocation = ResourceLocation.parse(biome)
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		val poseStack = guiGraphics.pose()
-		val checkPair = tryTranslating(
-			biomeResourceLocation.toLanguageKey(BIOME_KEY_BASE),
-			Component.translatable("gui.cobblenav.unknown_biome").red()
-				.onHover(Component.literal(biomeResourceLocation.toString())),
-		)
+		val checkPair =
+			tryTranslating(
+				biomeResourceLocation.toLanguageKey(BIOME_KEY_BASE),
+				label("unknown_biome").red().onHover(Component.literal(biomeResourceLocation.toString())),
+			)
 		if (!checkPair.first) {
 			blitk(
 				matrixStack = poseStack,

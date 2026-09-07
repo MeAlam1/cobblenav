@@ -9,7 +9,12 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import java.awt.Color
 
-class ContactsScreen(os: PokenavOS, makeOpeningSound: Boolean = false, animateOpening: Boolean = false) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Contacts")) {
+class ContactsScreen(
+	os: PokenavOS,
+	makeOpeningSound: Boolean = false,
+	animateOpening: Boolean = false,
+	// @TODO: move literal to lang var
+) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Contacts")) {
 	override val color = Color.decode("#C3BEA6").rgb
 
 	override fun initScreen() {
@@ -34,6 +39,11 @@ class ContactsScreen(os: PokenavOS, makeOpeningSound: Boolean = false, animateOp
 		).let { addBlockableWidget(it) }
 	}
 
-	override fun renderOnBackLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
+	override fun renderOnBackLayer(
+		guiGraphics: GuiGraphics,
+		mouseX: Int,
+		mouseY: Int,
+		delta: Float,
+	) {
 	}
 }

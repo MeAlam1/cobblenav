@@ -8,7 +8,12 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor
 
-class MainScreen(os: PokenavOS, makeOpeningSound: Boolean = false, animateOpening: Boolean = false) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Main")) {
+class MainScreen(
+	os: PokenavOS,
+	makeOpeningSound: Boolean = false,
+	animateOpening: Boolean = false,
+	// @TODO: move literal to lang?
+) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Main")) {
 	override val color = FastColor.ARGB32.color(255, 79, 189, 201)
 
 	override fun initScreen() {
@@ -24,6 +29,11 @@ class MainScreen(os: PokenavOS, makeOpeningSound: Boolean = false, animateOpenin
 		).also { addUnblockableWidget(it) }
 	}
 
-	override fun renderOnBackLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
+	override fun renderOnBackLayer(
+		guiGraphics: GuiGraphics,
+		mouseX: Int,
+		mouseY: Int,
+		delta: Float,
+	) {
 	}
 }

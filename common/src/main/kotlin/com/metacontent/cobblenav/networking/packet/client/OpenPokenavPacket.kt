@@ -6,9 +6,13 @@ import com.metacontent.cobblenav.util.cobblenavResource
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 
-class OpenPokenavPacket(val os: PokenavOS, val fixedAreaPoint: BlockPos? = null) : CobblenavNetworkPacket<OpenPokenavPacket> {
+class OpenPokenavPacket(
+	val os: PokenavOS,
+	val fixedAreaPoint: BlockPos? = null,
+) : CobblenavNetworkPacket<OpenPokenavPacket> {
 	companion object {
 		val ID = cobblenavResource("open_pokenav")
+
 		fun decode(buffer: RegistryFriendlyByteBuf) = OpenPokenavPacket(
 			os = PokenavOS.decode(buffer),
 			fixedAreaPoint = buffer.readNullable { it.readBlockPos() },

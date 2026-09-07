@@ -12,7 +12,13 @@ import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 
-class FilterListEntryWidget(val filter: RadarFilter, val widget: AbstractWidget, val icon: ResourceLocation, parent: PokefinderScreen) : SoundlessWidget(0, 0, WIDTH, HEIGHT, Component.empty()) {
+class FilterListEntryWidget(
+	val filter: RadarFilter,
+	val widget: AbstractWidget,
+	val icon: ResourceLocation,
+	parent: PokefinderScreen,
+	// @TODO: get rid of empty?
+) : SoundlessWidget(0, 0, WIDTH, HEIGHT, Component.empty()) {
 	companion object {
 		const val WIDTH = 238
 		const val HEIGHT = 26
@@ -21,21 +27,27 @@ class FilterListEntryWidget(val filter: RadarFilter, val widget: AbstractWidget,
 		val REMOVE = gui("pokefinder/remove")
 	}
 
-	val removeButton = IconButton(
-		pX = x,
-		pY = y + (HEIGHT - REMOVE_SIZE) / 2,
-		pWidth = REMOVE_SIZE,
-		pHeight = REMOVE_SIZE,
-		action = { parent.removeFilterListEntry(this) },
-		texture = REMOVE,
-	).also { addWidget(it) }
+	val removeButton =
+		IconButton(
+			pX = x,
+			pY = y + (HEIGHT - REMOVE_SIZE) / 2,
+			pWidth = REMOVE_SIZE,
+			pHeight = REMOVE_SIZE,
+			action = { parent.removeFilterListEntry(this) },
+			texture = REMOVE,
+		).also { addWidget(it) }
 
 	init {
 		widget.x += REMOVE_SIZE + 4
 		addWidget(widget)
 	}
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		val poseStack = guiGraphics.pose()
 
 		removeButton.render(guiGraphics, i, j, f)

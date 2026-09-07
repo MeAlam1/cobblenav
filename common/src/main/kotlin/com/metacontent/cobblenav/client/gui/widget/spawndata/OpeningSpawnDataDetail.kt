@@ -8,15 +8,19 @@ import net.minecraft.network.chat.Component
 import org.joml.Vector3d
 import org.joml.Vector3f
 
-class OpeningSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: Int) :
-	WidgetState<SpawnDataDetailWidget>(
-		statefulWidget,
-		x,
-		y,
-		SpawnDataDetailWidget.WIDTH,
-		SpawnDataDetailWidget.HEIGHT,
-		Component.literal("Opening Spawn Data Details"),
-	) {
+class OpeningSpawnDataDetail(
+	statefulWidget: SpawnDataDetailWidget,
+	x: Int,
+	y: Int,
+) : WidgetState<SpawnDataDetailWidget>(
+	statefulWidget,
+	x,
+	y,
+	SpawnDataDetailWidget.WIDTH,
+	SpawnDataDetailWidget.HEIGHT,
+	// @TODO: move literal to lang?
+	Component.literal("Opening Spawn Data Details"),
+) {
 	companion object {
 		const val ANIMATION_DURATION = 2f
 	}
@@ -27,7 +31,12 @@ class OpeningSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: I
 
 	private val timer = Timer(ANIMATION_DURATION)
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		timer.tick(f)
 
 		val poseStack = guiGraphics.pose()
@@ -57,5 +66,9 @@ class OpeningSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: I
 		}
 	}
 
-	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean = true
+	override fun mouseClicked(
+		pMouseX: Double,
+		pMouseY: Double,
+		pButton: Int,
+	): Boolean = true
 }

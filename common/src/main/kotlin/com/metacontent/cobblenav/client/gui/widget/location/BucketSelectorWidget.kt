@@ -11,7 +11,12 @@ import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 
-class BucketSelectorWidget(x: Int, y: Int, private val parent: LocationScreen) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Bucket Selector")) {
+class BucketSelectorWidget(
+	x: Int,
+	y: Int,
+	private val parent: LocationScreen,
+	// @TODO: move literal to lang?
+) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Bucket Selector")) {
 	companion object {
 		const val WIDTH: Int = 80
 		const val HEIGHT: Int = 16
@@ -23,34 +28,42 @@ class BucketSelectorWidget(x: Int, y: Int, private val parent: LocationScreen) :
 		val PREV = gui("button/prev_button")
 	}
 
-	private val prevButton = IconButton(
-		pX = x + 2,
-		pY = y + (height - BUTTON_HEIGHT) / 2,
-		pWidth = BUTTON_WIDTH,
-		pHeight = BUTTON_HEIGHT,
-		disabled = parent.bucketIndex <= 0,
-		action = { parent.bucketIndex-- },
-		texture = PREV,
-	).also { addWidget(it) }
-	private val nextButton = IconButton(
-		pX = x + WIDTH - BUTTON_WIDTH,
-		pY = y + (height - BUTTON_HEIGHT) / 2,
-		pWidth = BUTTON_WIDTH,
-		pHeight = BUTTON_HEIGHT,
-		disabled = parent.bucketIndex >= parent.buckets.size - 1,
-		action = { parent.bucketIndex++ },
-		texture = NEXT,
-	).also { addWidget(it) }
+	private val prevButton =
+		IconButton(
+			pX = x + 2,
+			pY = y + (height - BUTTON_HEIGHT) / 2,
+			pWidth = BUTTON_WIDTH,
+			pHeight = BUTTON_HEIGHT,
+			disabled = parent.bucketIndex <= 0,
+			action = { parent.bucketIndex-- },
+			texture = PREV,
+		).also { addWidget(it) }
+	private val nextButton =
+		IconButton(
+			pX = x + WIDTH - BUTTON_WIDTH,
+			pY = y + (height - BUTTON_HEIGHT) / 2,
+			pWidth = BUTTON_WIDTH,
+			pHeight = BUTTON_HEIGHT,
+			disabled = parent.bucketIndex >= parent.buckets.size - 1,
+			action = { parent.bucketIndex++ },
+			texture = NEXT,
+		).also { addWidget(it) }
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		prevButton.disabled = parent.bucketIndex <= 0
 		nextButton.disabled = parent.bucketIndex >= parent.buckets.size - 1
 		prevButton.render(guiGraphics, i, j, f)
 		val bucketName = parent.currentBucket
-		val pair = tryTranslating(
-			"$BUCKET_KEY_BASE.$bucketName",
-			Component.literal(bucketName),
-		)
+		val pair =
+			tryTranslating(
+				"$BUCKET_KEY_BASE.$bucketName",
+				Component.literal(bucketName),
+			)
 		val text = pair.second
 		if (!pair.first) {
 			text.onHover("$BUCKET_KEY_BASE.$bucketName").red()

@@ -2,7 +2,12 @@ package com.metacontent.cobblenav.client.gui.widget.pokefinder
 
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.api.pokemon.stats.Stats
-import com.cobblemon.mod.common.api.pokemon.stats.Stats.*
+import com.cobblemon.mod.common.api.pokemon.stats.Stats.ATTACK
+import com.cobblemon.mod.common.api.pokemon.stats.Stats.DEFENCE
+import com.cobblemon.mod.common.api.pokemon.stats.Stats.HP
+import com.cobblemon.mod.common.api.pokemon.stats.Stats.SPECIAL_ATTACK
+import com.cobblemon.mod.common.api.pokemon.stats.Stats.SPECIAL_DEFENCE
+import com.cobblemon.mod.common.api.pokemon.stats.Stats.SPEED
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
 import com.metacontent.cobblenav.api.generalresources.ColorRepository
@@ -11,11 +16,15 @@ import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen.Companio
 import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.button.CheckBox
 import com.metacontent.cobblenav.client.settings.pokefinder.filter.EvYieldFilter
+import com.metacontent.cobblenav.util.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import java.util.*
 
-class EvYieldFilterWidget(val filter: EvYieldFilter) : SoundlessWidget(0, 0, WIDGET_WIDTH, WIDGET_HEIGHT, Component.empty()) {
+class EvYieldFilterWidget(
+	val filter: EvYieldFilter,
+	// @TODO: get rid of empty?
+) : SoundlessWidget(0, 0, WIDGET_WIDTH, WIDGET_HEIGHT, Component.empty()) {
 	companion object {
 		const val CHECK_BOX_WIDTH = 32
 		const val CHECK_BOX_HEIGHT = 26
@@ -28,26 +37,35 @@ class EvYieldFilterWidget(val filter: EvYieldFilter) : SoundlessWidget(0, 0, WID
 
 	val stats = filter.get().toMutableSet()
 
-	val checkBoxes = STATS.mapIndexed { index, stat ->
-		stat to CheckBox(
-			x = LEFT_WIDTH + CHECK_BOX_WIDTH * index,
-			y = 0,
-			width = CHECK_BOX_WIDTH,
-			height = CHECK_BOX_HEIGHT,
-			texture = CHECK_BOX,
-			default = stats.contains(stat),
-			afterClick = {
-				val updated = if (it.checked()) {
-					stats.add(stat)
-				} else {
-					stats.remove(stat)
-				}
-				if (updated) filter.update(stats.toSet())
-			},
-		).also { addWidget(it) }
-	}.toMap()
+	val checkBoxes =
+		STATS
+			.mapIndexed { index, stat ->
+				stat to
+					CheckBox(
+						x = LEFT_WIDTH + CHECK_BOX_WIDTH * index,
+						y = 0,
+						width = CHECK_BOX_WIDTH,
+						height = CHECK_BOX_HEIGHT,
+						texture = CHECK_BOX,
+						default = stats.contains(stat),
+						afterClick = {
+							val updated =
+								if (it.checked()) {
+									stats.add(stat)
+								} else {
+									stats.remove(stat)
+								}
+							if (updated) filter.update(stats.toSet())
+						},
+					).also { addWidget(it) }
+			}.toMap()
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		blitk(
 			matrixStack = guiGraphics.pose(),
 			texture = LEFT,
@@ -63,7 +81,7 @@ class EvYieldFilterWidget(val filter: EvYieldFilter) : SoundlessWidget(0, 0, WID
 			val color = ColorRepository.get(if (checkBox.checked()) "pokefinder_background" else "pokefinder_text")
 			drawScaledText(
 				context = guiGraphics,
-				text = Component.translatable("gui.cobblenav.pokefidner.ev_yield.${stat.showdownId}"),
+				text = label("pokefidner.ev_yield.${stat.showdownId}"),
 				x = checkBox.x + checkBox.width / 2,
 				y = checkBox.y + (checkBox.height - 9) / 2,
 				maxCharacterWidth = checkBox.width - 4,

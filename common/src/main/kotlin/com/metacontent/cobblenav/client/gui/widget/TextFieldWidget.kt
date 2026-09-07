@@ -22,27 +22,34 @@ class TextFieldWidget(
 	textColor: Int = 0xffffff,
 	private val textureSheet: ResourceLocation,
 	private val onChange: (String) -> Unit,
+	// @TODO: get rid of empty?
 ) : SoundlessWidget(x, y, width, height, Component.empty()) {
-	private val editBox: EditBox = EditBox(
-		Minecraft.getInstance().font,
-		lineX,
-		lineY,
-		lineWidth,
-		lineHeight,
-		message,
-	).also {
-		it.setMaxLength(Int.MAX_VALUE)
-		it.value = default
-		it.setTextColor(textColor)
-		it.setResponder(onChange)
-		it.isBordered = false
-		addWidget(it)
-	}
+	private val editBox: EditBox =
+		EditBox(
+			Minecraft.getInstance().font,
+			lineX,
+			lineY,
+			lineWidth,
+			lineHeight,
+			message,
+		).also {
+			it.setMaxLength(Int.MAX_VALUE)
+			it.value = default
+			it.setTextColor(textColor)
+			it.setResponder(onChange)
+			it.isBordered = false
+			addWidget(it)
+		}
 
 	val value: String
 		get() = editBox.value
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		blitk(
 			matrixStack = guiGraphics.pose(),
 			texture = textureSheet,
@@ -71,7 +78,11 @@ class TextFieldWidget(
 		editBox.isFocused = bl
 	}
 
-	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean = clicked(pMouseX, pMouseY).also {
+	override fun mouseClicked(
+		pMouseX: Double,
+		pMouseY: Double,
+		pButton: Int,
+	): Boolean = clicked(pMouseX, pMouseY).also {
 		isFocused = it
 		if (it) {
 			editBox.onClick(pMouseX, pMouseY)

@@ -22,6 +22,7 @@ class ContextMenuWidget(
 	private val centerText: Boolean = true,
 	acceptAction: ((ContextMenuWidget, PokenavButton) -> Unit)? = null,
 	cancelAction: (ContextMenuWidget, PokenavButton) -> Unit,
+	// @TODO: move literal to lang?
 ) : SoundlessWidget(pX, pY, WIDTH, 0, Component.literal("Context Menu")) {
 	companion object {
 		const val WIDTH: Int = 220
@@ -42,7 +43,12 @@ class ContextMenuWidget(
 
 	private var acceptButton: IconButton? = null
 	private val cancelButton: IconButton
-	private val scale = lineHeight.toFloat() / Minecraft.getInstance().font.lineHeight.toFloat()
+	private val scale =
+		lineHeight.toFloat() /
+			Minecraft
+				.getInstance()
+				.font.lineHeight
+				.toFloat()
 	private val dividedText = text.flatMap { splitText(it, (textWidth / scale).toInt()) }
 	val openingTimer = Timer(OPENING)
 
@@ -51,26 +57,33 @@ class ContextMenuWidget(
 		y -= height / 2
 
 		acceptAction?.let {
-			acceptButton = IconButton(
-				pX = x + width - 2 * BUTTON_WIDTH - BUTTON_SPACE + BUTTON_HORIZONTAL_OFFSET,
+			acceptButton =
+				IconButton(
+					pX = x + width - 2 * BUTTON_WIDTH - BUTTON_SPACE + BUTTON_HORIZONTAL_OFFSET,
+					pY = y + height - BUTTON_HEIGHT + BUTTON_VERTICAL_OFFSET,
+					pWidth = BUTTON_WIDTH,
+					pHeight = BUTTON_HEIGHT,
+					texture = ACCEPT,
+					action = { acceptAction.invoke(this, it) },
+				).also { addWidget(it) }
+		}
+		cancelButton =
+			IconButton(
+				pX = x + width - BUTTON_WIDTH + BUTTON_HORIZONTAL_OFFSET,
 				pY = y + height - BUTTON_HEIGHT + BUTTON_VERTICAL_OFFSET,
 				pWidth = BUTTON_WIDTH,
 				pHeight = BUTTON_HEIGHT,
-				texture = ACCEPT,
-				action = { acceptAction.invoke(this, it) },
+				texture = CANCEL,
+				action = { cancelAction.invoke(this, it) },
 			).also { addWidget(it) }
-		}
-		cancelButton = IconButton(
-			pX = x + width - BUTTON_WIDTH + BUTTON_HORIZONTAL_OFFSET,
-			pY = y + height - BUTTON_HEIGHT + BUTTON_VERTICAL_OFFSET,
-			pWidth = BUTTON_WIDTH,
-			pHeight = BUTTON_HEIGHT,
-			texture = CANCEL,
-			action = { cancelAction.invoke(this, it) },
-		).also { addWidget(it) }
 	}
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		guiGraphics.cobblenavScissor(
 			x,
 			(y + 3 + (height / 2) * (1 - openingTimer.getProgress())).toInt(),
@@ -123,7 +136,11 @@ class ContextMenuWidget(
 		openingTimer.tick(f)
 	}
 
-	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean {
+	override fun mouseClicked(
+		pMouseX: Double,
+		pMouseY: Double,
+		pButton: Int,
+	): Boolean {
 		if (!openingTimer.isOver()) return false
 		return super.mouseClicked(pMouseX, pMouseY, pButton)
 	}

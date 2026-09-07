@@ -15,15 +15,19 @@ import net.minecraft.util.FastColor
 import org.joml.Vector3d
 import org.joml.Vector3f
 
-class OpenedSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: Int) :
-	WidgetState<SpawnDataDetailWidget>(
-		statefulWidget,
-		x,
-		y,
-		SpawnDataDetailWidget.WIDTH,
-		SpawnDataDetailWidget.HEIGHT,
-		Component.literal("Opened Spawn Data Details"),
-	) {
+class OpenedSpawnDataDetail(
+	statefulWidget: SpawnDataDetailWidget,
+	x: Int,
+	y: Int,
+) : WidgetState<SpawnDataDetailWidget>(
+	statefulWidget,
+	x,
+	y,
+	SpawnDataDetailWidget.WIDTH,
+	SpawnDataDetailWidget.HEIGHT,
+	// @TODO: move literal to lang?
+	Component.literal("Opened Spawn Data Details"),
+) {
 	companion object {
 		const val BUTTON_WIDTH: Int = 17
 		const val BUTTON_HEIGHT: Int = 23
@@ -31,38 +35,42 @@ class OpenedSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: In
 		val PREV = gui("button/prev_button_big")
 	}
 
-	private val tableView = TableView<AbstractWidget>(
-		x = statefulWidget.sectionX,
-		y = statefulWidget.sectionY,
-		width = SpawnDataDetailWidget.SECTION_WIDTH,
-		columns = 1,
-		verticalGap = 2f,
-		horizontalGap = 0f,
-	).also { statefulWidget.displayer.selectedData?.let { data -> it.add(data.dataWidgets) } }
-	private val scrollableView = ScrollableView(
-		x = statefulWidget.menuX,
-		y = statefulWidget.sectionY,
-		width = SpawnDataDetailWidget.MENU_WIDTH,
-		height = SpawnDataDetailWidget.SCROLLABLE_HEIGHT,
-		scissorSpreading = 7,
-		child = tableView,
-	).also { addWidget(it) }
-	private val prevButton = IconButton(
-		pX = x + (statefulWidget.width - SpawnDataDetailWidget.MENU_WIDTH) / 2 - 75,
-		pY = y + (height - BUTTON_HEIGHT) / 2,
-		pWidth = BUTTON_WIDTH,
-		pHeight = BUTTON_HEIGHT,
-		action = { checkButtons(statefulWidget.displayer.switchData(-1)) },
-		texture = PREV,
-	).also { addWidget(it) }
-	private val nextButton = IconButton(
-		pX = x + (statefulWidget.width - SpawnDataDetailWidget.MENU_WIDTH) / 2 + 75 - BUTTON_WIDTH,
-		pY = y + (height - BUTTON_HEIGHT) / 2,
-		pWidth = BUTTON_WIDTH,
-		pHeight = BUTTON_HEIGHT,
-		action = { checkButtons(statefulWidget.displayer.switchData(1)) },
-		texture = NEXT,
-	).also { addWidget(it) }
+	private val tableView =
+		TableView<AbstractWidget>(
+			x = statefulWidget.sectionX,
+			y = statefulWidget.sectionY,
+			width = SpawnDataDetailWidget.SECTION_WIDTH,
+			columns = 1,
+			verticalGap = 2f,
+			horizontalGap = 0f,
+		).also { statefulWidget.displayer.selectedData?.let { data -> it.add(data.dataWidgets) } }
+	private val scrollableView =
+		ScrollableView(
+			x = statefulWidget.menuX,
+			y = statefulWidget.sectionY,
+			width = SpawnDataDetailWidget.MENU_WIDTH,
+			height = SpawnDataDetailWidget.SCROLLABLE_HEIGHT,
+			scissorSpreading = 7,
+			child = tableView,
+		).also { addWidget(it) }
+	private val prevButton =
+		IconButton(
+			pX = x + (statefulWidget.width - SpawnDataDetailWidget.MENU_WIDTH) / 2 - 75,
+			pY = y + (height - BUTTON_HEIGHT) / 2,
+			pWidth = BUTTON_WIDTH,
+			pHeight = BUTTON_HEIGHT,
+			action = { checkButtons(statefulWidget.displayer.switchData(-1)) },
+			texture = PREV,
+		).also { addWidget(it) }
+	private val nextButton =
+		IconButton(
+			pX = x + (statefulWidget.width - SpawnDataDetailWidget.MENU_WIDTH) / 2 + 75 - BUTTON_WIDTH,
+			pY = y + (height - BUTTON_HEIGHT) / 2,
+			pWidth = BUTTON_WIDTH,
+			pHeight = BUTTON_HEIGHT,
+			action = { checkButtons(statefulWidget.displayer.switchData(1)) },
+			texture = NEXT,
+		).also { addWidget(it) }
 
 	init {
 		addWidget(statefulWidget.closeButton)
@@ -74,7 +82,12 @@ class OpenedSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: In
 		statefulWidget.pokenavScreen.blockWidgets = true
 	}
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		if (!statefulWidget.displayer.isDataSelected()) {
 			removeWidget(statefulWidget.closeButton)
 			removeWidget(scrollableView)

@@ -22,6 +22,7 @@ class CheckBox(
 	private val text: MutableComponent? = null,
 	default: Boolean = false,
 	afterClick: (CheckBox) -> Unit,
+	// @TODO: get rid of empty?
 ) : PokenavButton(x, y, width, height, Component.empty(), disabled, {
 	(it as CheckBox).checked = !it.checked
 	afterClick.invoke(it)
@@ -35,7 +36,12 @@ class CheckBox(
 	private val font = Minecraft.getInstance().font
 	private val scale = min(1f, height.toFloat() / font.lineHeight.toFloat())
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		val poseStack = guiGraphics.pose()
 
 		blitk(

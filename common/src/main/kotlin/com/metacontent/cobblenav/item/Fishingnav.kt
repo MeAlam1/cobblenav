@@ -6,6 +6,7 @@ import com.cobblemon.mod.common.entity.fishing.PokeRodFishingBobberEntity
 import com.metacontent.cobblenav.client.gui.pokenav.FishingnavScreen
 import com.metacontent.cobblenav.networking.packet.client.OpenFishingnavPacket
 import com.metacontent.cobblenav.os.PokenavOS
+import com.metacontent.cobblenav.util.I18nUtil.item
 import com.metacontent.cobblenav.util.cobblenavResource
 import com.metacontent.cobblenav.util.isTraveling
 import net.minecraft.client.Minecraft
@@ -35,7 +36,11 @@ class Fishingnav :
 	override val openedInventoryModel = cobblenavResource("open/$REGISTRY_KEY")
 	override val openedInHandModel = cobblenavResource("model/open/$REGISTRY_KEY")
 
-	override fun use(level: Level, player: Player, interactionHand: InteractionHand): InteractionResultHolder<ItemStack> {
+	override fun use(
+		level: Level,
+		player: Player,
+		interactionHand: InteractionHand,
+	): InteractionResultHolder<ItemStack> {
 		if (player.handSlots.any { it.`is`(CobblemonItemTags.POKE_RODS) } && !player.isShiftKeyDown) {
 			return InteractionResultHolder.pass(player.getItemInHand(interactionHand))
 		}
@@ -51,8 +56,13 @@ class Fishingnav :
 		return InteractionResultHolder.sidedSuccess(player.getItemInHand(interactionHand), false)
 	}
 
-	override fun appendHoverText(itemStack: ItemStack, tooltipContext: TooltipContext, list: MutableList<Component>, tooltipFlag: TooltipFlag) {
-		list.add(Component.translatable("item.cobblenav.fishingnav_item.tooltip").gray())
+	override fun appendHoverText(
+		itemStack: ItemStack,
+		tooltipContext: TooltipContext,
+		list: MutableList<Component>,
+		tooltipFlag: TooltipFlag,
+	) {
+		list.add(item("fishingnav_item.tooltip").gray())
 		super.appendHoverText(itemStack, tooltipContext, list, tooltipFlag)
 	}
 

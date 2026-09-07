@@ -6,7 +6,10 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceLocation
 
 // TODO: Nuke with the New Lang Branch
-fun translate(key: String, placeholder: MutableComponent = Component.literal(key).red()): MutableComponent {
+fun translate(
+	key: String,
+	placeholder: MutableComponent = Component.literal(key).red(),
+): MutableComponent {
 	val component = Component.translatable(key)
 	if (component.string == key) {
 		return placeholder
@@ -14,9 +17,15 @@ fun translate(key: String, placeholder: MutableComponent = Component.literal(key
 	return component
 }
 
-fun translate(location: ResourceLocation, namespace: String): MutableComponent = translate(location.toLanguageKey(namespace), literal(location.path).red())
+fun translate(
+	location: ResourceLocation,
+	namespace: String,
+): MutableComponent = translate(location.toLanguageKey(namespace), literal(location.path).red())
 
-fun tryTranslating(key: String, placeholder: MutableComponent = Component.literal(key).red()): Pair<Boolean, MutableComponent> {
+fun tryTranslating(
+	key: String,
+	placeholder: MutableComponent = Component.literal(key).red(),
+): Pair<Boolean, MutableComponent> {
 	val component = Component.translatable(key)
 	if (component.string == key) {
 		return false to placeholder

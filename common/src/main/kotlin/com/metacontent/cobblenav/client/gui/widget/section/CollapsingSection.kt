@@ -5,14 +5,26 @@ import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 
-class CollapsingSection(statefulWidget: SectionWidget, x: Int, y: Int, width: Int, height: Int) : WidgetState<SectionWidget>(statefulWidget, x, y, width, height, Component.empty()) {
+class CollapsingSection(
+	statefulWidget: SectionWidget,
+	x: Int,
+	y: Int,
+	width: Int,
+	height: Int,
+	// @TODO: get rid of empty?
+) : WidgetState<SectionWidget>(statefulWidget, x, y, width, height, Component.empty()) {
 	companion object {
 		const val ANIMATION_TIME = 0.1f
 	}
 
 	private val timer = Timer(ANIMATION_TIME * statefulWidget.widgets.sumOf { it.height / 12 })
 
-	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		i: Int,
+		j: Int,
+		f: Float,
+	) {
 		timer.tick(f)
 
 		height = SectionWidget.HEADER_HEIGHT + (statefulWidget.expandablePartHeight * (1 - timer.getProgress())).toInt()
@@ -27,5 +39,9 @@ class CollapsingSection(statefulWidget: SectionWidget, x: Int, y: Int, width: In
 		}
 	}
 
-	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean = false
+	override fun mouseClicked(
+		pMouseX: Double,
+		pMouseY: Double,
+		pButton: Int,
+	): Boolean = false
 }

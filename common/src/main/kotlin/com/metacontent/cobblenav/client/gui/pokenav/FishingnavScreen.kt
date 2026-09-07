@@ -24,7 +24,10 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 
-class FishingnavScreen(os: PokenavOS) :
+class FishingnavScreen(
+	os: PokenavOS,
+) :
+// @TODO: move literal to lang?
 	PokenavScreen(os, true, true, Component.literal("Fishing")),
 	SpawnDataDisplayer {
 	companion object {
@@ -67,35 +70,39 @@ class FishingnavScreen(os: PokenavOS) :
 	override fun initScreen() {
 		RequestFishingnavScreenInitDataPacket().sendToServer()
 
-		baseTable = TableView(
-			x = screenX + VERTICAL_BORDER_DEPTH + PANEL_WIDTH,
-			y = screenY + HORIZONTAL_BORDER_DEPTH,
-			width = WIDTH - 2 * VERTICAL_BORDER_DEPTH - PANEL_WIDTH,
-			columns = 1,
-			horizontalGap = 0f,
-		)
-		scrollableView = ScrollableView(
-			x = screenX + VERTICAL_BORDER_DEPTH + PANEL_WIDTH,
-			y = screenY + HORIZONTAL_BORDER_DEPTH,
-			width = WIDTH - 2 * VERTICAL_BORDER_DEPTH - PANEL_WIDTH,
-			height = HEIGHT - 2 * HORIZONTAL_BORDER_DEPTH,
-			child = baseTable,
-		).also { addBlockableWidget(it) }
-		fishingTable = TableView(
-			x = 0,
-			y = 0,
-			width = baseTable.width,
-			columns = 1,
-			columnWidth = baseTable.columnWidth,
-			horizontalGap = 0f,
-		)
-		fishingContextWidget = FishingContextWidget(
-			x = 0,
-			y = 0,
-			width = baseTable.width,
-			height = WEATHER_WIDGET_HEIGHT,
-			level = player?.clientLevel,
-		)
+		baseTable =
+			TableView(
+				x = screenX + VERTICAL_BORDER_DEPTH + PANEL_WIDTH,
+				y = screenY + HORIZONTAL_BORDER_DEPTH,
+				width = WIDTH - 2 * VERTICAL_BORDER_DEPTH - PANEL_WIDTH,
+				columns = 1,
+				horizontalGap = 0f,
+			)
+		scrollableView =
+			ScrollableView(
+				x = screenX + VERTICAL_BORDER_DEPTH + PANEL_WIDTH,
+				y = screenY + HORIZONTAL_BORDER_DEPTH,
+				width = WIDTH - 2 * VERTICAL_BORDER_DEPTH - PANEL_WIDTH,
+				height = HEIGHT - 2 * HORIZONTAL_BORDER_DEPTH,
+				child = baseTable,
+			).also { addBlockableWidget(it) }
+		fishingTable =
+			TableView(
+				x = 0,
+				y = 0,
+				width = baseTable.width,
+				columns = 1,
+				columnWidth = baseTable.columnWidth,
+				horizontalGap = 0f,
+			)
+		fishingContextWidget =
+			FishingContextWidget(
+				x = 0,
+				y = 0,
+				width = baseTable.width,
+				height = WEATHER_WIDGET_HEIGHT,
+				level = player?.clientLevel,
+			)
 		baseTable.add(fishingContextWidget)
 
 		IconButton(
@@ -107,49 +114,58 @@ class FishingnavScreen(os: PokenavOS) :
 			action = { this.onClose() },
 		).also { addBlockableWidget(it) }
 
-		refreshButton = IconButton(
-			pX = screenX + VERTICAL_BORDER_DEPTH + 2,
-			pY = screenY + HEIGHT / 2 - 2 * BUTTON_GAP - NAV_BUTTON_HEIGHT - BUTTON_HEIGHT,
-			pWidth = BUTTON_WIDTH,
-			pHeight = BUTTON_HEIGHT,
-			disabled = loading,
-			action = {
-				scrollableView.reset()
-				bucketViews.forEach { it.clear() }
-				requestFishingData()
-			},
-			texture = REFRESH,
-		).also { addBlockableWidget(it) }
+		refreshButton =
+			IconButton(
+				pX = screenX + VERTICAL_BORDER_DEPTH + 2,
+				pY = screenY + HEIGHT / 2 - 2 * BUTTON_GAP - NAV_BUTTON_HEIGHT - BUTTON_HEIGHT,
+				pWidth = BUTTON_WIDTH,
+				pHeight = BUTTON_HEIGHT,
+				disabled = loading,
+				action = {
+					scrollableView.reset()
+					bucketViews.forEach { it.clear() }
+					requestFishingData()
+				},
+				texture = REFRESH,
+			).also { addBlockableWidget(it) }
 
-		spawnDataDetails = SpawnDataDetailWidget(
-			displayer = this,
-			pokenavScreen = this,
-			x = screenX + VERTICAL_BORDER_DEPTH,
-			y = screenY + HORIZONTAL_BORDER_DEPTH,
-		).also { addUnblockableWidget(it) }
+		spawnDataDetails =
+			SpawnDataDetailWidget(
+				displayer = this,
+				pokenavScreen = this,
+				x = screenX + VERTICAL_BORDER_DEPTH,
+				y = screenY + HORIZONTAL_BORDER_DEPTH,
+			).also { addUnblockableWidget(it) }
 	}
 
-	fun receiveInitData(buckets: List<String>, pokeBall: ResourceLocation, lineColor: String, baitItem: ItemStack) {
+	fun receiveInitData(
+		buckets: List<String>,
+		pokeBall: ResourceLocation,
+		lineColor: String,
+		baitItem: ItemStack,
+	) {
 		this.buckets = buckets
-		bucketViews = buckets.mapIndexed { index, bucket ->
-			BucketViewWidget(
-				x = 0,
-				y = 0,
-				width = fishingTable.width,
-				columns = 5,
-				minHeight = BUCKET_VIEW_MIN_HEIGHT,
-				depthProgress = index / buckets.size.toFloat(),
-				bucket = bucket,
-				verticalPadding = 4f,
-			).also {
-				if (index == buckets.size - 1) {
-					_color = it.color.toColor()
+		bucketViews =
+			buckets
+				.mapIndexed { index, bucket ->
+					BucketViewWidget(
+						x = 0,
+						y = 0,
+						width = fishingTable.width,
+						columns = 5,
+						minHeight = BUCKET_VIEW_MIN_HEIGHT,
+						depthProgress = index / buckets.size.toFloat(),
+						bucket = bucket,
+						verticalPadding = 4f,
+					).also {
+						if (index == buckets.size - 1) {
+							_color = it.color.toColor()
+						}
+					}
+				}.also {
+					fishingTable.add(it)
+					baseTable.add(fishingTable)
 				}
-			}
-		}.also {
-			fishingTable.add(it)
-			baseTable.add(fishingTable)
-		}
 
 		fishingContextWidget.lineColor = lineColor.toIntOrNull()
 		fishingContextWidget.pokeBallStack = ItemStack(BuiltInRegistries.ITEM.get(pokeBall))
@@ -215,10 +231,10 @@ class FishingnavScreen(os: PokenavOS) :
 								firstData.chance,
 								secondData.chance,
 							)
-						}
-						.map {
+						}.map {
 							ScrollableItemWidget(
-								child = SpawnDataWidget(
+								child =
+								SpawnDataWidget(
 									x = 0,
 									y = 0,
 									spawnData = it,
@@ -236,7 +252,12 @@ class FishingnavScreen(os: PokenavOS) :
 		refreshButton.disabled = false
 	}
 
-	override fun renderOnBackLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
+	override fun renderOnBackLayer(
+		guiGraphics: GuiGraphics,
+		mouseX: Int,
+		mouseY: Int,
+		delta: Float,
+	) {
 		val poseStack = guiGraphics.pose()
 
 		blitk(
@@ -259,7 +280,12 @@ class FishingnavScreen(os: PokenavOS) :
 		)
 	}
 
-	override fun renderOnFrontLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
+	override fun renderOnFrontLayer(
+		guiGraphics: GuiGraphics,
+		mouseX: Int,
+		mouseY: Int,
+		delta: Float,
+	) {
 		if (blockWidgets || minecraft?.screen != this) return
 		hoveredData?.renderTooltip(
 			guiGraphics = guiGraphics,
