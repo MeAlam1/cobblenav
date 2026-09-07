@@ -3,10 +3,10 @@ package com.metacontent.cobblenav.client.gui.widget.spawndata
 import com.cobblemon.mod.common.api.gui.blitk
 import com.metacontent.cobblenav.client.gui.SpawnDataDisplayer
 import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
-import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.client.gui.widget.stateful.StatefulWidget
+import com.metacontent.cobblenav.utils.extensions.gui
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import org.joml.Vector3d

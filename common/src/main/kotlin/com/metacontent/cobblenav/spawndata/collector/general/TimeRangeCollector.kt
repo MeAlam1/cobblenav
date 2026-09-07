@@ -2,7 +2,7 @@ package com.metacontent.cobblenav.spawndata.collector.general
 
 import com.cobblemon.mod.common.api.spawning.condition.SpawningCondition
 import com.cobblemon.mod.common.api.spawning.detail.SpawnDetail
-import com.metacontent.cobblenav.client.gui.util.getTimeString
+import com.metacontent.cobblenav.utils.extensions.getTimeString
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer

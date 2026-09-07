@@ -3,7 +3,6 @@ package com.metacontent.cobblenav.client.gui
 import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
 import com.cobblemon.mod.common.util.removeIf
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.gui.util.Timer
 import com.metacontent.cobblenav.item.Pokefinder
 import com.metacontent.cobblenav.item.Pokenav
 import com.mojang.blaze3d.vertex.PoseStack

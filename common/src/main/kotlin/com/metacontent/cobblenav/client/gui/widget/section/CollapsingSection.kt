@@ -1,6 +1,6 @@
 package com.metacontent.cobblenav.client.gui.widget.section
 
-import com.metacontent.cobblenav.client.gui.util.Timer
+import com.metacontent.cobblenav.client.gui.Timer
 import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component

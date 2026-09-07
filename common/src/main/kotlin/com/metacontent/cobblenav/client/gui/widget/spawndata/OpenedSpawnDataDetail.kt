@@ -1,12 +1,13 @@
 package com.metacontent.cobblenav.client.gui.widget.spawndata
 
 import com.cobblemon.mod.common.client.render.drawScaledTextJustifiedRight
-import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.client.gui.widget.layout.TableView
 import com.metacontent.cobblenav.client.gui.widget.layout.scrollable.ScrollableView
 import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
+import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.extensions.gui
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
@@ -22,8 +23,7 @@ class OpenedSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: In
 		y,
 		SpawnDataDetailWidget.WIDTH,
 		SpawnDataDetailWidget.HEIGHT,
-		// @TODO: move literal to lang?
-		Component.literal("Opened Spawn Data Details"),
+		label("opened_spawn_data_details"),
 	) {
 	companion object {
 		const val BUTTON_WIDTH: Int = 17

@@ -2,10 +2,10 @@ package com.metacontent.cobblenav.client.gui.widget.section
 
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.render.drawScaledText
-import com.metacontent.cobblenav.client.gui.util.RGB
-import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.stateful.StatefulWidget
 import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
+import com.metacontent.cobblenav.utils.RGB
+import com.metacontent.cobblenav.utils.extensions.gui
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics

@@ -1,10 +1,11 @@
-package com.metacontent.cobblenav.utils.finder
+package com.metacontent.cobblenav.finder
 
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.metacontent.cobblenav.Cobblenav
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
+import kotlin.collections.get
 import kotlin.math.max
 
 object BestPokemonFinder : PokemonFinder() {

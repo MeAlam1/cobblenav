@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.utils
+package com.metacontent.cobblenav.utils.extensions
 
 import com.cobblemon.mod.common.util.asIdentifierDefaultingNamespace
 import com.metacontent.cobblenav.Cobblenav

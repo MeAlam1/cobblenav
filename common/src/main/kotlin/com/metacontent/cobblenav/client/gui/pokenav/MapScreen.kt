@@ -1,30 +1,23 @@
 package com.metacontent.cobblenav.client.gui.pokenav
 
-import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.os.PokenavOS
-import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import java.awt.Color
 
 class MapScreen(
 	os: PokenavOS,
 	makeOpeningSound: Boolean = false,
 	animateOpening: Boolean = false,
-	// @TODO: move literal to lang?
-) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Map")) {
+) : PokenavScreen(os, makeOpeningSound, animateOpening, label("map")) {
+
 	override val color = Color.decode("#000000").rgb
 
 	override fun initScreen() {
-		IconButton(
-			pX = screenX + VERTICAL_BORDER_DEPTH,
-			pY = screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - BACK_BUTTON_SIZE,
-			pWidth = BACK_BUTTON_SIZE,
-			pHeight = BACK_BUTTON_SIZE,
-			texture = BACK_BUTTON,
-			action = { changeScreen(MainScreen(os)) },
-		).let { addBlockableWidget(it) }
-	}
-
-	override fun renderOnBackLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
+		addDefaultBottomWidgets(
+			includeRadialMenu = false,
+			includeStatusBar = false,
+			includeBackButton = true,
+			backAction = { changeScreen(MainScreen(os)) },
+		)
 	}
 }

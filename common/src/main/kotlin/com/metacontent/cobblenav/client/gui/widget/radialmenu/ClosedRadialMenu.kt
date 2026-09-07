@@ -1,7 +1,7 @@
 package com.metacontent.cobblenav.client.gui.widget.radialmenu
 
 import com.cobblemon.mod.common.api.gui.blitk
-import com.metacontent.cobblenav.client.gui.util.Timer
+import com.metacontent.cobblenav.client.gui.Timer
 import com.metacontent.cobblenav.os.PokenavOS
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component

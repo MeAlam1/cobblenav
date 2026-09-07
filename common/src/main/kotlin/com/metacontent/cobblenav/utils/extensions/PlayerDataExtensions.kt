@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.utils
+package com.metacontent.cobblenav.utils.extensions
 
 import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.api.storage.player.PlayerInstancedDataStoreManager

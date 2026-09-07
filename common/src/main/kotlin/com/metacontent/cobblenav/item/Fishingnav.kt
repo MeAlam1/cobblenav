@@ -8,7 +8,7 @@ import com.metacontent.cobblenav.networking.packet.client.OpenFishingnavPacket
 import com.metacontent.cobblenav.os.PokenavOS
 import com.metacontent.cobblenav.utils.I18nUtil.item
 import com.metacontent.cobblenav.utils.cobblenavResource
-import com.metacontent.cobblenav.utils.isTraveling
+import com.metacontent.cobblenav.utils.extensions.isTraveling
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer

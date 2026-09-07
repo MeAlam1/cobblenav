@@ -1,8 +1,8 @@
 package com.metacontent.cobblenav.client.gui.widget.spawndata
 
-import com.metacontent.cobblenav.client.gui.util.Timer
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
+import com.metacontent.cobblenav.client.gui.Timer
 import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import org.joml.Vector3d

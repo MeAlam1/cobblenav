@@ -12,7 +12,7 @@ import net.minecraft.network.chat.CommonComponents
 
 class ConfigScreen<T : Config<T>>(private val config: T, private val parent: Screen?) :
 	Screen(
-		label("edit.context", "Config"), // TODO
+		label("edit.context", "Config"),
 	) {
 
 	companion object {
@@ -56,7 +56,6 @@ class ConfigScreen<T : Config<T>>(private val config: T, private val parent: Scr
 		variableList.setOptions(config.options())
 		addRenderableWidget(variableList)
 
-		//region Search Bar
 		val searchLayout = layout.addToHeader(LinearLayout.vertical())
 
 		searchLayout.addChild(
@@ -83,8 +82,7 @@ class ConfigScreen<T : Config<T>>(private val config: T, private val parent: Scr
 		}
 
 		searchLayout.addChild(searchEdit)
-		//endregion
-		//region Done Button
+
 		doneButton = Button.builder(CommonComponents.GUI_DONE) {
 			onClose()
 		}
@@ -96,7 +94,7 @@ class ConfigScreen<T : Config<T>>(private val config: T, private val parent: Scr
 			.build()
 
 		layout.addToFooter(doneButton)
-		//endregion
+
 		layout.visitWidgets { widget -> addRenderableWidget(widget) }
 		layout.arrangeElements()
 

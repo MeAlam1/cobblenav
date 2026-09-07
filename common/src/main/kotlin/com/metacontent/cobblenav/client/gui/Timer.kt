@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.client.gui.util
+package com.metacontent.cobblenav.client.gui
 
 class Timer(private var duration: Float, var loop: Boolean = false) {
 	private var timer = duration

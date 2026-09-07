@@ -22,8 +22,10 @@
 
 ### Fixes
 
-* Fix concurrent modification during spawn catalogue encoding
+* Fixed concurrent modification during spawn catalogue encoding
 * Fixed Pokefinder Properties filter working incorrectly
+* Fixed Toasts from leaking through the CobbleNav GUI's
+  * All Toasts should render on top of the CobbleNav GUI's
 
 ### Developer
 

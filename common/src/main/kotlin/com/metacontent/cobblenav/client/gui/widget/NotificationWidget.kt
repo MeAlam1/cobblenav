@@ -3,8 +3,8 @@ package com.metacontent.cobblenav.client.gui.widget
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
 import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
-import com.metacontent.cobblenav.client.gui.util.Timer
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
+import com.metacontent.cobblenav.client.gui.Timer
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent

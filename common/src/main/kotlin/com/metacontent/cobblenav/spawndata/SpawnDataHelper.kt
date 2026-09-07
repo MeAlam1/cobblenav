@@ -29,7 +29,7 @@ import com.metacontent.cobblenav.spawndata.collector.ConditionCollectors
 import com.metacontent.cobblenav.spawndata.resultdata.SpawnResultData
 import com.metacontent.cobblenav.storage.SpawnDataCatalogue
 import com.metacontent.cobblenav.utils.WeightedBucket
-import com.metacontent.cobblenav.utils.spawnCatalogue
+import com.metacontent.cobblenav.utils.extensions.spawnCatalogue
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer

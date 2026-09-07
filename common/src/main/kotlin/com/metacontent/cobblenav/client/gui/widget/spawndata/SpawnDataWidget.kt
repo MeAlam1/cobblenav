@@ -10,10 +10,10 @@ import com.metacontent.cobblenav.api.platform.DimensionPlateRepository
 import com.metacontent.cobblenav.client.CobblenavClient
 import com.metacontent.cobblenav.client.gui.SpawnDataDisplayer
 import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
-import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.spawndata.CheckedSpawnData
+import com.metacontent.cobblenav.utils.extensions.gui
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component

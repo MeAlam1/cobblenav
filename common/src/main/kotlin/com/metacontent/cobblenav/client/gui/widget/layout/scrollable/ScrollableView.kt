@@ -1,7 +1,7 @@
 package com.metacontent.cobblenav.client.gui.widget.layout.scrollable
 
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
-import com.metacontent.cobblenav.client.gui.util.cobblenavScissor
+import com.metacontent.cobblenav.utils.extensions.cobblenavScissor
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.chat.Component

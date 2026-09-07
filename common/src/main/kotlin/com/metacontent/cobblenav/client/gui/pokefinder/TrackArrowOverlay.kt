@@ -4,8 +4,8 @@ import com.cobblemon.mod.common.client.render.drawScaledText
 import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
 import com.metacontent.cobblenav.CobblenavItems
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
 import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui

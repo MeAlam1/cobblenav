@@ -3,7 +3,6 @@ package com.metacontent.cobblenav.client.gui.pokenav
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.metacontent.cobblenav.client.gui.SpawnDataDisplayer
-import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.client.gui.widget.fishing.BucketViewWidget
 import com.metacontent.cobblenav.client.gui.widget.fishing.FishingContextWidget
@@ -17,16 +16,16 @@ import com.metacontent.cobblenav.networking.packet.server.RequestFishingnavScree
 import com.metacontent.cobblenav.os.PokenavOS
 import com.metacontent.cobblenav.spawndata.CheckedSpawnData
 import com.metacontent.cobblenav.spawndata.SpawnData
+import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.extensions.gui
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 
 class FishingnavScreen(os: PokenavOS) :
-// @TODO: move literal to lang?
-	PokenavScreen(os, true, true, Component.literal("Fishing")),
+	PokenavScreen(os, true, true, label("fishing")),
 	SpawnDataDisplayer {
 	companion object {
 		const val WEATHER_WIDGET_HEIGHT = 40

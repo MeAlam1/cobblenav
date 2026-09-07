@@ -13,10 +13,10 @@ import com.cobblemon.mod.common.client.render.drawScaledText
 import com.metacontent.cobblenav.api.generalresources.ColorRepository
 import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen.Companion.WIDGET_HEIGHT
 import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen.Companion.WIDGET_WIDTH
-import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.button.CheckBox
 import com.metacontent.cobblenav.client.settings.pokefinder.filter.EvYieldFilter
 import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.extensions.gui
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import java.util.*

@@ -1,9 +1,9 @@
 package com.metacontent.cobblenav.client.gui.widget.radialmenu
 
-import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.stateful.StatefulWidget
 import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
 import com.metacontent.cobblenav.os.PokenavOS
+import com.metacontent.cobblenav.utils.extensions.gui
 import net.minecraft.network.chat.Component
 
 abstract class RadialMenuState(

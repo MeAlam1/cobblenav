@@ -3,15 +3,18 @@ package com.metacontent.cobblenav.client.gui.pokenav
 import com.cobblemon.mod.common.CobblemonSounds
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.gui.CobblemonRenderable
-import com.google.common.collect.Lists
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.gui.util.cobblenavScissor
-import com.metacontent.cobblenav.client.gui.util.drawBlurredArea
-import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
+import com.metacontent.cobblenav.client.gui.ScreenElementManager
 import com.metacontent.cobblenav.client.gui.widget.NotificationWidget
+import com.metacontent.cobblenav.client.gui.widget.StatusBarWidget
+import com.metacontent.cobblenav.client.gui.widget.button.IconButton
+import com.metacontent.cobblenav.client.gui.widget.button.PokenavButton
+import com.metacontent.cobblenav.client.gui.widget.radialmenu.RadialMenuState
+import com.metacontent.cobblenav.client.gui.widget.radialmenu.RadialPopupMenu
 import com.metacontent.cobblenav.os.PokenavOS
-import com.mojang.blaze3d.vertex.PoseStack
+import com.metacontent.cobblenav.utils.extensions.cobblenavScissor
+import com.metacontent.cobblenav.utils.extensions.drawBlurredArea
+import com.metacontent.cobblenav.utils.extensions.gui
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
@@ -20,11 +23,15 @@ import net.minecraft.client.player.LocalPlayer
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.FastColor
-import org.joml.Vector3f
 
-abstract class PokenavScreen(val os: PokenavOS, makeOpeningSound: Boolean, animateOpening: Boolean, component: Component) :
-	Screen(component),
+abstract class PokenavScreen(
+	val os: PokenavOS,
+	makeOpeningSound: Boolean,
+	animateOpening: Boolean,
+	component: Component,
+) : Screen(component),
 	CobblemonRenderable {
+
 	companion object {
 		const val WIDTH = 350
 		const val HEIGHT = 250
@@ -48,10 +55,12 @@ abstract class PokenavScreen(val os: PokenavOS, makeOpeningSound: Boolean, anima
 	var screenY = 0
 	abstract val color: Int
 	val player: LocalPlayer? = Minecraft.getInstance().player
+
 	private var animationOffset: Float = if (animateOpening) ANIMATION_OFFSET else 0f
 	var blockWidgets: Boolean = false
-	private val blockable = Lists.newArrayList<AbstractWidget>()
-	private val unblockable = Lists.newArrayList<AbstractWidget>()
+
+	protected val widgets = ScreenElementManager(scale)
+
 	lateinit var notifications: NotificationWidget
 	var previousScreen: PokenavScreen? = null
 
@@ -63,8 +72,7 @@ abstract class PokenavScreen(val os: PokenavOS, makeOpeningSound: Boolean, anima
 
 	override fun init() {
 		blockWidgets = false
-		blockable.clear()
-		unblockable.clear()
+		widgets.clear()
 
 		width = (width / scale).toInt()
 		height = (height / scale).toInt()
@@ -75,7 +83,7 @@ abstract class PokenavScreen(val os: PokenavOS, makeOpeningSound: Boolean, anima
 		notifications = NotificationWidget(
 			screenX + VERTICAL_BORDER_DEPTH,
 			screenY + HORIZONTAL_BORDER_DEPTH,
-		).also { addUnblockableWidget(it) }
+		).also { widgets.addUnblockable(it) }
 
 		initScreen()
 	}
@@ -83,28 +91,39 @@ abstract class PokenavScreen(val os: PokenavOS, makeOpeningSound: Boolean, anima
 	abstract fun initScreen()
 
 	override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
-		val poseStack = guiGraphics.pose()
+		guiGraphics.pose().pushPose()
+		guiGraphics.pose().scale(scale, scale, 1f)
 
-		poseStack.pushAndPop(
-			scale = Vector3f(scale, scale, 1f),
-		) {
-			renderBackground(guiGraphics, mouseX, mouseY, delta)
-			val scaledMouseX = (mouseX / scale).toInt()
-			val scaledMouseY = (mouseY / scale).toInt()
-			poseStack.translate(0f, animationOffset, 100f)
-			renderScreenBackground(guiGraphics, SCREEN, color)
-			guiGraphics.cobblenavScissor(
-				screenX + VERTICAL_BORDER_DEPTH,
-				screenY + HORIZONTAL_BORDER_DEPTH - 1,
-				screenX + VERTICAL_BORDER_DEPTH + SCREEN_WIDTH,
-				screenY + HORIZONTAL_BORDER_DEPTH + SCREEN_HEIGHT + 1,
-			)
-			// render blockable widgets and the current screen's stuff
-			renderOnBackLayer(guiGraphics, scaledMouseX, scaledMouseY, delta)
-			renderWidgets(blockable, guiGraphics, scaledMouseX, scaledMouseY, delta)
-			renderOnFrontLayer(guiGraphics, scaledMouseX, scaledMouseY, delta)
-			// if true block widgets and screen
-			poseStack.translate(0f, 0f, 500f)
+		val scaledMouseX = (mouseX / scale).toInt()
+		val scaledMouseY = (mouseY / scale).toInt()
+
+		renderScreenContent(guiGraphics, scaledMouseX, scaledMouseY, delta)
+
+		guiGraphics.pose().popPose()
+
+		if (animationOffset > 0f) {
+			animationOffset -= ANIMATION_SPEED * delta
+			if (animationOffset < 0f) animationOffset = 0f
+		}
+	}
+
+	private fun renderScreenContent(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
+		renderBaseElement(guiGraphics, BORDERS)
+
+		renderScreenBackground(guiGraphics, SCREEN, color)
+
+		guiGraphics.cobblenavScissor(
+			screenX + VERTICAL_BORDER_DEPTH,
+			screenY + HORIZONTAL_BORDER_DEPTH - 1,
+			screenX + VERTICAL_BORDER_DEPTH + SCREEN_WIDTH,
+			screenY + HORIZONTAL_BORDER_DEPTH + SCREEN_HEIGHT + 1,
+		)
+
+		try {
+			renderOnBackLayer(guiGraphics, mouseX, mouseY, delta)
+			widgets.renderBlockable(guiGraphics, mouseX, mouseY, delta, blockWidgets)
+			renderOnFrontLayer(guiGraphics, mouseX, mouseY, delta)
+
 			if (blockWidgets) {
 				guiGraphics.fill(
 					screenX + VERTICAL_BORDER_DEPTH,
@@ -122,54 +141,32 @@ abstract class PokenavScreen(val os: PokenavOS, makeOpeningSound: Boolean, anima
 					delta = delta,
 				)
 			}
-			poseStack.translate(0f, 0f, 5000f)
-			// render unblockable widgets
-			renderWidgets(unblockable, guiGraphics, scaledMouseX, scaledMouseY, delta)
 
+			widgets.renderUnblockable(guiGraphics, mouseX, mouseY, delta)
+		} finally {
 			guiGraphics.disableScissor()
-
-			poseStack.translate(0f, 0f, 600f)
-			renderBaseElement(poseStack, BORDERS)
-			blitk(
-				poseStack,
-				texture = SCREEN_GLOW,
-				x = screenX,
-				y = screenY,
-				width = WIDTH,
-				height = HEIGHT,
-				red = FastColor.ARGB32.red(color) / 128f,
-				green = FastColor.ARGB32.green(color) / 128f,
-				blue = FastColor.ARGB32.blue(color) / 128f,
-			)
-			poseStack.translate(0f, 0f, 900f)
-			renderBaseElement(poseStack, DETAILS)
 		}
 
-		if (animationOffset > 0f) {
-			animationOffset -= ANIMATION_SPEED * delta
-			if (animationOffset < 0f) {
-				animationOffset = 0f
-			}
-		}
-//        guiGraphics.fill((width.toFloat() / 2f).toInt() - 1, 0, (width.toFloat() / 2f).toInt() + 1, height, FastColor.ARGB32.color(255, 255, 255, 255))
-//        guiGraphics.fill(0, (height.toFloat() / 2f).toInt() - 1, width, (height.toFloat() / 2f).toInt() + 1, FastColor.ARGB32.color(255, 255, 255, 255))
+		renderOverlay(guiGraphics, mouseX, mouseY, delta)
 	}
 
-	open fun renderOnBackLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {}
-
-	open fun renderOnFrontLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {}
-
-	private fun renderWidgets(widgets: List<AbstractWidget>, guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
-		val iterator = widgets.iterator()
-		while (iterator.hasNext()) {
-			iterator.next().render(guiGraphics, mouseX, mouseY, delta)
-		}
-	}
-
-	private fun renderBaseElement(poseStack: PoseStack, resourceLocation: ResourceLocation) {
+	protected open fun renderOnBackLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {}
+	protected open fun renderOnFrontLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {}
+	protected open fun renderOverlay(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		blitk(
-			poseStack,
-			texture = resourceLocation,
+			guiGraphics.pose(),
+			texture = SCREEN_GLOW,
+			x = screenX,
+			y = screenY,
+			width = WIDTH,
+			height = HEIGHT,
+			red = FastColor.ARGB32.red(color) / 128f,
+			green = FastColor.ARGB32.green(color) / 128f,
+			blue = FastColor.ARGB32.blue(color) / 128f,
+		)
+		blitk(
+			guiGraphics.pose(),
+			texture = DETAILS,
 			x = screenX,
 			y = screenY,
 			width = WIDTH,
@@ -177,7 +174,18 @@ abstract class PokenavScreen(val os: PokenavOS, makeOpeningSound: Boolean, anima
 		)
 	}
 
-	private fun renderScreenBackground(guiGraphics: GuiGraphics, resourceLocation: ResourceLocation?, color: Int) {
+	private fun renderBaseElement(guiGraphics: GuiGraphics, texture: ResourceLocation) {
+		blitk(
+			guiGraphics.pose(),
+			texture = texture,
+			x = screenX,
+			y = screenY,
+			width = WIDTH,
+			height = HEIGHT,
+		)
+	}
+
+	private fun renderScreenBackground(guiGraphics: GuiGraphics, texture: ResourceLocation?, color: Int) {
 		guiGraphics.fill(
 			screenX + VERTICAL_BORDER_DEPTH,
 			screenY + HORIZONTAL_BORDER_DEPTH - 1,
@@ -185,101 +193,60 @@ abstract class PokenavScreen(val os: PokenavOS, makeOpeningSound: Boolean, anima
 			screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH + 1,
 			color,
 		)
-//        blitk(
-//            poseStack,
-//            texture = resourceLocation,
-//            x = screenX,
-//            y = screenY,
-//            width = WIDTH,
-//            height = HEIGHT,
-//            textureWidth = WIDTH,
-//            textureHeight = HEIGHT,
-// //            red = FastColor.ARGB32.red(color),
-// //            green = FastColor.ARGB32.green(color),
-// //            blue = FastColor.ARGB32.blue(color),
-//        )
 	}
 
-	override fun mouseClicked(d: Double, e: Double, i: Int): Boolean {
-		if (!blockWidgets) {
-			val blockableClicked = blockable.widgetsClicked(d / scale, e / scale, i)
-			if (blockableClicked) {
-				return true
-			}
+	protected fun addBlockableWidget(widget: AbstractWidget) = widgets.addBlockable(widget)
+	protected fun removeBlockableWidget(widget: AbstractWidget) = widgets.removeBlockable(widget)
+	protected fun clearBlockableWidgets() = widgets.clearBlockable()
+	protected fun addUnblockableWidget(widget: AbstractWidget) = widgets.addUnblockable(widget)
+	protected fun removeUnblockableWidget(widget: AbstractWidget) = widgets.removeUnblockable(widget)
+	protected fun clearUnblockableWidget() = widgets.clearUnblockable()
+
+	protected fun addDefaultBottomWidgets(
+		includeRadialMenu: Boolean = true,
+		includeStatusBar: Boolean = true,
+		includeBackButton: Boolean = false,
+		backAction: ((PokenavButton) -> Unit)? = null,
+	) {
+		if (includeRadialMenu) {
+			RadialPopupMenu(
+				this,
+				screenX + (WIDTH - RadialMenuState.MENU_DIAMETER) / 2,
+				screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - RadialMenuState.MENU_DIAMETER / 2,
+			).also { addUnblockableWidget(it) }
 		}
-		return unblockable.widgetsClicked(d / scale, e / scale, i)
+		if (includeStatusBar) {
+			StatusBarWidget(
+				screenX + WIDTH - VERTICAL_BORDER_DEPTH - StatusBarWidget.WIDTH - 2,
+				screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - StatusBarWidget.HEIGHT,
+			).also { addUnblockableWidget(it) }
+		}
+		if (includeBackButton && backAction != null) {
+			IconButton(
+				pX = screenX + VERTICAL_BORDER_DEPTH,
+				pY = screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - BACK_BUTTON_SIZE,
+				pWidth = BACK_BUTTON_SIZE,
+				pHeight = BACK_BUTTON_SIZE,
+				texture = BACK_BUTTON,
+				action = backAction,
+			).let { addBlockableWidget(it) }
+		}
 	}
 
-	override fun mouseScrolled(d: Double, e: Double, f: Double, g: Double): Boolean {
-		if (!blockWidgets) {
-			val blockableScrolled = blockable.widgetsScrolled(d / scale, e / scale, f / scale, g / scale)
-			if (blockableScrolled) {
-				return true
-			}
-		}
-		return unblockable.widgetsScrolled(d / scale, e / scale, f / scale, g / scale)
-	}
+	override fun mouseClicked(d: Double, e: Double, i: Int): Boolean =
+		widgets.mouseClicked(d, e, i, blockWidgets)
+
+	override fun mouseScrolled(d: Double, e: Double, f: Double, g: Double): Boolean =
+		widgets.mouseScrolled(d, e, f, g, blockWidgets)
 
 	override fun mouseDragged(d: Double, e: Double, i: Int, f: Double, g: Double): Boolean {
-		if (!blockWidgets) {
-			blockable.widgetsDragged(d / scale, e / scale, i, f / scale, g / scale)
-		}
-		unblockable.widgetsDragged(d / scale, e / scale, i, f / scale, g / scale)
+		widgets.mouseDragged(d, e, i, f, g, blockWidgets)
 		return true
 	}
 
 	override fun mouseReleased(d: Double, e: Double, i: Int): Boolean {
-		if (!blockWidgets) {
-			blockable.widgetsReleased(d / scale, e / scale, i)
-		}
-		unblockable.widgetsReleased(d / scale, e / scale, i)
+		widgets.mouseReleased(d, e, i, blockWidgets)
 		return true
-	}
-
-	private fun List<AbstractWidget>.widgetsClicked(d: Double, e: Double, i: Int): Boolean = this.any {
-		it.mouseClicked(d, e, i)
-	}
-
-	private fun List<AbstractWidget>.widgetsScrolled(d: Double, e: Double, f: Double, g: Double): Boolean = this.any {
-		it.mouseScrolled(d, e, f, g)
-	}
-
-	private fun List<AbstractWidget>.widgetsDragged(d: Double, e: Double, i: Int, f: Double, g: Double) {
-		this.forEach {
-			it.mouseDragged(d, e, i, f, g)
-		}
-	}
-
-	private fun List<AbstractWidget>.widgetsReleased(d: Double, e: Double, i: Int) {
-		this.forEach {
-			it.mouseReleased(d, e, i)
-		}
-	}
-
-	override fun isPauseScreen(): Boolean = false
-
-	fun addBlockableWidget(widget: AbstractWidget) {
-		blockable.add(widget)
-	}
-
-	fun removeBlockableWidget(widget: AbstractWidget) {
-		blockable.remove(widget)
-	}
-
-	fun clearBlockableWidgets() {
-		blockable.clear()
-	}
-
-	fun addUnblockableWidget(widget: AbstractWidget) {
-		unblockable.add(widget)
-	}
-
-	fun removeUnblockableWidget(widget: AbstractWidget) {
-		unblockable.remove(widget)
-	}
-
-	fun clearUnblockableWidget() {
-		unblockable.clear()
 	}
 
 	fun changeScreen(screen: PokenavScreen, savePrevious: Boolean = false) {
@@ -298,4 +265,6 @@ abstract class PokenavScreen(val os: PokenavOS, makeOpeningSound: Boolean, anima
 	}
 
 	open fun onScreenChange() {}
+
+	override fun isPauseScreen(): Boolean = false
 }

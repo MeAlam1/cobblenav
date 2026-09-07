@@ -6,9 +6,9 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.metacontent.cobblenav.Cobblenav
 import com.metacontent.cobblenav.api.generalresources.ColorRepository
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
 import com.metacontent.cobblenav.item.Pokefinder
+import com.metacontent.cobblenav.utils.extensions.gui
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft

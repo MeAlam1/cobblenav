@@ -1,7 +1,11 @@
-package com.metacontent.cobblenav.utils
+package com.metacontent.cobblenav.utils.extensions
 
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties
 import com.cobblemon.mod.common.pokemon.Pokemon
+import com.cobblemon.mod.common.pokemon.RenderablePokemon
+import com.cobblemon.mod.common.pokemon.feature.SeasonFeatureHandler
+import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 
 fun PokemonProperties.matchesOnClient(pokemon: Pokemon): Boolean {
 	val customPropsBackup = this.customProperties
@@ -24,4 +28,13 @@ fun PokemonProperties.matchesOnClient(pokemon: Pokemon): Boolean {
 
 		aspectFallbackMatches
 	}
+}
+
+fun PokemonProperties.createAndGetAsRenderable(level: ServerLevel? = null, pos: BlockPos? = null): RenderablePokemon {
+	val pokemon = Pokemon()
+	this.apply(pokemon)
+	if (level != null && pos != null) {
+		SeasonFeatureHandler.updateSeason(pokemon, level, pos)
+	}
+	return pokemon.asRenderablePokemon()
 }

@@ -4,7 +4,7 @@ import com.cobblemon.mod.common.api.permission.CobblemonPermissions
 import com.cobblemon.mod.common.util.permission
 import com.metacontent.cobblenav.spawndata.SpawnDataHelper
 import com.metacontent.cobblenav.storage.SpawnDataCatalogue
-import com.metacontent.cobblenav.utils.spawnCatalogue
+import com.metacontent.cobblenav.utils.extensions.spawnCatalogue
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.ArgumentBuilder

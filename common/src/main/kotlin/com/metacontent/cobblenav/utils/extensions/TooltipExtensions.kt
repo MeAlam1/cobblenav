@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.client.gui.util
+package com.metacontent.cobblenav.utils.extensions
 
 import com.cobblemon.mod.common.client.render.drawScaledText
 import net.minecraft.client.Minecraft

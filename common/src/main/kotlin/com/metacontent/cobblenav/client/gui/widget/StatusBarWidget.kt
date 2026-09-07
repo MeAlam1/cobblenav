@@ -3,8 +3,8 @@ package com.metacontent.cobblenav.client.gui.widget
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
-import com.metacontent.cobblenav.client.gui.util.getTimeString
-import com.metacontent.cobblenav.client.gui.util.gui
+import com.metacontent.cobblenav.utils.extensions.getTimeString
+import com.metacontent.cobblenav.utils.extensions.gui
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
