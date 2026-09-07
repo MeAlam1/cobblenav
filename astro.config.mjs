@@ -31,16 +31,14 @@ export default defineConfig({
 			customCss: ["./src/styles/starlight.css"],
 
 			sidebar: [
+				{ label: 'Getting Started', slug: 'getting-started' },
+				{ label: 'PokéNav', slug: 'pokenav' },
 				{
 					label: 'Guides',
 					items: [
 						// Each item here is one entry in the navigation menu.
 						{ label: 'Example Guide', slug: 'guides/example' },
 					],
-				},
-				{
-					label: "Getting Started",
-					items: [{ autogenerate: { directory: 'start' } }],
 				},
 				{
 					label: 'Reference',
