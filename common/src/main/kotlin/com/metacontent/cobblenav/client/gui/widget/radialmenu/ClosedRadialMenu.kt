@@ -19,12 +19,7 @@ class ClosedRadialMenu(
 
 	private val timer = Timer(ANIMATION_DURATION)
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		if ((statefulWidget as RadialPopupMenu).pokenavScreen.blockWidgets) return
 
 		var rgb = 1f
@@ -54,11 +49,7 @@ class ClosedRadialMenu(
 
 	override val blockScreenWidgets: Boolean = false
 
-	override fun mouseClicked(
-		pMouseX: Double,
-		pMouseY: Double,
-		pButton: Int,
-	): Boolean {
+	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean {
 		if (clicked(
 				pMouseX,
 				pMouseY,

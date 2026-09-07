@@ -24,9 +24,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 
-class FishingnavScreen(
-	os: PokenavOS,
-) :
+class FishingnavScreen(os: PokenavOS) :
 // @TODO: move literal to lang?
 	PokenavScreen(os, true, true, Component.literal("Fishing")),
 	SpawnDataDisplayer {
@@ -138,12 +136,7 @@ class FishingnavScreen(
 			).also { addUnblockableWidget(it) }
 	}
 
-	fun receiveInitData(
-		buckets: List<String>,
-		pokeBall: ResourceLocation,
-		lineColor: String,
-		baitItem: ItemStack,
-	) {
+	fun receiveInitData(buckets: List<String>, pokeBall: ResourceLocation, lineColor: String, baitItem: ItemStack) {
 		this.buckets = buckets
 		bucketViews =
 			buckets
@@ -252,12 +245,7 @@ class FishingnavScreen(
 		refreshButton.disabled = false
 	}
 
-	override fun renderOnBackLayer(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	override fun renderOnBackLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		val poseStack = guiGraphics.pose()
 
 		blitk(
@@ -280,12 +268,7 @@ class FishingnavScreen(
 		)
 	}
 
-	override fun renderOnFrontLayer(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	override fun renderOnFrontLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		if (blockWidgets || minecraft?.screen != this) return
 		hoveredData?.renderTooltip(
 			guiGraphics = guiGraphics,

@@ -17,7 +17,11 @@ class FluidSubmergedCollector : ConditionCollector<SubmergedTypeSpawningConditio
 	override val color = 0x20B2AA
 	override val conditionClass = SubmergedTypeSpawningCondition::class.java
 
-	override fun collectValues(detail: SpawnDetail, condition: SubmergedTypeSpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? = condition.fluid?.toResourceLocation()?.let {
+	override fun collectValues(
+		detail: SpawnDetail,
+		condition: SubmergedTypeSpawningCondition<*>,
+		player: ServerPlayer,
+	): List<MutableComponent>? = condition.fluid?.toResourceLocation()?.let {
 		listOf(translate("tag.fluid.c.${it.path}"))
 	}
 }

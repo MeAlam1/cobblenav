@@ -7,7 +7,8 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
 abstract class ConditionCollector<T : SpawningCondition<*>> : Collector<T> {
-	fun collect(detail: SpawnDetail, condition: T, player: ServerPlayer): ConditionData? = collectValues(detail, condition, player)?.let { ConditionData(name, color, it) }
+	fun collect(detail: SpawnDetail, condition: T, player: ServerPlayer): ConditionData? =
+		collectValues(detail, condition, player)?.let { ConditionData(name, color, it) }
 
 	fun formatValueRange(min: Number?, max: Number?): String? = if (min != null && max != null) {
 		"$min - $max"

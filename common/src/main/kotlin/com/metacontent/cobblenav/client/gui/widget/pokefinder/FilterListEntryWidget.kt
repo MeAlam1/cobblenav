@@ -42,12 +42,7 @@ class FilterListEntryWidget(
 		addWidget(widget)
 	}
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		val poseStack = guiGraphics.pose()
 
 		removeButton.render(guiGraphics, i, j, f)

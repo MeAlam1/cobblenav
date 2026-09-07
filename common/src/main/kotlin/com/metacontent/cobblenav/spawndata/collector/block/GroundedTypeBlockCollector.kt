@@ -12,5 +12,6 @@ class GroundedTypeBlockCollector : BlockConditionCollector<GroundedTypeSpawningC
 	override val name = NAME
 	override val conditionClass = GroundedTypeSpawningCondition::class.java
 
-	override fun collect(condition: GroundedTypeSpawningCondition<*>): Set<ResourceLocation> = condition.neededBaseBlocks?.toBlockSet() ?: emptySet()
+	override fun collect(condition: GroundedTypeSpawningCondition<*>): Set<ResourceLocation> =
+		condition.neededBaseBlocks?.toBlockSet() ?: emptySet()
 }

@@ -10,12 +10,7 @@ class PartyWidget(
 	playerY: Int,
 	// @TODO: move literal to lang?
 ) : AbstractWidget(playerX, playerY, 0, 0, Component.literal("Party Widget")) {
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 	}
 
 	override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

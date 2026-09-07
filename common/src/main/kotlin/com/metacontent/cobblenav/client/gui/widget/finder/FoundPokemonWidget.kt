@@ -45,12 +45,7 @@ class FoundPokemonWidget(
 	private val openingTimer = Timer(OPENING)
 	private val loopTimer = Timer(LOOP, true)
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		delta: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, delta: Float) {
 		val poseStack = guiGraphics.pose()
 
 		poseStack.pushAndPop {

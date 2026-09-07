@@ -60,12 +60,7 @@ class BucketViewWidget(
 		height = minHeight
 	}
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		val poseStack = guiGraphics.pose()
 
 		guiGraphics.fill(

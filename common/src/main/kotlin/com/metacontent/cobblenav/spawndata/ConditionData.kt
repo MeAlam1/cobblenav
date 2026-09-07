@@ -10,11 +10,7 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 
-data class ConditionData(
-	val condition: String,
-	val color: Int,
-	val values: List<Component>,
-) {
+data class ConditionData(val condition: String, val color: Int, val values: List<Component>) {
 	companion object {
 		val CODEC: Codec<ConditionData> =
 			RecordCodecBuilder.create { instance ->

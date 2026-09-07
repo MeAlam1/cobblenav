@@ -93,12 +93,7 @@ class FishingContextWidget(
 		}
 	}
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		val poseStack = guiGraphics.pose()
 		guiGraphics.cobblenavScissor(
 			x1 = x,
@@ -222,12 +217,7 @@ class FishingContextWidget(
 		}
 	}
 
-	private fun renderClouds(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	private fun renderClouds(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		clouds.forEach { cloud ->
 			blitk(
 				matrixStack = guiGraphics.pose(),
@@ -245,9 +235,5 @@ class FishingContextWidget(
 		}
 	}
 
-	private data class Cloud(
-		val position: Vector2f,
-		var velocity: Float,
-		val type: Int,
-	)
+	private data class Cloud(val position: Vector2f, var velocity: Float, val type: Int)
 }

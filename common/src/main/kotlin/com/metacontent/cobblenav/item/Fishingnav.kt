@@ -36,11 +36,7 @@ class Fishingnav :
 	override val openedInventoryModel = cobblenavResource("open/$REGISTRY_KEY")
 	override val openedInHandModel = cobblenavResource("model/open/$REGISTRY_KEY")
 
-	override fun use(
-		level: Level,
-		player: Player,
-		interactionHand: InteractionHand,
-	): InteractionResultHolder<ItemStack> {
+	override fun use(level: Level, player: Player, interactionHand: InteractionHand): InteractionResultHolder<ItemStack> {
 		if (player.handSlots.any { it.`is`(CobblemonItemTags.POKE_RODS) } && !player.isShiftKeyDown) {
 			return InteractionResultHolder.pass(player.getItemInHand(interactionHand))
 		}

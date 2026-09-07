@@ -22,12 +22,7 @@ open class TableView<I : AbstractWidget>(
 	val rows
 		get() = ceil(items.size.toFloat() / columns.toFloat()).toInt()
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		calculateItems()
 		items.forEach { it.render(guiGraphics, i, j, f) }
 //        guiGraphics.renderOutline(x, y, width, height, FastColor.ARGB32.color(255, 0, 0, 0))
@@ -53,10 +48,7 @@ open class TableView<I : AbstractWidget>(
 		children.clear()
 	}
 
-	fun <T : Comparable<T>> resort(
-		sorting: Sorting,
-		extractor: (I) -> T,
-	) {
+	fun <T : Comparable<T>> resort(sorting: Sorting, extractor: (I) -> T) {
 		val resortedItems =
 			items.sortedWith { firstWidget, secondWidget ->
 				compareValues(extractor.invoke(firstWidget), extractor.invoke(secondWidget)) * sorting.multiplier
@@ -90,11 +82,7 @@ open class TableView<I : AbstractWidget>(
 		height = calculatedHeight
 	}
 
-	override fun mouseClicked(
-		pMouseX: Double,
-		pMouseY: Double,
-		pButton: Int,
-	): Boolean {
+	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean {
 		items.forEach { it.isFocused = false }
 		return super.mouseClicked(pMouseX, pMouseY, pButton)
 	}

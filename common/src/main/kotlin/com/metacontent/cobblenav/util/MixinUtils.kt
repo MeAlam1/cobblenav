@@ -16,7 +16,8 @@ fun PokeRodFishingBobberEntity.isTraveling(): Boolean = (this as PokeRodFishingB
 
 fun GrowingPlantBlock.getHeadBlock(): GrowingPlantHeadBlock = (this as GrowingPlantBlockMixin).invokeGetHeadBlock()
 
-fun GlobalSpeciesFeatures.registerDirectly(name: String, provider: SpeciesFeatureProvider<*>) = (this as GlobalSpeciesFeaturesDuck).`cobblenav$registerDirectly`(name, provider)
+fun GlobalSpeciesFeatures.registerDirectly(name: String, provider: SpeciesFeatureProvider<*>) =
+	(this as GlobalSpeciesFeaturesDuck).`cobblenav$registerDirectly`(name, provider)
 
 fun FormData.setEvYield(evYield: MutableMap<Stat, Int>?) = (this as FormDataMixin).`cobblenav$setEvYield`(evYield)
 

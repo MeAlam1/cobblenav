@@ -16,7 +16,11 @@ class DepthSubmergedCollector : ConditionCollector<SubmergedTypeSpawningConditio
 	override val color = 0x000080
 	override val conditionClass = SubmergedTypeSpawningCondition::class.java
 
-	override fun collectValues(detail: SpawnDetail, condition: SubmergedTypeSpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? = formatValueRange(condition.minDepth, condition.maxDepth)?.let {
+	override fun collectValues(
+		detail: SpawnDetail,
+		condition: SubmergedTypeSpawningCondition<*>,
+		player: ServerPlayer,
+	): List<MutableComponent>? = formatValueRange(condition.minDepth, condition.maxDepth)?.let {
 		listOf(literal(it))
 	}
 }

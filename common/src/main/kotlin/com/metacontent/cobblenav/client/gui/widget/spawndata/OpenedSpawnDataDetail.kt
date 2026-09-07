@@ -15,19 +15,16 @@ import net.minecraft.util.FastColor
 import org.joml.Vector3d
 import org.joml.Vector3f
 
-class OpenedSpawnDataDetail(
-	statefulWidget: SpawnDataDetailWidget,
-	x: Int,
-	y: Int,
-) : WidgetState<SpawnDataDetailWidget>(
-	statefulWidget,
-	x,
-	y,
-	SpawnDataDetailWidget.WIDTH,
-	SpawnDataDetailWidget.HEIGHT,
-	// @TODO: move literal to lang?
-	Component.literal("Opened Spawn Data Details"),
-) {
+class OpenedSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: Int) :
+	WidgetState<SpawnDataDetailWidget>(
+		statefulWidget,
+		x,
+		y,
+		SpawnDataDetailWidget.WIDTH,
+		SpawnDataDetailWidget.HEIGHT,
+		// @TODO: move literal to lang?
+		Component.literal("Opened Spawn Data Details"),
+	) {
 	companion object {
 		const val BUTTON_WIDTH: Int = 17
 		const val BUTTON_HEIGHT: Int = 23
@@ -82,12 +79,7 @@ class OpenedSpawnDataDetail(
 		statefulWidget.pokenavScreen.blockWidgets = true
 	}
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		if (!statefulWidget.displayer.isDataSelected()) {
 			removeWidget(statefulWidget.closeButton)
 			removeWidget(scrollableView)

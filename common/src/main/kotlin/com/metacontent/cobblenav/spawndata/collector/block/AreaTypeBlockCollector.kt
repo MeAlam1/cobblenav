@@ -12,5 +12,6 @@ class AreaTypeBlockCollector : BlockConditionCollector<AreaTypeSpawningCondition
 	override val name = NAME
 	override val conditionClass = AreaTypeSpawningCondition::class.java
 
-	override fun collect(condition: AreaTypeSpawningCondition<*>): Set<ResourceLocation> = condition.neededNearbyBlocks?.toBlockSet() ?: emptySet()
+	override fun collect(condition: AreaTypeSpawningCondition<*>): Set<ResourceLocation> =
+		condition.neededNearbyBlocks?.toBlockSet() ?: emptySet()
 }

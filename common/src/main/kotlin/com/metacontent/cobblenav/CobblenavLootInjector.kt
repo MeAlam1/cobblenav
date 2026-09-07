@@ -15,10 +15,7 @@ object CobblenavLootInjector {
 			BuiltInLootTables.FISHING_TREASURE.location(),
 		)
 
-	fun inject(
-		id: ResourceLocation,
-		consumer: (LootPool.Builder) -> Unit,
-	) {
+	fun inject(id: ResourceLocation, consumer: (LootPool.Builder) -> Unit) {
 		if (!injectableTables.contains(id)) return
 		val table = cobblenavResource("injection/${id.path}")
 		val pool =

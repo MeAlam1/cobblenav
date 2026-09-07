@@ -54,7 +54,11 @@ class EvYieldSyncPacket(evYieldData: Collection<EvYieldDataEntry>) : DataRegistr
 	}
 }
 
-data class EvYieldDataEntry(val speciesId: ResourceLocation, val speciesEvYield: Map<Stats, Int>, val formToEvYield: Map<String, Map<Stats, Int>?>) : Encodable {
+data class EvYieldDataEntry(
+	val speciesId: ResourceLocation,
+	val speciesEvYield: Map<Stats, Int>,
+	val formToEvYield: Map<String, Map<Stats, Int>?>,
+) : Encodable {
 	companion object {
 		fun decode(buffer: RegistryFriendlyByteBuf): EvYieldDataEntry = EvYieldDataEntry(
 			speciesId = buffer.readIdentifier(),

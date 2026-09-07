@@ -17,9 +17,10 @@ class RodTypeCollector : ConditionCollector<FishingSpawningCondition>() {
 	override val color = 0xD2691E
 	override val conditionClass = FishingSpawningCondition::class.java
 
-	override fun collectValues(detail: SpawnDetail, condition: FishingSpawningCondition, player: ServerPlayer): List<MutableComponent>? = condition.rodType?.let { resourceLocation ->
-		PokeRods.getPokeRod(resourceLocation)?.pokeBallId?.let {
-			listOf(translate(it, "item"))
+	override fun collectValues(detail: SpawnDetail, condition: FishingSpawningCondition, player: ServerPlayer): List<MutableComponent>? =
+		condition.rodType?.let { resourceLocation ->
+			PokeRods.getPokeRod(resourceLocation)?.pokeBallId?.let {
+				listOf(translate(it, "item"))
+			}
 		}
-	}
 }

@@ -14,11 +14,7 @@ class UnderOpenSkyCollector : GeneralConditionCollector() {
 	override val name = NAME
 	override val color = 0x1E90FF
 
-	override fun collectValues(
-		detail: SpawnDetail,
-		condition: SpawningCondition<*>,
-		player: ServerPlayer,
-	): List<MutableComponent>? {
+	override fun collectValues(detail: SpawnDetail, condition: SpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? {
 		return condition.canSeeSky?.let {
 			return listOf(label(it.toString()))
 		}

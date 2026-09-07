@@ -24,19 +24,11 @@ class NotificationWidget(
 
 	private val notifications = mutableListOf<Notification>()
 
-	fun add(
-		text: MutableComponent,
-		duration: Float = 60f,
-	) {
+	fun add(text: MutableComponent, duration: Float = 60f) {
 		notifications.add(Notification(text, Timer(duration)))
 	}
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		if (notifications.isEmpty()) return
 		val notification = notifications.last()
 		val poseStack = guiGraphics.pose()
@@ -75,8 +67,5 @@ class NotificationWidget(
 		if (notification.timer.isOver()) notifications.remove(notification)
 	}
 
-	private data class Notification(
-		val text: MutableComponent,
-		val timer: Timer,
-	)
+	private data class Notification(val text: MutableComponent, val timer: Timer)
 }

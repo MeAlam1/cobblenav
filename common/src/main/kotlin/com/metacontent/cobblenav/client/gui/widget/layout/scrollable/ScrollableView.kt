@@ -30,12 +30,7 @@ class ScrollableView(
 
 	private val scrollThumb = ScrollThumbWidget(x + width - ScrollThumbWidget.WIDTH, y, this).also { addWidget(it) }
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		if (scrolled > child.height - height) {
 			scrolled -= (scrollMultiplier * f).toInt()
 			if (scrolled < child.height - height) {
@@ -50,18 +45,10 @@ class ScrollableView(
 		guiGraphics.disableScissor()
 	}
 
-	override fun mouseClicked(
-		pMouseX: Double,
-		pMouseY: Double,
-		pButton: Int,
-	): Boolean = clicked(pMouseX, pMouseY) && super.mouseClicked(pMouseX, pMouseY, pButton)
+	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean =
+		clicked(pMouseX, pMouseY) && super.mouseClicked(pMouseX, pMouseY, pButton)
 
-	override fun mouseScrolled(
-		mouseX: Double,
-		mouseY: Double,
-		horizontalAmount: Double,
-		verticalAmount: Double,
-	): Boolean {
+	override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
 		if (child.height > height) {
 			scrolled -= (verticalAmount * scrollMultiplier).toInt()
 		}

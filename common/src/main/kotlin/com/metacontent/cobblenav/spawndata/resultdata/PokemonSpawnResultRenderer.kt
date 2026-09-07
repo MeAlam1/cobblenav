@@ -20,14 +20,7 @@ abstract class PokemonSpawnResultRenderer {
 	abstract val scale: Float
 	abstract val pose: PoseType
 
-	open fun render(
-		pokemon: RenderablePokemon,
-		poseStack: PoseStack,
-		x: Float,
-		y: Float,
-		z: Float,
-		delta: Float,
-	) {
+	open fun render(pokemon: RenderablePokemon, poseStack: PoseStack, x: Float, y: Float, z: Float, delta: Float) {
 		try {
 			drawPokemon(
 				poseStack = poseStack,

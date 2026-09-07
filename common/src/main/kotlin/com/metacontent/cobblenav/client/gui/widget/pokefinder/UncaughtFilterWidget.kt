@@ -18,12 +18,7 @@ import net.minecraft.network.chat.Component
 class UncaughtFilterWidget : SoundlessWidget(0, 0, WIDGET_WIDTH, WIDGET_HEIGHT, Component.empty()) {
 	private val uncaught = 100 - CobblemonClient.clientPokedexData.getGlobalCalculatedValue(CaughtPercent).toInt()
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		blitk(
 			matrixStack = guiGraphics.pose(),
 			texture = FIELD,

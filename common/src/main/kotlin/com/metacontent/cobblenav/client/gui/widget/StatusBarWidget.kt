@@ -25,12 +25,7 @@ class StatusBarWidget(
 		val TEXTURE = gui("status_bar")
 	}
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		val poseStack = guiGraphics.pose()
 
 		val dayTime = Minecraft.getInstance().level?.dayTime ?: 0L

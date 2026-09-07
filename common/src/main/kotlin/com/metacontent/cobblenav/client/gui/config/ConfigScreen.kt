@@ -11,12 +11,10 @@ import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.CommonComponents
 import net.minecraft.network.chat.Component
 
-class ConfigScreen<T : Config<T>>(
-	private val config: T,
-	private val parent: Screen?,
-) : Screen(
-	Component.translatable("edit.context", "Config"), // TODO
-) {
+class ConfigScreen<T : Config<T>>(private val config: T, private val parent: Screen?) :
+	Screen(
+		Component.translatable("edit.context", "Config"), // TODO
+	) {
 
 	companion object {
 		const val HEADER_HEIGHT = 45
@@ -110,12 +108,7 @@ class ConfigScreen<T : Config<T>>(
 		variableList.filter(searchString)
 	}
 
-	override fun render(
-		graphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		partialTick: Float,
-	) {
+	override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
 		val panelTop = variableList.y - PANEL_PADDING
 		val panelBottom = variableList.bottom + PANEL_PADDING
 

@@ -36,12 +36,7 @@ class CheckBox(
 	private val font = Minecraft.getInstance().font
 	private val scale = min(1f, height.toFloat() / font.lineHeight.toFloat())
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		val poseStack = guiGraphics.pose()
 
 		blitk(

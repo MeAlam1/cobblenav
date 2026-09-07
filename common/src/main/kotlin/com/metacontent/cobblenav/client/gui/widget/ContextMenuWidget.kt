@@ -78,12 +78,7 @@ class ContextMenuWidget(
 			).also { addWidget(it) }
 	}
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		guiGraphics.cobblenavScissor(
 			x,
 			(y + 3 + (height / 2) * (1 - openingTimer.getProgress())).toInt(),
@@ -136,11 +131,7 @@ class ContextMenuWidget(
 		openingTimer.tick(f)
 	}
 
-	override fun mouseClicked(
-		pMouseX: Double,
-		pMouseY: Double,
-		pButton: Int,
-	): Boolean {
+	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean {
 		if (!openingTimer.isOver()) return false
 		return super.mouseClicked(pMouseX, pMouseY, pButton)
 	}

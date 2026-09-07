@@ -14,11 +14,8 @@ class SlimeChunkCollector : GeneralConditionCollector() {
 	override val name = NAME
 	override val color = 0x32CD32
 
-	override fun collectValues(
-		detail: SpawnDetail,
-		condition: SpawningCondition<*>,
-		player: ServerPlayer,
-	): List<MutableComponent>? = condition.isSlimeChunk?.let {
-		listOf(label(it.toString()))
-	}
+	override fun collectValues(detail: SpawnDetail, condition: SpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? =
+		condition.isSlimeChunk?.let {
+			listOf(label(it.toString()))
+		}
 }

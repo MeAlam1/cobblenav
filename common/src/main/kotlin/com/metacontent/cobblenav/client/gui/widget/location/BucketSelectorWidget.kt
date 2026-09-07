@@ -49,12 +49,7 @@ class BucketSelectorWidget(
 			texture = NEXT,
 		).also { addWidget(it) }
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		prevButton.disabled = parent.bucketIndex <= 0
 		nextButton.disabled = parent.bucketIndex >= parent.buckets.size - 1
 		prevButton.render(guiGraphics, i, j, f)

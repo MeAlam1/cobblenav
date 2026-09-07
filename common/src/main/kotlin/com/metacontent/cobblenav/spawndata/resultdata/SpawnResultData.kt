@@ -18,7 +18,11 @@ interface SpawnResultData : Encodable {
 
 		private val decoders: HashMap<String, (RegistryFriendlyByteBuf) -> SpawnResultData> = hashMapOf()
 
-		fun register(type: String, transformer: (SpawnDetail, ServerPlayer) -> SpawnResultData?, decoder: (RegistryFriendlyByteBuf) -> SpawnResultData) {
+		fun register(
+			type: String,
+			transformer: (SpawnDetail, ServerPlayer) -> SpawnResultData?,
+			decoder: (RegistryFriendlyByteBuf) -> SpawnResultData,
+		) {
 			transformers[type] = transformer
 			decoders[type] = decoder
 		}

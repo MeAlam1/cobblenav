@@ -52,12 +52,7 @@ class SpawnDataDetailWidget(
 
 	override var state = initState(ClosedSpawnDataDetail(this, x, y))
 
-	fun renderMenu(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	fun renderMenu(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		val poseStack = guiGraphics.pose()
 		poseStack.pushAndPop(
 			translate = Vector3d(0.0, 0.0, 3000.0),

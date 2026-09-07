@@ -16,7 +16,8 @@ class LureLevelCollector : ConditionCollector<FishingSpawningCondition>() {
 	override val color = 0x8A2BE2
 	override val conditionClass = FishingSpawningCondition::class.java
 
-	override fun collectValues(detail: SpawnDetail, condition: FishingSpawningCondition, player: ServerPlayer): List<MutableComponent>? = formatValueRange(condition.minLureLevel, condition.maxLureLevel)?.let {
-		listOf(literal(it))
-	}
+	override fun collectValues(detail: SpawnDetail, condition: FishingSpawningCondition, player: ServerPlayer): List<MutableComponent>? =
+		formatValueRange(condition.minLureLevel, condition.maxLureLevel)?.let {
+			listOf(literal(it))
+		}
 }

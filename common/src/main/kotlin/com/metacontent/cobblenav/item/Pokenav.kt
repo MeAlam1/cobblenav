@@ -21,9 +21,8 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
 
-class Pokenav(
-	private val model: PokenavModelType,
-) : Item(Properties().stacksTo(MAX_STACK)),
+class Pokenav(private val model: PokenavModelType) :
+	Item(Properties().stacksTo(MAX_STACK)),
 	InHandModelItem,
 	FlickeringItem,
 	OpenableItem {
@@ -40,11 +39,7 @@ class Pokenav(
 	override val flickeringInHandModel = cobblenavResource("model/flicker/$BASE_REGISTRY_KEY${model.modelName}")
 	override val openedInHandModel = cobblenavResource("model/open/$BASE_REGISTRY_KEY${model.modelName}")
 
-	override fun use(
-		level: Level,
-		player: Player,
-		interactionHand: InteractionHand,
-	): InteractionResultHolder<ItemStack> {
+	override fun use(level: Level, player: Player, interactionHand: InteractionHand): InteractionResultHolder<ItemStack> {
 		if (!level.isClientSide()) {
 			(player as? ServerPlayer)?.let { serverPlayer ->
 				val posUsedOn =

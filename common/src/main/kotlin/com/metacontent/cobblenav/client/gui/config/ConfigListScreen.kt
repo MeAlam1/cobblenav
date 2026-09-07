@@ -9,14 +9,8 @@ import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
-class ConfigListScreen(
-	private val parent: Screen?,
-	private val entries: List<Entry>,
-) : Screen(label("config_list.title")) {
-	class Entry(
-		val label: Component,
-		val open: (parent: Screen) -> Screen,
-	)
+class ConfigListScreen(private val parent: Screen?, private val entries: List<Entry>) : Screen(label("config_list.title")) {
+	class Entry(val label: Component, val open: (parent: Screen) -> Screen)
 
 	companion object {
 		private const val BUTTON_WIDTH = 200
@@ -71,12 +65,7 @@ class ConfigListScreen(
 		)
 	}
 
-	override fun render(
-		graphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		partialTick: Float,
-	) {
+	override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
 		renderBackground(graphics, mouseX, mouseY, partialTick)
 
 		graphics.drawCenteredString(

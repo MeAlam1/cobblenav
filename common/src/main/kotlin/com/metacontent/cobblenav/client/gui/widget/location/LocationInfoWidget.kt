@@ -34,12 +34,7 @@ class LocationInfoWidget(
 
 	private val biomeResourceLocation = ResourceLocation.parse(biome)
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		val poseStack = guiGraphics.pose()
 		val checkPair =
 			tryTranslating(

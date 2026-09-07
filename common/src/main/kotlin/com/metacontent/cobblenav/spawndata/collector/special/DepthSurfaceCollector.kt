@@ -16,7 +16,11 @@ class DepthSurfaceCollector : ConditionCollector<SurfaceTypeSpawningCondition<*>
 	override val color = 0x1E90FF
 	override val conditionClass = SurfaceTypeSpawningCondition::class.java
 
-	override fun collectValues(detail: SpawnDetail, condition: SurfaceTypeSpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? = formatValueRange(condition.minDepth, condition.maxDepth)?.let {
+	override fun collectValues(
+		detail: SpawnDetail,
+		condition: SurfaceTypeSpawningCondition<*>,
+		player: ServerPlayer,
+	): List<MutableComponent>? = formatValueRange(condition.minDepth, condition.maxDepth)?.let {
 		listOf(literal(it))
 	}
 }

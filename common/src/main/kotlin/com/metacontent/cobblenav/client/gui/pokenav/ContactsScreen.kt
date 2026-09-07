@@ -39,11 +39,6 @@ class ContactsScreen(
 		).let { addBlockableWidget(it) }
 	}
 
-	override fun renderOnBackLayer(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	override fun renderOnBackLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 	}
 }

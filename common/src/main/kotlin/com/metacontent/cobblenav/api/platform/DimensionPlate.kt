@@ -4,7 +4,11 @@ import com.cobblemon.mod.common.api.gui.blitk
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.resources.ResourceLocation
 
-data class DimensionPlate(val dimension: ResourceLocation, val texture: ResourceLocation? = null, val highlighting: HoverHighlighting? = null) {
+data class DimensionPlate(
+	val dimension: ResourceLocation,
+	val texture: ResourceLocation? = null,
+	val highlighting: HoverHighlighting? = null,
+) {
 	fun render(poseStack: PoseStack, x: Int, y: Int, width: Int, height: Int, hovered: Boolean) {
 		val texture = (if (hovered) highlighting?.texture ?: texture else texture) ?: return
 		val rgb = 1.0f + if (hovered) highlighting?.tintOffset ?: 0f else 0f

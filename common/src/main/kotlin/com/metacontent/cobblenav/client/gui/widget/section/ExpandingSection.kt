@@ -20,12 +20,7 @@ class ExpandingSection(
 
 	private val timer = Timer(ANIMATION_TIME * statefulWidget.widgets.sumOf { it.height / 12 })
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		timer.tick(f)
 
 		height =
@@ -41,9 +36,5 @@ class ExpandingSection(
 		}
 	}
 
-	override fun mouseClicked(
-		pMouseX: Double,
-		pMouseY: Double,
-		pButton: Int,
-	): Boolean = false
+	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean = false
 }

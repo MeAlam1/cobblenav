@@ -30,10 +30,7 @@ class TrackArrowOverlay : Gui(Minecraft.getInstance()) {
 			field = value
 		}
 
-	override fun render(
-		guiGraphics: GuiGraphics,
-		deltaTracker: DeltaTracker,
-	) {
+	override fun render(guiGraphics: GuiGraphics, deltaTracker: DeltaTracker) {
 		if (!tracking) return
 
 		val entity = minecraft.level?.getEntity(entityId)

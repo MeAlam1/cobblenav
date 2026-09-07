@@ -13,18 +13,14 @@ import net.minecraft.client.gui.narration.NarratableEntry
 import net.minecraft.network.chat.Component
 import kotlin.math.min
 
-class ConfigVariableList(
-	private val idPrefix: String,
-	y: Int,
-	height: Int,
-	screenWidth: Int,
-) : ContainerObjectSelectionList<ConfigVariableList.Entry>(
-	Minecraft.getInstance(),
-	screenWidth,
-	height,
-	y,
-	ConfigScreen.SLOT_HEIGHT,
-) {
+class ConfigVariableList(private val idPrefix: String, y: Int, height: Int, screenWidth: Int) :
+	ContainerObjectSelectionList<ConfigVariableList.Entry>(
+		Minecraft.getInstance(),
+		screenWidth,
+		height,
+		y,
+		ConfigScreen.SLOT_HEIGHT,
+	) {
 
 	private val allEntries = mutableListOf<Entry>()
 
@@ -51,10 +47,7 @@ class ConfigVariableList(
 	override fun getRowWidth(): Int = ConfigScreen.SLOT_WIDTH
 	override fun getScrollbarPosition(): Int = width / 2 + ConfigScreen.SLOT_WIDTH / 2 + ConfigScreen.PADDING
 
-	class Entry(
-		private val option: ConfigOption<*>,
-		idPrefix: String,
-	) : ContainerObjectSelectionList.Entry<Entry>() {
+	class Entry(private val option: ConfigOption<*>, idPrefix: String) : ContainerObjectSelectionList.Entry<Entry>() {
 
 		private val label: Component = Component.translatable("$idPrefix.option.${option.name}") // TODO
 		private val labelQuery: String = label.string.lowercase()
@@ -86,7 +79,9 @@ class ConfigVariableList(
 				updateResetState()
 			}
 
-		private fun buildEnum(option: ConfigOption.EnumOption<*>): AbstractWidget = CycleButton.builder<Enum<*>> { value -> Component.literal(value.name) }
+		private fun buildEnum(option: ConfigOption.EnumOption<*>): AbstractWidget = CycleButton.builder<Enum<*>> { value ->
+			Component.literal(value.name)
+		}
 			.withValues(option.values)
 			.withInitialValue(option.get())
 			.displayOnlyValue()
@@ -95,10 +90,7 @@ class ConfigVariableList(
 				updateResetState()
 			}
 
-		private fun <V : Any> buildText(
-			option: ConfigOption<V>,
-			parse: (String) -> V?,
-		): EditBox = EditBox(
+		private fun <V : Any> buildText(option: ConfigOption<V>, parse: (String) -> V?): EditBox = EditBox(
 			Minecraft.getInstance().font,
 			0,
 			0,

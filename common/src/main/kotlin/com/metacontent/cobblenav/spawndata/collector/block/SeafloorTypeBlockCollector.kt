@@ -12,5 +12,6 @@ class SeafloorTypeBlockCollector : BlockConditionCollector<SeafloorTypeSpawningC
 	override val name = NAME
 	override val conditionClass = SeafloorTypeSpawningCondition::class.java
 
-	override fun collect(condition: SeafloorTypeSpawningCondition<*>): Set<ResourceLocation> = condition.neededBaseBlocks?.toBlockSet() ?: emptySet()
+	override fun collect(condition: SeafloorTypeSpawningCondition<*>): Set<ResourceLocation> =
+		condition.neededBaseBlocks?.toBlockSet() ?: emptySet()
 }

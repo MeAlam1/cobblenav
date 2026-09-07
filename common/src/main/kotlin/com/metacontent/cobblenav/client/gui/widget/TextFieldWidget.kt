@@ -44,12 +44,7 @@ class TextFieldWidget(
 	val value: String
 		get() = editBox.value
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		blitk(
 			matrixStack = guiGraphics.pose(),
 			texture = textureSheet,
@@ -78,11 +73,7 @@ class TextFieldWidget(
 		editBox.isFocused = bl
 	}
 
-	override fun mouseClicked(
-		pMouseX: Double,
-		pMouseY: Double,
-		pButton: Int,
-	): Boolean = clicked(pMouseX, pMouseY).also {
+	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean = clicked(pMouseX, pMouseY).also {
 		isFocused = it
 		if (it) {
 			editBox.onClick(pMouseX, pMouseY)

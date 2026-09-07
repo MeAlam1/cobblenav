@@ -27,12 +27,7 @@ class BlockConditionWidget(
 		}
 	}
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		var lineY = y
 		var itemCount = 0
 		blockConditions.asItemStacks.forEach {

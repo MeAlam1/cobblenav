@@ -29,12 +29,7 @@ class OpeningRadialMenu(
 	private val timer = Timer(ANIMATION_DURATION)
 	private val buttons = listOf(SWITCH_OFF, CONTACTS, LOCATION, MAP)
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		timer.tick(delta)
 		val progress = timer.getProgress()
 		val poseStack = guiGraphics.pose()

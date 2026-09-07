@@ -18,9 +18,10 @@ class BaitCollector : ConditionCollector<FishingSpawningCondition>() {
 	override val color = 0xCD5C5C
 	override val conditionClass = FishingSpawningCondition::class.java
 
-	override fun collectValues(detail: SpawnDetail, condition: FishingSpawningCondition, player: ServerPlayer): List<MutableComponent>? = condition.bait?.let { resourceLocation ->
-		SpawnBaitEffects.getFromIdentifier(resourceLocation)?.item?.toResourceLocation()?.let {
-			listOf(translate(it, "item"))
+	override fun collectValues(detail: SpawnDetail, condition: FishingSpawningCondition, player: ServerPlayer): List<MutableComponent>? =
+		condition.bait?.let { resourceLocation ->
+			SpawnBaitEffects.getFromIdentifier(resourceLocation)?.item?.toResourceLocation()?.let {
+				listOf(translate(it, "item"))
+			}
 		}
-	}
 }

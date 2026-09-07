@@ -76,23 +76,14 @@ class OpenedRadialMenu(
 			}
 		}
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		closeButton.render(guiGraphics, i, j, f)
 		buttons.forEach { it.render(guiGraphics, i, j, f) }
 	}
 
 	override val blockScreenWidgets: Boolean = true
 
-	override fun mouseClicked(
-		pMouseX: Double,
-		pMouseY: Double,
-		pButton: Int,
-	): Boolean {
+	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean {
 		val clicked = super.mouseClicked(pMouseX, pMouseY, pButton)
 		if (!clicked) {
 			statefulWidget.changeState(ClosedRadialMenu(os, statefulWidget as RadialPopupMenu, x, y))

@@ -176,12 +176,7 @@ class FinderScreen(
 		loading = false
 	}
 
-	override fun renderOnBackLayer(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	override fun renderOnBackLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		val poseStack = guiGraphics.pose()
 
 		blitk(
@@ -230,12 +225,7 @@ class FinderScreen(
 //        )
 	}
 
-	override fun render(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		if (closingTimer.isOver()) {
 			super.render(guiGraphics, mouseX, mouseY, delta)
 		} else {
@@ -249,12 +239,7 @@ class FinderScreen(
 		}
 	}
 
-	private fun renderPokeballAnimation(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	private fun renderPokeballAnimation(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		val poseStack = guiGraphics.pose()
 
 		guiGraphics.cobblenavScissor(

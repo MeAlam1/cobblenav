@@ -15,17 +15,13 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 import org.joml.Vector3f
 
-class UnknownSpawnResultData(
-	val positionType: String,
-) : SpawnResultData {
+class UnknownSpawnResultData(val positionType: String) : SpawnResultData {
 	companion object {
 		const val TYPE = "unknown"
 		val UNKNOWN = cobblemonResource("textures/gui/pokedex/platform_unknown.png")
 
-		fun transform(
-			detail: SpawnDetail,
-			player: ServerPlayer,
-		): UnknownSpawnResultData = UnknownSpawnResultData(detail.spawnablePositionType.name)
+		fun transform(detail: SpawnDetail, player: ServerPlayer): UnknownSpawnResultData =
+			UnknownSpawnResultData(detail.spawnablePositionType.name)
 
 		fun decodeResultData(buffer: RegistryFriendlyByteBuf): UnknownSpawnResultData = UnknownSpawnResultData(buffer.readString())
 	}
@@ -34,13 +30,7 @@ class UnknownSpawnResultData(
 
 	override val dataWidgets: List<AbstractWidget>? = null
 
-	override fun drawResult(
-		poseStack: PoseStack,
-		x: Float,
-		y: Float,
-		z: Float,
-		delta: Float,
-	) {
+	override fun drawResult(poseStack: PoseStack, x: Float, y: Float, z: Float, delta: Float) {
 		val width = SpawnDataWidget.MODEL_HEIGHT - 16
 		blitk(
 			matrixStack = poseStack,

@@ -14,10 +14,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 
-fun cobblenavResource(
-	name: String,
-	namespace: String = Cobblenav.ID,
-): ResourceLocation = ResourceLocation.fromNamespaceAndPath(namespace, name)
+fun cobblenavResource(name: String, namespace: String = Cobblenav.ID): ResourceLocation =
+	ResourceLocation.fromNamespaceAndPath(namespace, name)
 
 fun RegistryLikeCondition<*>.toResourceLocation(): ResourceLocation? {
 	if (this is RegistryLikeIdentifierCondition) {
@@ -37,10 +35,7 @@ fun <T> combinations(vararg lists: Iterable<T>): List<List<T>> = lists.fold(list
 	}
 }
 
-fun PokemonProperties.createAndGetAsRenderable(
-	level: ServerLevel? = null,
-	pos: BlockPos? = null,
-): RenderablePokemon {
+fun PokemonProperties.createAndGetAsRenderable(level: ServerLevel? = null, pos: BlockPos? = null): RenderablePokemon {
 	val pokemon = Pokemon()
 	this.apply(pokemon)
 	if (level != null && pos != null) {

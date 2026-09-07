@@ -14,7 +14,8 @@ class LightCollector : GeneralConditionCollector() {
 	override val name = NAME
 	override val color = 0xFFD700
 
-	override fun collectValues(detail: SpawnDetail, condition: SpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? = formatValueRange(condition.minLight, condition.maxLight)?.let {
-		listOf(literal(it))
-	}
+	override fun collectValues(detail: SpawnDetail, condition: SpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? =
+		formatValueRange(condition.minLight, condition.maxLight)?.let {
+			listOf(literal(it))
+		}
 }

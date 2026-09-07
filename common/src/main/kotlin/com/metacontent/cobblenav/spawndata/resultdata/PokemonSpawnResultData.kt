@@ -35,10 +35,7 @@ class PokemonSpawnResultData(
 	val positionType: String,
 ) : SpawnResultData {
 	companion object {
-		fun transform(
-			detail: SpawnDetail,
-			player: ServerPlayer,
-		): SpawnResultData? {
+		fun transform(detail: SpawnDetail, player: ServerPlayer): SpawnResultData? {
 			if (detail !is PokemonSpawnDetail) {
 				Cobblenav.LOGGER.error(
 					"The provided SpawnDetail type (${detail.type}) does not match the key under which it is registered (${PokemonSpawnDetail.TYPE}).",
@@ -142,13 +139,7 @@ class PokemonSpawnResultData(
 		}
 	}
 
-	override fun drawResult(
-		poseStack: PoseStack,
-		x: Float,
-		y: Float,
-		z: Float,
-		delta: Float,
-	) {
+	override fun drawResult(poseStack: PoseStack, x: Float, y: Float, z: Float, delta: Float) {
 		renderer.render(pokemon, poseStack, x, y, z, delta)
 	}
 

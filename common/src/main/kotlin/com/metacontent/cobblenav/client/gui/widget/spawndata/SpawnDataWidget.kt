@@ -85,12 +85,7 @@ open class SpawnDataWidget(
 			},
 		)
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		delta: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, delta: Float) {
 		val poseStack = guiGraphics.pose()
 		val hovered = ishHovered(i, j) && isFocused && !displayer.isBlockingTooltip()
 
@@ -174,11 +169,7 @@ open class SpawnDataWidget(
 		}
 	}
 
-	override fun mouseClicked(
-		pMouseX: Double,
-		pMouseY: Double,
-		pButton: Int,
-	): Boolean {
+	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean {
 		if (clicked(pMouseX, pMouseY) && isValidClickButton(pButton)) {
 			trackButton.mouseClicked(pMouseX, pMouseY, pButton).takeIf { it }?.let {
 				return true
@@ -194,11 +185,7 @@ open class SpawnDataWidget(
 		return if (finalChance <= 0.005f) "<0.01%" else FORMAT.format(finalChance) + "%"
 	}
 
-	private fun renderPokeBall(
-		guiGraphics: GuiGraphics,
-		x: Double,
-		y: Double,
-	) {
+	private fun renderPokeBall(guiGraphics: GuiGraphics, x: Double, y: Double) {
 		val poseStack = guiGraphics.pose()
 
 		poseStack.pushAndPop(

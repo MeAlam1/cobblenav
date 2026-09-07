@@ -242,10 +242,7 @@ class LocationScreen(
 		).also { addBlockableWidget(it) }
 	}
 
-	fun receiveInitData(
-		buckets: List<String>,
-		biome: String,
-	) {
+	fun receiveInitData(buckets: List<String>, biome: String) {
 		this.buckets = buckets
 		this.bucketIndex = CobblenavClient.pokenavSettings?.preferences?.bucketIndex ?: 0
 		bucketSelector =
@@ -275,10 +272,7 @@ class LocationScreen(
 		}
 	}
 
-	fun receiveSpawnData(
-		spawnDataList: List<CheckedSpawnData>,
-		weightedBucket: WeightedBucket,
-	) {
+	fun receiveSpawnData(spawnDataList: List<CheckedSpawnData>, weightedBucket: WeightedBucket) {
 		spawnDataMap[currentBucket] = spawnDataList
 		weightedBuckets[currentBucket] = weightedBucket
 		createSpawnDataWidgets(spawnDataList)
@@ -286,12 +280,7 @@ class LocationScreen(
 		refreshButton.disabled = false
 	}
 
-	override fun renderOnBackLayer(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	override fun renderOnBackLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		val poseStack = guiGraphics.pose()
 		blitk(
 			matrixStack = poseStack,
@@ -321,12 +310,7 @@ class LocationScreen(
 		}
 	}
 
-	override fun renderOnFrontLayer(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	override fun renderOnFrontLayer(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		if (blockWidgets || minecraft?.screen != this) return
 		hoveredData?.renderTooltip(
 			guiGraphics = guiGraphics,
@@ -362,10 +346,7 @@ class LocationScreen(
 		savePreferences()
 	}
 
-	private fun renderLoadingAnimation(
-		poseStack: PoseStack,
-		delta: Float,
-	) {
+	private fun renderLoadingAnimation(poseStack: PoseStack, delta: Float) {
 		timer.tick(delta)
 		blitk(
 			poseStack,

@@ -17,7 +17,11 @@ class FluidSurfaceCollector : ConditionCollector<SurfaceTypeSpawningCondition<*>
 	override val color = 0x5F9EA0
 	override val conditionClass = SurfaceTypeSpawningCondition::class.java
 
-	override fun collectValues(detail: SpawnDetail, condition: SurfaceTypeSpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? = condition.fluid?.toResourceLocation()?.let {
+	override fun collectValues(
+		detail: SpawnDetail,
+		condition: SurfaceTypeSpawningCondition<*>,
+		player: ServerPlayer,
+	): List<MutableComponent>? = condition.fluid?.toResourceLocation()?.let {
 		listOf(translate("tag.fluid.c.${it.path}"))
 	}
 }

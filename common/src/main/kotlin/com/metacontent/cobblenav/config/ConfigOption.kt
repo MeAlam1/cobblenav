@@ -19,30 +19,21 @@ sealed class ConfigOption<V : Any>(
 		setter(value as V)
 	}
 
-	class BooleanOption(
-		name: String,
-		getter: () -> Boolean,
-		setter: (Boolean) -> Unit,
-		baseValue: Boolean,
-	) : ConfigOption<Boolean>(
-		name = name,
-		getter = getter,
-		setter = setter,
-		baseValue = baseValue,
-	)
+	class BooleanOption(name: String, getter: () -> Boolean, setter: (Boolean) -> Unit, baseValue: Boolean) :
+		ConfigOption<Boolean>(
+			name = name,
+			getter = getter,
+			setter = setter,
+			baseValue = baseValue,
+		)
 
-	class IntOption(
-		name: String,
-		getter: () -> Int,
-		setter: (Int) -> Unit,
-		val range: IntRange? = null,
-		baseValue: Int,
-	) : ConfigOption<Int>(
-		name = name,
-		getter = getter,
-		setter = setter,
-		baseValue = baseValue,
-	) {
+	class IntOption(name: String, getter: () -> Int, setter: (Int) -> Unit, val range: IntRange? = null, baseValue: Int) :
+		ConfigOption<Int>(
+			name = name,
+			getter = getter,
+			setter = setter,
+			baseValue = baseValue,
+		) {
 		constructor(name: String, getter: () -> Int, setter: (Int) -> Unit, baseValue: Int) : this(
 			name,
 			getter,
@@ -52,17 +43,13 @@ sealed class ConfigOption<V : Any>(
 		)
 	}
 
-	class LongOption(
-		name: String,
-		getter: () -> Long,
-		setter: (Long) -> Unit,
-		baseValue: Long,
-	) : ConfigOption<Long>(
-		name = name,
-		getter = getter,
-		setter = setter,
-		baseValue = baseValue,
-	)
+	class LongOption(name: String, getter: () -> Long, setter: (Long) -> Unit, baseValue: Long) :
+		ConfigOption<Long>(
+			name = name,
+			getter = getter,
+			setter = setter,
+			baseValue = baseValue,
+		)
 
 	class FloatOption(
 		name: String,
@@ -106,28 +93,19 @@ sealed class ConfigOption<V : Any>(
 		)
 	}
 
-	class StringOption(
-		name: String,
-		getter: () -> String,
-		setter: (String) -> Unit,
-		baseValue: String,
-	) : ConfigOption<String>(
-		name = name,
-		getter = getter,
-		setter = setter,
-		baseValue = baseValue,
-	)
+	class StringOption(name: String, getter: () -> String, setter: (String) -> Unit, baseValue: String) :
+		ConfigOption<String>(
+			name = name,
+			getter = getter,
+			setter = setter,
+			baseValue = baseValue,
+		)
 
-	class EnumOption<E : Enum<E>>(
-		name: String,
-		getter: () -> E,
-		setter: (E) -> Unit,
-		val values: List<E>,
-		baseValue: E,
-	) : ConfigOption<E>(
-		name = name,
-		getter = getter,
-		setter = setter,
-		baseValue = baseValue,
-	)
+	class EnumOption<E : Enum<E>>(name: String, getter: () -> E, setter: (E) -> Unit, val values: List<E>, baseValue: E) :
+		ConfigOption<E>(
+			name = name,
+			getter = getter,
+			setter = setter,
+			baseValue = baseValue,
+		)
 }

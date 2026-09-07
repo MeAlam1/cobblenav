@@ -6,10 +6,7 @@ import com.metacontent.cobblenav.util.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.RegistryFriendlyByteBuf
 
-data class CheckedSpawnData(
-	val data: SpawnData,
-	val chance: Float,
-) : Encodable {
+data class CheckedSpawnData(val data: SpawnData, val chance: Float) : Encodable {
 	companion object {
 		fun decode(buffer: RegistryFriendlyByteBuf) = CheckedSpawnData(
 			data = SpawnData.decode(buffer),

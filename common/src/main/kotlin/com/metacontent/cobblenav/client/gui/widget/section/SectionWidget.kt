@@ -44,12 +44,7 @@ class SectionWidget(
 		return super.initState(state)
 	}
 
-	fun renderTitle(
-		guiGraphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		delta: Float,
-	) {
+	fun renderTitle(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		blitk(
 			matrixStack = guiGraphics.pose(),
 			texture = HEADER_1,
@@ -95,10 +90,7 @@ class SectionWidget(
 		)
 	}
 
-	fun renderBody(
-		guiGraphics: GuiGraphics,
-		height: Int = this.height - HEADER_HEIGHT,
-	) {
+	fun renderBody(guiGraphics: GuiGraphics, height: Int = this.height - HEADER_HEIGHT) {
 		guiGraphics.fill(
 			x,
 			y + HEADER_HEIGHT / 2,
@@ -108,11 +100,7 @@ class SectionWidget(
 		)
 	}
 
-	fun renderFooter(
-		poseStack: PoseStack,
-		x: Int,
-		y: Int,
-	) {
+	fun renderFooter(poseStack: PoseStack, x: Int, y: Int) {
 		blitk(
 			matrixStack = poseStack,
 			texture = FOOTER,

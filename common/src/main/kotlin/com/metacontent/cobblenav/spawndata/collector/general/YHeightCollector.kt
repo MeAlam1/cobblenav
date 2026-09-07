@@ -14,7 +14,8 @@ class YHeightCollector : GeneralConditionCollector() {
 	override val name = NAME
 	override val color = 0x4B0082
 
-	override fun collectValues(detail: SpawnDetail, condition: SpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? = formatValueRange(condition.minY, condition.maxY)?.let {
-		listOf(literal(it))
-	}
+	override fun collectValues(detail: SpawnDetail, condition: SpawningCondition<*>, player: ServerPlayer): List<MutableComponent>? =
+		formatValueRange(condition.minY, condition.maxY)?.let {
+			listOf(literal(it))
+		}
 }

@@ -120,12 +120,7 @@ class StatsTableWidget(
 	private val abilityText = pokemon.ability.copy()
 	private val eggMoveText = pokemon.eggMove.copy()
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		val poseStack = guiGraphics.pose()
 
 		guiGraphics.drawBlurredArea(
@@ -184,10 +179,7 @@ class StatsTableWidget(
 		if (pokemon.eggMove != PokemonFinder.NO_EGG_MOVE) renderNotification(poseStack, 3)
 	}
 
-	private fun renderNotification(
-		poseStack: PoseStack,
-		row: Int,
-	) {
+	private fun renderNotification(poseStack: PoseStack, row: Int) {
 		blitk(
 			matrixStack = poseStack,
 			texture = NOTIFICATION,

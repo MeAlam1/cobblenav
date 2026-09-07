@@ -25,12 +25,7 @@ open class TextWidget(
 		height = splittedText.size * lineHeight + (splittedText.size - 1) * lineOffset
 	}
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		var lineY = y
 		splittedText.forEach {
 			drawScaledText(

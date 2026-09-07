@@ -11,20 +11,11 @@ class CollapsedSection(
 	width: Int,
 	// @TODO: get rid of empty?
 ) : WidgetState<SectionWidget>(statefulWidget, x, y, width, SectionWidget.HEADER_HEIGHT, Component.empty()) {
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		statefulWidget.renderTitle(guiGraphics, i, j, f)
 	}
 
-	override fun mouseClicked(
-		pMouseX: Double,
-		pMouseY: Double,
-		pButton: Int,
-	): Boolean {
+	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean {
 		if (isValidClickButton(pButton) && clicked(pMouseX, pMouseY)) {
 			statefulWidget.changeState(ExpandingSection(statefulWidget, x, y, width, height))
 			return true

@@ -60,12 +60,7 @@ class EvYieldFilterWidget(
 					).also { addWidget(it) }
 			}.toMap()
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
-		i: Int,
-		j: Int,
-		f: Float,
-	) {
+	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		blitk(
 			matrixStack = guiGraphics.pose(),
 			texture = LEFT,
