@@ -7,10 +7,10 @@ import com.cobblemon.mod.common.util.cobblemonResource
 import com.cobblemon.mod.common.util.readString
 import com.cobblemon.mod.common.util.writeString
 import com.metacontent.cobblenav.client.gui.widget.spawndata.SpawnDataWidget
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 import org.joml.Vector3f
@@ -20,7 +20,8 @@ class UnknownSpawnResultData(val positionType: String) : SpawnResultData {
 		const val TYPE = "unknown"
 		val UNKNOWN = cobblemonResource("textures/gui/pokedex/platform_unknown.png")
 
-		fun transform(detail: SpawnDetail, player: ServerPlayer): UnknownSpawnResultData = UnknownSpawnResultData(detail.spawnablePositionType.name)
+		fun transform(detail: SpawnDetail, player: ServerPlayer): UnknownSpawnResultData =
+			UnknownSpawnResultData(detail.spawnablePositionType.name)
 
 		fun decodeResultData(buffer: RegistryFriendlyByteBuf): UnknownSpawnResultData = UnknownSpawnResultData(buffer.readString())
 	}
@@ -58,7 +59,7 @@ class UnknownSpawnResultData(val positionType: String) : SpawnResultData {
 
 	override fun getColor() = 0x815989
 
-	override fun getResultName(): MutableComponent = Component.translatable("gui.cobblenav.spawn_data.unknown_pokemon")
+	override fun getResultName(): MutableComponent = label("spawn_data.unknown_pokemon")
 
 	override fun shouldRenderPlatform() = positionType != "fishing"
 

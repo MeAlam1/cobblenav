@@ -1,6 +1,6 @@
 {
   "key.cobblenav.open_pokenav": "Abrir PokéNav",
-  "key.cobblenav.open_location": "Abrir Tela de Localização",
+  "action.cobblenav.open_location": "Abrir Tela de Localização",
   "category.cobblenav": "Cobblenav",
   "itemGroup.cobblenav.pokenav_group": "Cobblenav",
   "tag.item.cobblenav.pokenav": "PokéNav",

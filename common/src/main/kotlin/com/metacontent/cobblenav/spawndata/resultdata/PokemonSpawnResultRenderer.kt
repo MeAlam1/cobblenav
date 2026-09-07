@@ -8,9 +8,9 @@ import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
 import com.metacontent.cobblenav.Cobblenav
 import com.metacontent.cobblenav.client.CobblenavClient
 import com.metacontent.cobblenav.client.gui.util.drawPokemon
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.Minecraft
-import net.minecraft.network.chat.Component
 import org.joml.Quaternionf
 import org.joml.Vector3f
 
@@ -35,11 +35,12 @@ abstract class PokemonSpawnResultRenderer {
 				rotation = Quaternionf().fromEulerXYZDegrees(rotation),
 			)
 		} catch (e: Exception) {
-			val message = Component.translatable(
-				"gui.cobblenav.pokemon_rendering_exception",
-				pokemon.species.translatedName.string,
-				pokemon.species.translatedName.string,
-			)
+			val message =
+				label(
+					"pokemon_rendering_exception",
+					pokemon.species.translatedName.string,
+					pokemon.species.translatedName.string,
+				)
 			Cobblenav.LOGGER.error(message.string)
 			Cobblenav.LOGGER.error(e.message)
 			if (CobblenavClient.config.sendErrorMessagesToChat) {
@@ -73,7 +74,6 @@ class BasicHerdSpawnResultRenderer : BasicSpawnResultRenderer() {
 }
 
 open class FishingSpawnResultRenderer : PokemonSpawnResultRenderer() {
-
 	override val rotation = Vector3f(0f, 270f, 0f)
 	override val scale = 15f
 	override val pose = PoseType.SWIM

@@ -13,19 +13,21 @@ class ExpandedSection(statefulWidget: SectionWidget, x: Int, y: Int, width: Int)
 		y,
 		width,
 		SectionWidget.HEADER_HEIGHT + SectionWidget.FOOTER_HEIGHT + statefulWidget.expandablePartHeight,
+		// @TODO: get rid of empty?
 		Component.empty(),
 	) {
-	private val tableView = TableView<AbstractWidget>(
-		x = x + 4,
-		y = y + SectionWidget.HEADER_HEIGHT + statefulWidget.paragraphOffset.toInt(),
-		width = width - 8,
-		columns = 1,
-		verticalGap = statefulWidget.paragraphOffset,
-		horizontalGap = 0f,
-	).also {
-		it.add(statefulWidget.widgets)
-		addWidget(it)
-	}
+	private val tableView =
+		TableView<AbstractWidget>(
+			x = x + 4,
+			y = y + SectionWidget.HEADER_HEIGHT + statefulWidget.paragraphOffset.toInt(),
+			width = width - 8,
+			columns = 1,
+			verticalGap = statefulWidget.paragraphOffset,
+			horizontalGap = 0f,
+		).also {
+			it.add(statefulWidget.widgets)
+			addWidget(it)
+		}
 
 	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		statefulWidget.renderBody(guiGraphics, height)

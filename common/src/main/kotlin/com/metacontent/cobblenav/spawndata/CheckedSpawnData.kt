@@ -2,10 +2,9 @@ package com.metacontent.cobblenav.spawndata
 
 import com.cobblemon.mod.common.api.net.Encodable
 import com.metacontent.cobblenav.client.gui.util.renderAdvancedTooltip
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.MutableComponent
 
 data class CheckedSpawnData(val data: SpawnData, val chance: Float) : Encodable {
 	companion object {
@@ -29,11 +28,12 @@ data class CheckedSpawnData(val data: SpawnData, val chance: Float) : Encodable 
 		opacity: Float = 0.9f,
 		delta: Float = 0f,
 	) {
-		val body = mutableListOf<MutableComponent>(
-			Component.translatable("gui.cobblenav.spawn_data.spawn_chance", chance * chanceMultiplier),
-			Component.translatable("gui.cobblenav.spawn_data.id", data.id),
-			Component.translatable("gui.cobblenav.spawn_data.position_type", data.positionType),
-		)
+		val body =
+			mutableListOf(
+				label("spawn_data.spawn_chance", chance * chanceMultiplier),
+				label("spawn_data.id", data.id),
+				label("spawn_data.position_type", data.positionType),
+			)
 
 		guiGraphics.renderAdvancedTooltip(
 			header = data.result.getResultName(),

@@ -1,8 +1,7 @@
 package com.metacontent.cobblenav.spawndata
 
 import com.cobblemon.mod.common.api.net.Encodable
-import com.metacontent.cobblenav.Cobblenav
-import com.metacontent.cobblenav.util.getHeadBlock
+import com.metacontent.cobblenav.utils.getHeadBlock
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation

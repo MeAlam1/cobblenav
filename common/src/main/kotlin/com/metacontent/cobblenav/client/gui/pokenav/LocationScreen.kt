@@ -28,7 +28,8 @@ import com.metacontent.cobblenav.networking.packet.server.RequestSpawnMapPacket
 import com.metacontent.cobblenav.os.PokenavOS
 import com.metacontent.cobblenav.spawndata.CheckedSpawnData
 import com.metacontent.cobblenav.spawndata.SpawnData
-import com.metacontent.cobblenav.util.WeightedBucket
+import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.WeightedBucket
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.BlockPos
@@ -123,30 +124,32 @@ class LocationScreen(
 			screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - StatusBarWidget.HEIGHT,
 		).also { addUnblockableWidget(it) }
 
-		sortButton = IconButton(
-			pX = viewX + BucketSelectorWidget.WIDTH + BUTTON_BLOCK_SPACE,
-			pY = viewY - (BucketSelectorWidget.HEIGHT + BUTTON_HEIGHT) / 2,
-			pWidth = BUTTON_WIDTH,
-			pHeight = BUTTON_HEIGHT,
-			action = {
-				this.sorting = if (this.sorting == Sorting.ASCENDING) Sorting.DESCENDING else Sorting.ASCENDING
-			},
-			texture = SORT_ASCENDING,
-			disabled = true,
-		).also { addBlockableWidget(it) }
+		sortButton =
+			IconButton(
+				pX = viewX + BucketSelectorWidget.WIDTH + BUTTON_BLOCK_SPACE,
+				pY = viewY - (BucketSelectorWidget.HEIGHT + BUTTON_HEIGHT) / 2,
+				pWidth = BUTTON_WIDTH,
+				pHeight = BUTTON_HEIGHT,
+				action = {
+					this.sorting = if (this.sorting == Sorting.ASCENDING) Sorting.DESCENDING else Sorting.ASCENDING
+				},
+				texture = SORT_ASCENDING,
+				disabled = true,
+			).also { addBlockableWidget(it) }
 
-		refreshButton = IconButton(
-			pX = viewX + BucketSelectorWidget.WIDTH + BUTTON_BLOCK_SPACE + BUTTON_WIDTH + BUTTON_SPACE,
-			pY = viewY - (BucketSelectorWidget.HEIGHT + BUTTON_HEIGHT) / 2,
-			pWidth = BUTTON_WIDTH,
-			pHeight = BUTTON_HEIGHT,
-			disabled = true,
-			action = {
-				tableView.clear()
-				requestSpawnData()
-			},
-			texture = REFRESH,
-		).also { addBlockableWidget(it) }
+		refreshButton =
+			IconButton(
+				pX = viewX + BucketSelectorWidget.WIDTH + BUTTON_BLOCK_SPACE + BUTTON_WIDTH + BUTTON_SPACE,
+				pY = viewY - (BucketSelectorWidget.HEIGHT + BUTTON_HEIGHT) / 2,
+				pWidth = BUTTON_WIDTH,
+				pHeight = BUTTON_HEIGHT,
+				disabled = true,
+				action = {
+					tableView.clear()
+					requestSpawnData()
+				},
+				texture = REFRESH,
+			).also { addBlockableWidget(it) }
 
 		RequestLocationScreenInitDataPacket().sendToServer()
 
@@ -159,69 +162,75 @@ class LocationScreen(
 //            action = { changeScreen(MainScreen(os)) }
 //        ).also { addBlockableWidget(it) }
 
-		tableView = TableView(
-			x = viewX + TABLE_MARGIN,
-			y = viewY + 1,
-			width = VIEW_WIDTH - 2 * TABLE_MARGIN,
-			columns = 6,
-			verticalGap = 4f,
-			horizontalGap = 3f,
-			columnWidth = SpawnDataWidget.WIDTH,
-		)
-		scrollableView = ScrollableView(
-			viewX + 1,
-			tableView.y,
-			VIEW_WIDTH - 2,
-			VIEW_HEIGHT - 2,
-			child = tableView,
-		).also { addBlockableWidget(it) }
+		tableView =
+			TableView(
+				x = viewX + TABLE_MARGIN,
+				y = viewY + 1,
+				width = VIEW_WIDTH - 2 * TABLE_MARGIN,
+				columns = 6,
+				verticalGap = 4f,
+				horizontalGap = 3f,
+				columnWidth = SpawnDataWidget.WIDTH,
+			)
+		scrollableView =
+			ScrollableView(
+				viewX + 1,
+				tableView.y,
+				VIEW_WIDTH - 2,
+				VIEW_HEIGHT - 2,
+				child = tableView,
+			).also { addBlockableWidget(it) }
 
-		checkBox = CheckBox(
-			/*screenX + BUTTON_WIDTH + VERTICAL_BORDER_DEPTH + BACK_BUTTON_SIZE + 2 * BUTTON_SPACE*/
-			x = viewX + BUTTON_WIDTH + BUTTON_SPACE,
-			/*screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - BUTTON_HEIGHT + CHECK_BOX_OFFSET*/
-			y = viewY + VIEW_HEIGHT + CHECK_BOX_OFFSET,
-			height = CHECK_BOX_SIZE,
-			width = CHECK_BOX_SIZE,
-			text = Component.translatable("gui.cobblenav.apply_bucket"),
-			texture = CheckBox.CHECK_BOX,
-			default = CobblenavClient.pokenavSettings?.preferences?.applyBucketChecked ?: false,
-		) {
-			tableView.applyToAll { child ->
-				child.child.spawnData.chanceMultiplier =
-					if (it.checked()) weightedBuckets[currentBucket]?.chance ?: 1f else 1f
-			}
-		}.also { addBlockableWidget(it) }
+		checkBox =
+			CheckBox(
+				// screenX + BUTTON_WIDTH + VERTICAL_BORDER_DEPTH + BACK_BUTTON_SIZE + 2 * BUTTON_SPACE
+				x = viewX + BUTTON_WIDTH + BUTTON_SPACE,
+				// screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - BUTTON_HEIGHT + CHECK_BOX_OFFSET
+				y = viewY + VIEW_HEIGHT + CHECK_BOX_OFFSET,
+				height = CHECK_BOX_SIZE,
+				width = CHECK_BOX_SIZE,
+				text = label("apply_bucket"),
+				texture = CheckBox.CHECK_BOX,
+				default = CobblenavClient.pokenavSettings?.preferences?.applyBucketChecked ?: false,
+			) {
+				tableView.applyToAll { child ->
+					child.child.spawnData.chanceMultiplier =
+						if (it.checked()) weightedBuckets[currentBucket]?.chance ?: 1f else 1f
+				}
+			}.also { addBlockableWidget(it) }
 
-		supportContextMenu = ContextMenuWidget(
-			text = listOf(
-				Component.translatable("gui.cobblenav.support.location_screen"),
-				Component.literal(" "),
-				Component.translatable("gui.cobblenav.support.bucket_checkbox"),
-			),
-			pX = (width - ContextMenuWidget.WIDTH) / 2,
-			pY = height / 2,
-			lineHeight = 8,
-			centerText = false,
-			textWidth = ContextMenuWidget.WIDTH - 20,
-			cancelAction = { menu, _ ->
-				blockWidgets = false
-				removeUnblockableWidget(menu)
-				menu.openingTimer.reset()
-			},
-		)
+		supportContextMenu =
+			ContextMenuWidget(
+				text =
+				listOf(
+					label("menu.location.screen"),
+					Component.literal(" "),
+					label("menu.location.bucket_checkbox"),
+				),
+				pX = (width - ContextMenuWidget.WIDTH) / 2,
+				pY = height / 2,
+				lineHeight = 8,
+				centerText = false,
+				textWidth = ContextMenuWidget.WIDTH - 20,
+				cancelAction = { menu, _ ->
+					blockWidgets = false
+					removeUnblockableWidget(menu)
+					menu.openingTimer.reset()
+				},
+			)
 
-		spawnDataDetails = SpawnDataDetailWidget(
-			displayer = this,
-			pokenavScreen = this,
-			x = screenX + VERTICAL_BORDER_DEPTH,
-			y = screenY + HORIZONTAL_BORDER_DEPTH,
-		).also { addUnblockableWidget(it) }
+		spawnDataDetails =
+			SpawnDataDetailWidget(
+				displayer = this,
+				pokenavScreen = this,
+				x = screenX + VERTICAL_BORDER_DEPTH,
+				y = screenY + HORIZONTAL_BORDER_DEPTH,
+			).also { addUnblockableWidget(it) }
 
 		IconButton(
-			/*screenX + VERTICAL_BORDER_DEPTH + BACK_BUTTON_SIZE + BUTTON_SPACE*/
+			// screenX + VERTICAL_BORDER_DEPTH + BACK_BUTTON_SIZE + BUTTON_SPACE
 			pX = viewX,
-			/*screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - BUTTON_HEIGHT*/
+			// screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - BUTTON_HEIGHT
 			pY = viewY + VIEW_HEIGHT,
 			pWidth = BUTTON_WIDTH,
 			pHeight = BUTTON_HEIGHT,
@@ -236,11 +245,12 @@ class LocationScreen(
 	fun receiveInitData(buckets: List<String>, biome: String) {
 		this.buckets = buckets
 		this.bucketIndex = CobblenavClient.pokenavSettings?.preferences?.bucketIndex ?: 0
-		bucketSelector = BucketSelectorWidget(
-			viewX,
-			viewY - BucketSelectorWidget.HEIGHT,
-			this,
-		).also { addBlockableWidget(it) }
+		bucketSelector =
+			BucketSelectorWidget(
+				viewX,
+				viewY - BucketSelectorWidget.HEIGHT,
+				this,
+			).also { addBlockableWidget(it) }
 
 		this.biome = biome
 		LocationInfoWidget(
@@ -254,11 +264,11 @@ class LocationScreen(
 
 		val newlyCatalogued = CobblenavClient.spawnDataCatalogue.newlyCataloguedAmount
 		if (newlyCatalogued > 0) {
-			notifications.add(Component.translatable("gui.cobblenav.notification.newly_catalogued", newlyCatalogued))
+			notifications.add(label("notification.newly_catalogued", newlyCatalogued))
 			CobblenavClient.spawnDataCatalogue.newlyCataloguedAmount = 0
 		}
 		if (fixedAreaPoint != null) {
-			notifications.add(Component.translatable("gui.cobblenav.notification.pokesnack"))
+			notifications.add(label("notification.pokesnack"))
 		}
 	}
 
@@ -291,7 +301,7 @@ class LocationScreen(
 		if (tableView.isEmpty()) {
 			drawScaledText(
 				context = guiGraphics,
-				text = Component.translatable("gui.cobblenav.empty_spawns_message"),
+				text = label("empty_spawns_message"),
 				x = screenX + WIDTH / 2,
 				y = screenY + HEIGHT / 2 - 4,
 				maxCharacterWidth = WIDTH - 2 * VERTICAL_BORDER_DEPTH,
@@ -317,11 +327,12 @@ class LocationScreen(
 
 	private fun savePreferences() {
 		CobblenavClient.pokenavSettings?.let {
-			it.preferences = PokenavPreferences(
-				bucketIndex = bucketIndex,
-				sorting = sorting,
-				applyBucketChecked = checkBox.checked(),
-			)
+			it.preferences =
+				PokenavPreferences(
+					bucketIndex = bucketIndex,
+					sorting = sorting,
+					applyBucketChecked = checkBox.checked(),
+				)
 		}
 	}
 
@@ -365,46 +376,54 @@ class LocationScreen(
 	}
 
 	private fun createSpawnDataWidgets(spawnDataList: List<CheckedSpawnData>) {
-		val spawnDataWidgets = spawnDataList
-			.sortedWith { firstData, secondData ->
-				compareValues(
-					firstData.chance,
-					secondData.chance,
-				) * sorting.multiplier
-			}
-			.map {
-				ScrollableItemWidget(
-					child = SpawnDataWidget(
-						x = 0,
-						y = 0,
-						spawnData = it.also { data ->
-							data.chanceMultiplier =
-								if (checkBox.checked()) weightedBuckets[currentBucket]?.chance ?: 1f else 1f
-						},
-						displayer = this,
-					),
-					topEdge = screenY + HORIZONTAL_BORDER_DEPTH + 16,
-					bottomEdge = screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - 15,
-				)
-			}
+		val spawnDataWidgets =
+			spawnDataList
+				.sortedWith { firstData, secondData ->
+					compareValues(
+						firstData.chance,
+						secondData.chance,
+					) * sorting.multiplier
+				}.map {
+					ScrollableItemWidget(
+						child =
+						SpawnDataWidget(
+							x = 0,
+							y = 0,
+							spawnData =
+							it.also { data ->
+								data.chanceMultiplier =
+									if (checkBox.checked()) weightedBuckets[currentBucket]?.chance ?: 1f else 1f
+							},
+							displayer = this,
+						),
+						topEdge = screenY + HORIZONTAL_BORDER_DEPTH + 16,
+						bottomEdge = screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - 15,
+					)
+				}
 		tableView.add(spawnDataWidgets)
 		checkNearbyPokemon()
 	}
 
 	fun checkNearbyPokemon() {
-		val nearbyPokemon = player?.let { player ->
-			player.clientLevel.getEntitiesOfClass(
-				PokemonEntity::class.java,
-				AABB.ofSize(
-					player.position(),
-					128.0,
-					128.0,
-					128.0,
-				),
-			).groupBy { it.pokemon.form.showdownId() }.mapValues { it.value.map(Entity::getId) }
-		} ?: emptyMap()
+		val nearbyPokemon =
+			player?.let { player ->
+				player.clientLevel
+					.getEntitiesOfClass(
+						PokemonEntity::class.java,
+						AABB.ofSize(
+							player.position(),
+							128.0,
+							128.0,
+							128.0,
+						),
+					).groupBy { it.pokemon.form.showdownId() }
+					.mapValues { it.value.map(Entity::getId) }
+			} ?: emptyMap()
 		tableView.applyToAll { item ->
-			item.child.nearbyEntityIds = nearbyPokemon[item.child.spawnData.data.result.getResultId()] ?: emptyList()
+			item.child.nearbyEntityIds = nearbyPokemon[
+				item.child.spawnData.data.result
+					.getResultId(),
+			] ?: emptyList()
 		}
 	}
 

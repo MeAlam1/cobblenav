@@ -2,7 +2,7 @@ package com.metacontent.cobblenav.client.settings.pokefinder.filter
 
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.cobblenavResource
 import net.minecraft.resources.ResourceLocation
 
 class TranslatedNameFilter(private var names: List<String> = emptyList()) : EditableTextFilter() {

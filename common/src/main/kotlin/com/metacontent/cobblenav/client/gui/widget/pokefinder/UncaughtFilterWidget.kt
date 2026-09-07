@@ -10,9 +10,11 @@ import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen.Companio
 import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen.Companion.LINE_WIDTH
 import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen.Companion.WIDGET_HEIGHT
 import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen.Companion.WIDGET_WIDTH
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 
+// @TODO: get rid of empty?
 class UncaughtFilterWidget : SoundlessWidget(0, 0, WIDGET_WIDTH, WIDGET_HEIGHT, Component.empty()) {
 	private val uncaught = 100 - CobblemonClient.clientPokedexData.getGlobalCalculatedValue(CaughtPercent).toInt()
 
@@ -28,7 +30,7 @@ class UncaughtFilterWidget : SoundlessWidget(0, 0, WIDGET_WIDTH, WIDGET_HEIGHT, 
 		)
 		drawScaledText(
 			context = guiGraphics,
-			text = Component.translatable("gui.cobblenav.pokefinder.uncaught", uncaught),
+			text = label("pokefinder.uncaught", uncaught),
 			x = x + 5,
 			y = y + 8,
 			maxCharacterWidth = LINE_WIDTH,

@@ -5,7 +5,7 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.metacontent.cobblenav.Cobblenav
 import com.metacontent.cobblenav.networking.packet.client.FoundPokemonPacket
 import com.metacontent.cobblenav.networking.packet.server.FindPokemonPacket
-import com.metacontent.cobblenav.util.finder.BestPokemonFinder
+import com.metacontent.cobblenav.utils.finder.BestPokemonFinder
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.phys.AABB

@@ -6,10 +6,9 @@ import com.metacontent.cobblenav.client.gui.util.*
 import com.metacontent.cobblenav.client.gui.widget.layout.TableView
 import com.metacontent.cobblenav.client.gui.widget.layout.scrollable.ScrollableItemWidget
 import com.metacontent.cobblenav.client.gui.widget.spawndata.SpawnDataWidget
-import com.metacontent.cobblenav.util.WeightedBucket
+import com.metacontent.cobblenav.utils.I18nUtil.bucket
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor
 import org.joml.Vector3d
 import kotlin.math.max
@@ -46,15 +45,16 @@ class BucketViewWidget(
 	}
 
 	val color
-		get() = interpolate(
-			dayCycleColor(
-				Minecraft.getInstance().level?.dayTime ?: 0L,
-				UP_DAY_COLOR,
-				UP_NIGHT_COLOR,
-			),
-			DOWN_COLOR,
-			depthProgress,
-		)
+		get() =
+			interpolate(
+				dayCycleColor(
+					Minecraft.getInstance().level?.dayTime ?: 0L,
+					UP_DAY_COLOR,
+					UP_NIGHT_COLOR,
+				),
+				DOWN_COLOR,
+				depthProgress,
+			)
 
 	init {
 		height = minHeight
@@ -95,7 +95,7 @@ class BucketViewWidget(
 			)
 			drawScaledText(
 				context = guiGraphics,
-				text = Component.translatable("bucket.cobblenav.$bucket"),
+				text = bucket(bucket),
 				x = x + width - BUCKET_WIDTH,
 				y = y - SEPARATOR_HEIGHT - 0.4,
 				shadow = true,

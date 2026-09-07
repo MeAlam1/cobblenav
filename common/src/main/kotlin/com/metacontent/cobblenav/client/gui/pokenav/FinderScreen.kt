@@ -14,14 +14,21 @@ import com.metacontent.cobblenav.client.gui.widget.finder.FoundPokemonWidget
 import com.metacontent.cobblenav.client.gui.widget.finder.StatsTableWidget
 import com.metacontent.cobblenav.os.PokenavOS
 import com.metacontent.cobblenav.spawndata.SpawnData
-import com.metacontent.cobblenav.util.finder.FoundPokemon
+import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.finder.FoundPokemon
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor
 import org.joml.Vector3d
 import org.joml.Vector3f
 
-class FinderScreen(private val spawnData: SpawnData, os: PokenavOS, makeOpeningSound: Boolean = false, animateOpening: Boolean = false) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Finder")) {
+class FinderScreen(
+	private val spawnData: SpawnData,
+	os: PokenavOS,
+	makeOpeningSound: Boolean = false,
+	animateOpening: Boolean = false,
+	// @TODO: move literal to lang?
+) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Finder")) {
 	companion object {
 		const val CLOSING_DURATION = 3f
 		const val FADING_DURATION = 5f
@@ -37,7 +44,7 @@ class FinderScreen(private val spawnData: SpawnData, os: PokenavOS, makeOpeningS
 		const val STAR_SIZE = 24
 		const val STAR_OFFSET = 10
 		const val STAR_GAP = 10
-		const val FIND_BUTTON_TEXT = "gui.cobblenav.finder.find_button"
+		const val FIND_BUTTON_TEXT = "finder.find_button"
 		val POKEBALL_TOP = gui("finder/pokeball_screen_top")
 		val POKEBALL_BOTTOM = gui("finder/pokeball_screen_bottom")
 		val DECORATIONS_0 = gui("finder/finder_decorations_0")
@@ -78,29 +85,31 @@ class FinderScreen(private val spawnData: SpawnData, os: PokenavOS, makeOpeningS
 			action = { toPreviousScreen() },
 		).also { addBlockableWidget(it) }
 
-		supportContextMenu = ContextMenuWidget(
-			text = listOf(
-				Component.translatable("gui.cobblenav.support.finder_screen"),
-				Component.literal(" "),
-				Component.translatable("gui.cobblenav.support.potential_stars"),
-				Component.literal(" "),
-				Component.translatable("gui.cobblenav.support.stats_table"),
-				Component.literal(" "),
-				Component.translatable("gui.cobblenav.support.track_button"),
-				Component.literal(" "),
-				Component.translatable("gui.cobblenav.support.pokefinder_button"),
-			),
-			pX = (width - ContextMenuWidget.WIDTH) / 2,
-			pY = height / 2,
-			lineHeight = 7,
-			centerText = false,
-			textWidth = ContextMenuWidget.WIDTH - 20,
-			cancelAction = { menu, _ ->
-				blockWidgets = false
-				removeUnblockableWidget(menu)
-				menu.openingTimer.reset()
-			},
-		)
+		supportContextMenu =
+			ContextMenuWidget(
+				text =
+				listOf(
+					label("support.finder_screen"),
+					Component.literal(" "),
+					label("support.potential_stars"),
+					Component.literal(" "),
+					label("support.stats_table"),
+					Component.literal(" "),
+					label("support.track_button"),
+					Component.literal(" "),
+					label("support.pokefinder_button"),
+				),
+				pX = (width - ContextMenuWidget.WIDTH) / 2,
+				pY = height / 2,
+				lineHeight = 7,
+				centerText = false,
+				textWidth = ContextMenuWidget.WIDTH - 20,
+				cancelAction = { menu, _ ->
+					blockWidgets = false
+					removeUnblockableWidget(menu)
+					menu.openingTimer.reset()
+				},
+			)
 	}
 
 	fun receiveFoundPokemon(pokemon: FoundPokemon) {
@@ -116,20 +125,21 @@ class FinderScreen(private val spawnData: SpawnData, os: PokenavOS, makeOpeningS
 			(previousScreen as? LocationScreen)?.checkNearbyPokemon()
 		}
 
-		findButton = TextButton(
-			pX = screenX + (WIDTH - FIND_BUTTON_WIDTH) / 2,
-			pY = screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - FIND_BUTTON_HEIGHT - FIND_BUTTON_OFFSET,
-			pWidth = FIND_BUTTON_WIDTH,
-			pHeight = FIND_BUTTON_HEIGHT,
-			disabled = !pokemon.found,
-			texture = FIND_BUTTON,
-			text = Component.translatable(FIND_BUTTON_TEXT),
-			shadow = true,
-			action = {
-				CobblenavClient.trackArrowOverlay.entityId = pokemon.entityId
-				onClose()
-			},
-		).also { addBlockableWidget(it) }
+		findButton =
+			TextButton(
+				pX = screenX + (WIDTH - FIND_BUTTON_WIDTH) / 2,
+				pY = screenY + HEIGHT - HORIZONTAL_BORDER_DEPTH - FIND_BUTTON_HEIGHT - FIND_BUTTON_OFFSET,
+				pWidth = FIND_BUTTON_WIDTH,
+				pHeight = FIND_BUTTON_HEIGHT,
+				disabled = !pokemon.found,
+				texture = FIND_BUTTON,
+				text = label(FIND_BUTTON_TEXT),
+				shadow = true,
+				action = {
+					CobblenavClient.trackArrowOverlay.entityId = pokemon.entityId
+					onClose()
+				},
+			).also { addBlockableWidget(it) }
 
 		val settings = CobblenavClient.pokefinderSettings
 //        val name = spawnData.renderable.species.name
@@ -184,7 +194,7 @@ class FinderScreen(private val spawnData: SpawnData, os: PokenavOS, makeOpeningS
 		if (!pokemon.found) {
 			drawScaledText(
 				context = guiGraphics,
-				text = Component.translatable("gui.cobblenav.finder.pokemon_not_found"),
+				text = label("finder.pokemon_not_found"),
 				x = width / 2,
 				y = height / 2,
 				centered = true,

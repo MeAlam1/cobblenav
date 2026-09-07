@@ -5,11 +5,11 @@ import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
 import com.metacontent.cobblenav.CobblenavItems
 import com.metacontent.cobblenav.client.CobblenavClient
 import com.metacontent.cobblenav.client.gui.util.pushAndPop
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 import org.joml.Quaternionf
@@ -54,7 +54,8 @@ class TrackArrowOverlay : Gui(Minecraft.getInstance()) {
 
 		poseStack.pushAndPop(
 			translate = Vector3d(x.toDouble(), y.toDouble(), 0.0),
-			mulPose = Quaternionf()
+			mulPose =
+			Quaternionf()
 				.rotateZ(PI.toFloat())
 				.fromEulerXYZDegrees(Vector3f(player.xRot, -player.yRot, 0f))
 				.rotateY(0.5f * PI.toFloat() + yaw)
@@ -75,7 +76,7 @@ class TrackArrowOverlay : Gui(Minecraft.getInstance()) {
 
 		drawScaledText(
 			context = guiGraphics,
-			text = Component.translatable("gui.cobblenav.finder.distance", distanceVec.length().toInt()),
+			text = label("finder.distance", distanceVec.length().toInt()),
 			x = x,
 			y = y + 30,
 			centered = true,

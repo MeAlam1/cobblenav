@@ -6,7 +6,12 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import java.awt.Color
 
-class MapScreen(os: PokenavOS, makeOpeningSound: Boolean = false, animateOpening: Boolean = false) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Map")) {
+class MapScreen(
+	os: PokenavOS,
+	makeOpeningSound: Boolean = false,
+	animateOpening: Boolean = false,
+	// @TODO: move literal to lang?
+) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Map")) {
 	override val color = Color.decode("#000000").rgb
 
 	override fun initScreen() {

@@ -217,9 +217,20 @@ class PokefinderScreen : Screen(Component.literal("Pokefinder")) {
 
 	override fun mouseClicked(d: Double, e: Double, i: Int): Boolean = super.mouseClicked(d / scale, e / scale, i)
 
-	override fun mouseScrolled(d: Double, e: Double, f: Double, g: Double): Boolean = super.mouseScrolled(d / scale, e / scale, f / scale, g / scale)
+	override fun mouseScrolled(d: Double, e: Double, f: Double, g: Double): Boolean = super.mouseScrolled(
+		d / scale,
+		e / scale,
+		f / scale,
+		g / scale,
+	)
 
-	override fun mouseDragged(d: Double, e: Double, i: Int, f: Double, g: Double): Boolean = super.mouseDragged(d / scale, e / scale, i, f / scale, g / scale)
+	override fun mouseDragged(d: Double, e: Double, i: Int, f: Double, g: Double): Boolean = super.mouseDragged(
+		d / scale,
+		e / scale,
+		i,
+		f / scale,
+		g / scale,
+	)
 
 	override fun mouseReleased(d: Double, e: Double, i: Int): Boolean = super.mouseReleased(d / scale, e / scale, i)
 }

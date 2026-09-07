@@ -16,6 +16,7 @@ open class TableView<I : AbstractWidget>(
 	val columnWidth: Int = width / columns,
 	private val verticalGap: Float = 0f,
 	private val horizontalGap: Float = (width - columns * columnWidth) / (columns - 1f),
+	// @TODO: move literal to lang?
 ) : SoundlessWidget(x, y, width, 0, Component.literal("Table View")) {
 	internal val items = mutableListOf<I>()
 	val rows
@@ -48,9 +49,10 @@ open class TableView<I : AbstractWidget>(
 	}
 
 	fun <T : Comparable<T>> resort(sorting: Sorting, extractor: (I) -> T) {
-		val resortedItems = items.sortedWith { firstWidget, secondWidget ->
-			compareValues(extractor.invoke(firstWidget), extractor.invoke(secondWidget)) * sorting.multiplier
-		}
+		val resortedItems =
+			items.sortedWith { firstWidget, secondWidget ->
+				compareValues(extractor.invoke(firstWidget), extractor.invoke(secondWidget)) * sorting.multiplier
+			}
 		items.clear()
 		add(resortedItems)
 	}

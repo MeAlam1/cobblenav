@@ -3,20 +3,14 @@ package com.metacontent.cobblenav.client.gui.config
 import com.metacontent.cobblenav.config.ClientCobblenavConfig
 import com.metacontent.cobblenav.config.CobblenavConfig
 import com.metacontent.cobblenav.config.Config
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
-class ConfigListScreen(
-	private val parent: Screen?,
-	private val entries: List<Entry>,
-) : Screen(Component.translatable("cobblenav.config_list.title")) { // TODO
-
-	class Entry(
-		val label: Component,
-		val open: (parent: Screen) -> Screen,
-	)
+class ConfigListScreen(private val parent: Screen?, private val entries: List<Entry>) : Screen(label("config.title")) {
+	class Entry(val label: Component, val open: (parent: Screen) -> Screen)
 
 	companion object {
 		private const val BUTTON_WIDTH = 200
@@ -27,7 +21,7 @@ class ConfigListScreen(
 			parent,
 			listOf(
 				Entry(
-					Component.translatable("cobblenav.config_list.client"), // TODO
+					label("edit.context", "Client Config"),
 				) { screenParent ->
 					ConfigScreen(
 						Config.load(ClientCobblenavConfig::class.java),
@@ -35,7 +29,7 @@ class ConfigListScreen(
 					)
 				},
 				Entry(
-					Component.translatable("cobblenav.config_list.server"), // TODO
+					label("edit.context", "Server Config"),
 				) { screenParent ->
 					ConfigScreen(
 						Config.load(CobblenavConfig::class.java),
@@ -52,39 +46,26 @@ class ConfigListScreen(
 
 		entries.forEachIndexed { index, entry ->
 			addRenderableWidget(
-				Button.builder(entry.label) {
-					minecraft?.setScreen(entry.open(this))
-				}
+				Button
+					.builder(entry.label) { minecraft?.setScreen(entry.open(this)) }
 					.bounds(
 						width / 2 - BUTTON_WIDTH / 2,
 						startY + index * BUTTON_SPACING,
 						BUTTON_WIDTH,
 						BUTTON_HEIGHT,
-					)
-					.build(),
+					).build(),
 			)
 		}
 
 		addRenderableWidget(
-			Button.builder(Component.translatable("gui.back")) {
-				onClose()
-			}
-				.bounds(
-					width / 2 - BUTTON_WIDTH / 2,
-					height - 28,
-					BUTTON_WIDTH,
-					BUTTON_HEIGHT,
-				)
+			Button
+				.builder(Component.translatable("gui.back")) { onClose() }
+				.bounds(width / 2 - BUTTON_WIDTH / 2, height - 28, BUTTON_WIDTH, BUTTON_HEIGHT)
 				.build(),
 		)
 	}
 
-	override fun render(
-		graphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		partialTick: Float,
-	) {
+	override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
 		renderBackground(graphics, mouseX, mouseY, partialTick)
 
 		graphics.drawCenteredString(

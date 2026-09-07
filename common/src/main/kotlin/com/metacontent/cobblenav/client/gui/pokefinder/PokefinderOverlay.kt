@@ -158,7 +158,15 @@ class PokefinderOverlay : Gui(Minecraft.getInstance()) {
 		)
 	}
 
-	private fun Collection<PokemonEntity>.renderPokemonDots(guiGraphics: GuiGraphics, x: Int, y: Int, width: Int, height: Int, center: Vec3, rotation: Float) {
+	private fun Collection<PokemonEntity>.renderPokemonDots(
+		guiGraphics: GuiGraphics,
+		x: Int,
+		y: Int,
+		width: Int,
+		height: Int,
+		center: Vec3,
+		rotation: Float,
+	) {
 		this.forEach {
 			val vec = center.vectorTo(it.position()).scale(RADAR_SCALE)
 			val angle = Math.toRadians(180.0 - rotation)

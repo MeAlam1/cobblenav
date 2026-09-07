@@ -3,8 +3,8 @@ package com.metacontent.cobblenav.client.settings.pokefinder.filter
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.util.cobblenavResource
-import com.metacontent.cobblenav.util.matchesOnClient
+import com.metacontent.cobblenav.utils.cobblenavResource
+import com.metacontent.cobblenav.utils.matchesOnClient
 import net.minecraft.resources.ResourceLocation
 
 class PokemonPropertiesFilter(private var properties: PokemonProperties = PokemonProperties()) : EditableTextFilter() {

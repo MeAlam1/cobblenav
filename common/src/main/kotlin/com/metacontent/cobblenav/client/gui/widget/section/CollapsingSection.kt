@@ -5,7 +5,14 @@ import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 
-class CollapsingSection(statefulWidget: SectionWidget, x: Int, y: Int, width: Int, height: Int) : WidgetState<SectionWidget>(statefulWidget, x, y, width, height, Component.empty()) {
+class CollapsingSection(
+	statefulWidget: SectionWidget,
+	x: Int,
+	y: Int,
+	width: Int,
+	height: Int,
+	// @TODO: get rid of empty?
+) : WidgetState<SectionWidget>(statefulWidget, x, y, width, height, Component.empty()) {
 	companion object {
 		const val ANIMATION_TIME = 0.1f
 	}

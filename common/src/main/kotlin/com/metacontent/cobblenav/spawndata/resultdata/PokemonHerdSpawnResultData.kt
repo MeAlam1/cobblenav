@@ -11,15 +11,14 @@ import com.cobblemon.mod.common.util.readString
 import com.cobblemon.mod.common.util.writeString
 import com.metacontent.cobblenav.Cobblenav
 import com.metacontent.cobblenav.client.gui.util.RGB
-import com.metacontent.cobblenav.client.gui.util.translate
 import com.metacontent.cobblenav.client.gui.widget.TextWidget
 import com.metacontent.cobblenav.client.gui.widget.section.SectionWidget
 import com.metacontent.cobblenav.client.gui.widget.spawndata.SpawnDataDetailWidget
-import com.metacontent.cobblenav.util.createAndGetAsRenderable
+import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.createAndGetAsRenderable
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerPlayer
 
@@ -31,7 +30,10 @@ class PokemonHerdSpawnResultData(
 	val positionType: String,
 ) : SpawnResultData {
 	companion object {
-		fun transform(detail: SpawnDetail, player: ServerPlayer): SpawnResultData? {
+		fun transform(
+			detail: SpawnDetail,
+			player: ServerPlayer,
+		): SpawnResultData? {
 			if (detail !is PokemonHerdSpawnDetail) {
 				Cobblenav.LOGGER.error(
 					"The provided SpawnDetail type (${detail.type}) does not match the key under which it is registered (${PokemonHerdSpawnDetail.TYPE}).",
@@ -50,13 +52,16 @@ class PokemonHerdSpawnResultData(
 			val rightPokemon = herd.getOrNull(1)?.pokemon?.createAndGetAsRenderable(player.serverLevel(), player.onPos)
 
 			val pokedex = player.pokedex()
-			val allPokemon = detail.herdablePokemon.associate {
-				val pokemon = it.pokemon.createAndGetAsRenderable(player.serverLevel(), player.onPos)
-				val knowledge = pokedex
-					.getSpeciesRecord(pokemon.species.resourceIdentifier)
-					?.getFormRecord(pokemon.form.name)?.knowledge ?: PokedexEntryProgress.UNREGISTERED
-				pokemon to knowledge
-			}
+			val allPokemon =
+				detail.herdablePokemon.associate {
+					val pokemon = it.pokemon.createAndGetAsRenderable(player.serverLevel(), player.onPos)
+					val knowledge =
+						pokedex
+							.getSpeciesRecord(pokemon.species.resourceIdentifier)
+							?.getFormRecord(pokemon.form.name)
+							?.knowledge ?: PokedexEntryProgress.UNREGISTERED
+					pokemon to knowledge
+				}
 
 			if (isUnknown(allPokemon.values) && Cobblenav.config.hideUnknownPokemon) {
 				return UnknownSpawnResultData(detail.spawnablePositionType.name)
@@ -75,40 +80,44 @@ class PokemonHerdSpawnResultData(
 			leaderPokemon = RenderablePokemon.loadFromBuffer(buffer),
 			leftPokemon = buffer.readNullable { RenderablePokemon.loadFromBuffer(it as RegistryFriendlyByteBuf) },
 			rightPokemon = buffer.readNullable { RenderablePokemon.loadFromBuffer(it as RegistryFriendlyByteBuf) },
-			allPokemon = buffer.readMap(
+			allPokemon =
+			buffer.readMap(
 				{ RenderablePokemon.loadFromBuffer(it as RegistryFriendlyByteBuf) },
 				{ it.readEnum(PokedexEntryProgress::class.java) },
 			),
 			positionType = buffer.readString(),
 		)
 
-		fun isUnknown(knowledge: Collection<PokedexEntryProgress>) = knowledge.filter { it != PokedexEntryProgress.UNREGISTERED }.size.toDouble() / knowledge.size < Cobblenav.config.percentageForKnownHerd
+		fun isUnknown(knowledge: Collection<PokedexEntryProgress>) = knowledge.filter { it != PokedexEntryProgress.UNREGISTERED }.size.toDouble() / knowledge.size <
+			Cobblenav.config.percentageForKnownHerd
 	}
 
 	override val type = PokemonHerdSpawnDetail.TYPE
 
 	override val dataWidgets: List<AbstractWidget>? by lazy {
-		val widgets = mutableListOf<AbstractWidget>(
-			TextWidget(
-				x = 0,
-				y = 0,
-				width = SpawnDataDetailWidget.SECTION_WIDTH - 2,
-				text = translate("gui.cobblenav.spawn_data.pokemon_herd").also { component ->
-					allPokemon.keys.forEachIndexed { index, pokemon ->
-						component.append(pokemon.species.translatedName)
-						if (index < allPokemon.size - 1) {
-							component.append(", ")
+		val widgets =
+			mutableListOf<AbstractWidget>(
+				TextWidget(
+					x = 0,
+					y = 0,
+					width = SpawnDataDetailWidget.SECTION_WIDTH - 2,
+					text =
+					label("spawn_data.pokemon_herd").also { component ->
+						allPokemon.keys.forEachIndexed { index, pokemon ->
+							component.append(pokemon.species.translatedName)
+							if (index < allPokemon.size - 1) {
+								component.append(", ")
+							}
 						}
-					}
-				},
-			),
-		)
+					},
+				),
+			)
 		listOf(
 			SectionWidget(
 				x = 0,
 				y = 0,
 				width = SpawnDataDetailWidget.SECTION_WIDTH,
-				title = Component.translatable("gui.cobblenav.spawn_data.title.result"),
+				title = label("spawn_data.title.result"),
 				widgets = widgets,
 				color = RGB(144, 213, 255),
 			),
@@ -125,7 +134,13 @@ class PokemonHerdSpawnResultData(
 		leaderRenderer.getHerdRenderer()
 	}
 
-	override fun drawResult(poseStack: PoseStack, x: Float, y: Float, z: Float, delta: Float) {
+	override fun drawResult(
+		poseStack: PoseStack,
+		x: Float,
+		y: Float,
+		z: Float,
+		delta: Float,
+	) {
 		leaderRenderer.render(leaderPokemon, poseStack, x, y + 3, z + 100, delta)
 		leftPokemon?.let { herdRenderer.render(it, poseStack, x - 10, y + 3, z - 100, delta) }
 		rightPokemon?.let { herdRenderer.render(it, poseStack, x + 10, y + 3, z - 100, delta) }
@@ -153,8 +168,8 @@ class PokemonHerdSpawnResultData(
 
 	override fun getColor() = leaderPokemon.form.primaryType.hue
 
-	override fun getResultName(): MutableComponent = Component.translatable(
-		"gui.cobblenav.spawn_data.herd",
+	override fun getResultName(): MutableComponent = label(
+		"spawn_data.herd",
 		leaderPokemon.species.translatedName.string,
 	)
 

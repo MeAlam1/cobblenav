@@ -9,7 +9,7 @@ import com.metacontent.cobblenav.client.CobblenavClient
 import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen
 import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.duck.GameRendererDuck
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.cobblenavResource
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -70,11 +70,12 @@ fun GuiGraphics.cobblenavScissor(
 	y1: Int,
 	x2: Int,
 	y2: Int,
-	scale: Float = when (Minecraft.getInstance().screen) {
-		is PokenavScreen -> CobblenavClient.config.screenScale
-		is PokefinderScreen -> CobblenavClient.config.pokefinderScreenScale
-		else -> 1f
-	},
+	scale: Float =
+		when (Minecraft.getInstance().screen) {
+			is PokenavScreen -> CobblenavClient.config.screenScale
+			is PokefinderScreen -> CobblenavClient.config.pokefinderScreenScale
+			else -> 1f
+		},
 ) = this.enableScissor(
 	(x1 * scale).toInt(),
 	(y1 * scale).toInt(),
@@ -84,7 +85,8 @@ fun GuiGraphics.cobblenavScissor(
 
 fun GameRenderer.processBlurEffect(blur: Float, delta: Float) = (this as GameRendererDuck).`cobblenav$processBlurEffect`(blur, delta)
 
-fun getTimeString(period: IntRange): String = String.format("%s - %s", getTimeString(period.first.toLong()), getTimeString(period.last.toLong()))
+fun getTimeString(period: IntRange): String =
+	String.format("%s - %s", getTimeString(period.first.toLong()), getTimeString(period.last.toLong()))
 
 fun getTimeString(time: Long): String {
 	val adjusted = (time + 6000) % 24000
@@ -93,16 +95,20 @@ fun getTimeString(time: Long): String {
 	val minutes = ((adjusted % 1000) * 60) / 1000
 
 	val period = if (hours24 < 12) "AM" else "PM"
-	val hours12 = when {
-		hours24 == 0L -> 12
-		hours24 > 12L -> hours24 - 12
-		else -> hours24
-	}
+	val hours12 =
+		when {
+			hours24 == 0L -> 12
+			hours24 > 12L -> hours24 - 12
+			else -> hours24
+		}
 
 	return String.format("%02d:%02d %s", hours12, minutes, period)
 }
 
-fun splitText(text: MutableComponent, targetWidth: Int): List<MutableComponent> = Minecraft.getInstance().font.splitter.splitLines(text, targetWidth, Style.EMPTY)
+fun splitText(text: MutableComponent, targetWidth: Int): List<MutableComponent> = Minecraft
+	.getInstance()
+	.font.splitter
+	.splitLines(text, targetWidth, Style.EMPTY)
 	.map { Component.literal(it.string).withStyle(text.style) }
 
 fun interpolate(start: RGB, end: RGB, progress: Float): RGB = RGB(
@@ -124,9 +130,13 @@ fun dayCycleColor(dayTime: Long, dayColor: RGB, nightColor: RGB): RGB = when (va
 		interpolate(nightColor, dayColor, progress)
 	}
 
-	in 13670..22331 -> nightColor
+	in 13670..22331 -> {
+		nightColor
+	}
 
-	else -> dayColor
+	else -> {
+		dayColor
+	}
 }
 
 fun PoseStack.pushAndPop(translate: Vector3d? = null, mulPose: Quaternionf? = null, scale: Vector3f? = null, render: () -> Unit) {

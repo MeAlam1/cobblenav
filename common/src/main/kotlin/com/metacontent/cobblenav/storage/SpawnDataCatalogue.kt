@@ -5,7 +5,7 @@ import com.cobblemon.mod.common.api.storage.player.InstancedPlayerData
 import com.cobblemon.mod.common.net.messages.client.SetClientPlayerDataPacket
 import com.cobblemon.mod.common.util.getPlayer
 import com.metacontent.cobblenav.storage.client.ClientSpawnDataCatalogue
-import com.metacontent.cobblenav.util.getSpawnDataCatalogue
+import com.metacontent.cobblenav.utils.getSpawnDataCatalogue
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.PrimitiveCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder

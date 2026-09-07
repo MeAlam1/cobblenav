@@ -6,8 +6,9 @@ import com.cobblemon.mod.common.entity.fishing.PokeRodFishingBobberEntity
 import com.metacontent.cobblenav.client.gui.pokenav.FishingnavScreen
 import com.metacontent.cobblenav.networking.packet.client.OpenFishingnavPacket
 import com.metacontent.cobblenav.os.PokenavOS
-import com.metacontent.cobblenav.util.cobblenavResource
-import com.metacontent.cobblenav.util.isTraveling
+import com.metacontent.cobblenav.utils.I18nUtil.item
+import com.metacontent.cobblenav.utils.cobblenavResource
+import com.metacontent.cobblenav.utils.isTraveling
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
@@ -51,8 +52,13 @@ class Fishingnav :
 		return InteractionResultHolder.sidedSuccess(player.getItemInHand(interactionHand), false)
 	}
 
-	override fun appendHoverText(itemStack: ItemStack, tooltipContext: TooltipContext, list: MutableList<Component>, tooltipFlag: TooltipFlag) {
-		list.add(Component.translatable("item.cobblenav.fishingnav_item.tooltip").gray())
+	override fun appendHoverText(
+		itemStack: ItemStack,
+		tooltipContext: TooltipContext,
+		list: MutableList<Component>,
+		tooltipFlag: TooltipFlag,
+	) {
+		list.add(item("fishingnav_item.tooltip").gray())
 		super.appendHoverText(itemStack, tooltipContext, list, tooltipFlag)
 	}
 

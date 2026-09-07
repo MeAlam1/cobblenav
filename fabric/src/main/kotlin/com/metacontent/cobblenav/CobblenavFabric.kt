@@ -1,6 +1,7 @@
 package com.metacontent.cobblenav
 
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.I18nUtil.itemGroup
+import com.metacontent.cobblenav.utils.cobblenavResource
 import com.mojang.brigadier.arguments.ArgumentType
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry
@@ -9,9 +10,8 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents
 import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
 import net.minecraft.commands.synchronization.ArgumentTypeInfo
-import net.minecraft.core.Registry
+import net.minecraft.core.Registry.register
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import kotlin.reflect.KClass
@@ -33,17 +33,18 @@ class CobblenavFabric :
 
 	override fun registerItems() {
 		CobblenavItems.register { resourceLocation, item ->
-			Registry.register(
+			register(
 				CobblenavItems.registry,
 				resourceLocation,
 				item,
 			)
 		}
-		Registry.register(
+		register(
 			BuiltInRegistries.CREATIVE_MODE_TAB,
 			cobblenavResource("cobblenav"),
-			FabricItemGroup.builder()
-				.title(Component.translatable("itemGroup.cobblenav.pokenav_group"))
+			FabricItemGroup
+				.builder()
+				.title(itemGroup("general"))
 				.icon { ItemStack(CobblenavItems.POKENAV) }
 				.displayItems(CobblenavItems::addToGroup)
 				.build(),

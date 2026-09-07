@@ -9,13 +9,21 @@ import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.button.InfoButton
 import com.metacontent.cobblenav.client.gui.widget.layout.TableView
 import com.metacontent.cobblenav.spawndata.SpawnData
-import com.metacontent.cobblenav.util.finder.FoundPokemon
-import com.metacontent.cobblenav.util.finder.PokemonFinder
+import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.finder.FoundPokemon
+import com.metacontent.cobblenav.utils.finder.PokemonFinder
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 
-class StatsTableWidget(x: Int, y: Int, val spawnData: SpawnData, val pokemon: FoundPokemon, val parent: PokenavScreen) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Stats Table")) {
+class StatsTableWidget(
+	x: Int,
+	y: Int,
+	val spawnData: SpawnData,
+	val pokemon: FoundPokemon,
+	val parent: PokenavScreen,
+	// @TODO: move literal to lang?
+) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Stats Table")) {
 	companion object {
 		const val WIDTH = 82
 		const val HEIGHT = 66
@@ -40,65 +48,66 @@ class StatsTableWidget(x: Int, y: Int, val spawnData: SpawnData, val pokemon: Fo
 		val NOTIFICATION = gui("finder/notification")
 	}
 
-	private val iconTable = TableView<InfoButton>(
-		x = x + VERTICAL_MARGIN,
-		y = y + TOP_MARGIN,
-		width = ICON_WIDTH,
-		columns = 1,
-		verticalGap = PADDING,
-		horizontalGap = 0f,
-	).also {
-		it.add(
-			listOf(
-				InfoButton(
-					0,
-					0,
-					ICON_WIDTH,
-					ROW_HEIGHT,
-					Component.translatable("gui.cobblenav.info_button.header.name"),
-					Component.translatable("gui.cobblenav.info_button.body.name"),
-					texture = NAME,
-					parent = parent,
+	private val iconTable =
+		TableView<InfoButton>(
+			x = x + VERTICAL_MARGIN,
+			y = y + TOP_MARGIN,
+			width = ICON_WIDTH,
+			columns = 1,
+			verticalGap = PADDING,
+			horizontalGap = 0f,
+		).also {
+			it.add(
+				listOf(
+					InfoButton(
+						0,
+						0,
+						ICON_WIDTH,
+						ROW_HEIGHT,
+						label("info_button.header.name"),
+						label("info_button.body.name"),
+						texture = NAME,
+						parent = parent,
+					),
+					InfoButton(
+						0,
+						0,
+						ICON_WIDTH,
+						ROW_HEIGHT,
+						label("info_button.header.type"),
+						label("info_button.body.type"),
+						texture = TYPE,
+						parent = parent,
+					),
+					InfoButton(
+						0,
+						0,
+						ICON_WIDTH,
+						ROW_HEIGHT,
+						label("info_button.header.ability"),
+						label("info_button.body.ability"),
+						texture = ABILITY,
+						parent = parent,
+					),
+					InfoButton(
+						0,
+						0,
+						ICON_WIDTH,
+						ROW_HEIGHT,
+						label("info_button.header.egg_move"),
+						label("info_button.body.egg_move"),
+						texture = EGG_MOVE,
+						parent = parent,
+					),
 				),
-				InfoButton(
-					0,
-					0,
-					ICON_WIDTH,
-					ROW_HEIGHT,
-					Component.translatable("gui.cobblenav.info_button.header.type"),
-					Component.translatable("gui.cobblenav.info_button.body.type"),
-					texture = TYPE,
-					parent = parent,
-				),
-				InfoButton(
-					0,
-					0,
-					ICON_WIDTH,
-					ROW_HEIGHT,
-					Component.translatable("gui.cobblenav.info_button.header.ability"),
-					Component.translatable("gui.cobblenav.info_button.body.ability"),
-					texture = ABILITY,
-					parent = parent,
-				),
-				InfoButton(
-					0,
-					0,
-					ICON_WIDTH,
-					ROW_HEIGHT,
-					Component.translatable("gui.cobblenav.info_button.header.egg_move"),
-					Component.translatable("gui.cobblenav.info_button.body.egg_move"),
-					texture = EGG_MOVE,
-					parent = parent,
-				),
-			),
-		)
-		addWidget(it)
-	}
+			)
+			addWidget(it)
+		}
 
 	private val textX = x + 2 * VERTICAL_MARGIN + ICON_WIDTH + TEXT_HORIZONTAL_OFFSET
 	private val textBaseY = y + TOP_MARGIN
 
-//    private val nameText = spawnData.renderable.species.translatedName
+	//    private val nameText = spawnData.renderable.species.translatedName
 //        .append(", ")
 //        .append(Component.translatable("gui.cobblenav.level", pokemon.level))
 //    private val typeText = Component.empty().let {

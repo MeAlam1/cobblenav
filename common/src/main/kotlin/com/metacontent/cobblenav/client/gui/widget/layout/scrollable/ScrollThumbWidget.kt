@@ -7,7 +7,12 @@ import net.minecraft.client.sounds.SoundManager
 import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor
 
-class ScrollThumbWidget(x: Int, y: Int, val parent: ScrollableView) : PokenavButton(x, y, WIDTH, 0, Component.literal(" Scroll Thumb"), false, {}) {
+class ScrollThumbWidget(
+	x: Int,
+	y: Int,
+	val parent: ScrollableView,
+	// @TODO: move literal to lang?
+) : PokenavButton(x, y, WIDTH, 0, Component.literal(" Scroll Thumb"), false, {}) {
 	companion object {
 		const val WIDTH: Int = 2
 	}
@@ -43,7 +48,8 @@ class ScrollThumbWidget(x: Int, y: Int, val parent: ScrollableView) : PokenavBut
 	override fun onDrag(d: Double, e: Double, f: Double, g: Double) {
 		if (parent.child.height < parent.height) return
 		// TODO: improve scrolling
-		parent.scrolled = ((e - height / 2.0 - parent.y) * (parent.child.height - parent.height) / (parent.height - height)).toInt()
+		parent.scrolled =
+			((e - height / 2.0 - parent.y) * (parent.child.height - parent.height) / (parent.height - height)).toInt()
 	}
 
 	override fun playDownSound(soundManager: SoundManager) {}

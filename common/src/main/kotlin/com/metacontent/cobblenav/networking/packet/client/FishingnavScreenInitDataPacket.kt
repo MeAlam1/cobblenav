@@ -5,12 +5,17 @@ import com.cobblemon.mod.common.util.readString
 import com.cobblemon.mod.common.util.writeItemStack
 import com.cobblemon.mod.common.util.writeString
 import com.metacontent.cobblenav.networking.packet.CobblenavNetworkPacket
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.cobblenavResource
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 
-class FishingnavScreenInitDataPacket(val buckets: List<String>, val pokeBall: ResourceLocation, val lineColor: String, val baitItem: ItemStack) : CobblenavNetworkPacket<FishingnavScreenInitDataPacket> {
+class FishingnavScreenInitDataPacket(
+	val buckets: List<String>,
+	val pokeBall: ResourceLocation,
+	val lineColor: String,
+	val baitItem: ItemStack,
+) : CobblenavNetworkPacket<FishingnavScreenInitDataPacket> {
 	companion object {
 		val ID = cobblenavResource("fishingnav_screen_init_data")
 		fun decode(buffer: RegistryFriendlyByteBuf) = FishingnavScreenInitDataPacket(

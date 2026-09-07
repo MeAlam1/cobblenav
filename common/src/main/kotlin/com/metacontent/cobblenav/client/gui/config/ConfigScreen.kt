@@ -1,7 +1,7 @@
 package com.metacontent.cobblenav.client.gui.config
 
 import com.metacontent.cobblenav.config.Config
-import net.minecraft.client.gui.GuiGraphics
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.components.EditBox
 import net.minecraft.client.gui.components.StringWidget
@@ -9,14 +9,11 @@ import net.minecraft.client.gui.layouts.HeaderAndFooterLayout
 import net.minecraft.client.gui.layouts.LinearLayout
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.CommonComponents
-import net.minecraft.network.chat.Component
 
-class ConfigScreen<T : Config<T>>(
-	private val config: T,
-	private val parent: Screen?,
-) : Screen(
-	Component.translatable("edit.context", "Config"), // TODO
-) {
+class ConfigScreen<T : Config<T>>(private val config: T, private val parent: Screen?) :
+	Screen(
+		label("edit.context", "Config"), // TODO
+	) {
 
 	companion object {
 		const val HEADER_HEIGHT = 45
@@ -33,10 +30,6 @@ class ConfigScreen<T : Config<T>>(
 		const val WIDGET_HEIGHT = SLOT_HEIGHT - PADDING
 
 		const val LABEL_Y_OFFSET = 4
-
-		private const val BACKGROUND_COLOR = 0x60000000
-		private const val BORDER_COLOR = -8355584 // 0xFF808080 as signed Int (opaque grey)
-		private const val PANEL_PADDING = 4
 	}
 
 	private val idPrefix: String = config.fileName
@@ -67,7 +60,7 @@ class ConfigScreen<T : Config<T>>(
 		val searchLayout = layout.addToHeader(LinearLayout.vertical())
 
 		searchLayout.addChild(
-			StringWidget(Component.translatable("search.context", textPrefix), font), // TODO
+			StringWidget(label("search.context", textPrefix), font),
 			searchLayout.newCellSettings().alignHorizontallyCenter(),
 		)
 
@@ -77,7 +70,7 @@ class ConfigScreen<T : Config<T>>(
 			0,
 			SLOT_WIDTH / 2,
 			SLOT_HEIGHT,
-			Component.translatable("search.context", textPrefix), // TODO
+			label("search.context", textPrefix),
 		).also { editBox ->
 			editBox.height = WIDGET_HEIGHT
 			editBox.setMaxLength(250)
@@ -108,22 +101,6 @@ class ConfigScreen<T : Config<T>>(
 		layout.arrangeElements()
 
 		variableList.filter(searchString)
-	}
-
-	override fun render(
-		graphics: GuiGraphics,
-		mouseX: Int,
-		mouseY: Int,
-		partialTick: Float,
-	) {
-		val panelTop = variableList.y - PANEL_PADDING
-		val panelBottom = variableList.bottom + PANEL_PADDING
-
-		graphics.fill(0, panelTop, width, panelBottom, BACKGROUND_COLOR)
-		graphics.fill(0, panelTop, width, panelTop + 1, BORDER_COLOR)
-		graphics.fill(0, panelBottom - 1, width, panelBottom, BORDER_COLOR)
-
-		super.render(graphics, mouseX, mouseY, partialTick)
 	}
 
 	override fun onClose() {

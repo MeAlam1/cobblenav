@@ -6,7 +6,8 @@ import com.metacontent.cobblenav.client.gui.pokenav.FishingnavScreen
 import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.networking.packet.client.OpenPokenavPacket
 import com.metacontent.cobblenav.os.PokenavOS
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.I18nUtil.item
+import com.metacontent.cobblenav.utils.cobblenavResource
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
@@ -29,7 +30,6 @@ class Pokenav(private val model: PokenavModelType) :
 		const val MAX_STACK = 1
 		const val BASE_REGISTRY_KEY = "pokenav_item_"
 		const val TRANSLATION_KEY = "item.cobblenav.pokenav_item"
-		const val BASE_TOOLTIP_TRANSLATION_KEY = "item.cobblenav.pokenav_item."
 	}
 
 	override val inventoryModel = cobblenavResource("$BASE_REGISTRY_KEY${model.modelName}")
@@ -42,10 +42,12 @@ class Pokenav(private val model: PokenavModelType) :
 	override fun use(level: Level, player: Player, interactionHand: InteractionHand): InteractionResultHolder<ItemStack> {
 		if (!level.isClientSide()) {
 			(player as? ServerPlayer)?.let { serverPlayer ->
-				val posUsedOn = serverPlayer.raycast(
-					player.blockInteractionRange().toFloat(),
-					ClipContext.Fluid.NONE,
-				).blockPos
+				val posUsedOn =
+					serverPlayer
+						.raycast(
+							player.blockInteractionRange().toFloat(),
+							ClipContext.Fluid.NONE,
+						).blockPos
 				val hasAreaSpawner = level.getBlockEntity(posUsedOn)?.let { it is PokeSnackBlockEntity } == true
 				OpenPokenavPacket(
 					os = PokenavOS("Lite", canUseLocation = true),
@@ -58,8 +60,13 @@ class Pokenav(private val model: PokenavModelType) :
 
 	override fun getDescriptionId(itemStack: ItemStack): String = TRANSLATION_KEY
 
-	override fun appendHoverText(itemStack: ItemStack, tooltipContext: TooltipContext, list: MutableList<Component>, tooltipFlag: TooltipFlag) {
-		list.add(Component.translatable(BASE_TOOLTIP_TRANSLATION_KEY + model.modelName).withStyle(ChatFormatting.GRAY))
+	override fun appendHoverText(
+		itemStack: ItemStack,
+		tooltipContext: TooltipContext,
+		list: MutableList<Component>,
+		tooltipFlag: TooltipFlag,
+	) {
+		list.add(item("pokenav_item.${model.modelName}").withStyle(ChatFormatting.GRAY))
 	}
 
 	override fun isOpened(stack: ItemStack) = Minecraft.getInstance().screen.let {

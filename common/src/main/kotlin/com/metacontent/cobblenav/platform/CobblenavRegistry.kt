@@ -1,7 +1,7 @@
 package com.metacontent.cobblenav.platform
 
 import com.cobblemon.mod.common.platform.PlatformRegistry
-import com.metacontent.cobblenav.util.cobblenavResource
+import com.metacontent.cobblenav.utils.cobblenavResource
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 

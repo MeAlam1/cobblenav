@@ -1,6 +1,6 @@
 {
   "key.cobblenav.open_pokenav": "Abrir Pokenav",
-  "key.cobblenav.open_location": "Abrir Pantalla de Localización",
+  "action.cobblenav.open_location": "Abrir Pantalla de Localización",
   "category.cobblenav": "Cobblenav",
   "gamerule.titleCommandsPermissionLevel": "Nivel de permiso del comando de título",
   "itemGroup.cobblenav.pokenav_group": "Cobblenav",

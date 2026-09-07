@@ -36,29 +36,49 @@ class CobblenavConfig : Config<CobblenavConfig>() {
 	fun collectorEnabled(collector: Collector<*>): Boolean = collectableConditions.contains(collector.name)
 
 	override fun options(): List<ConfigOption<*>> = listOf(
-		ConfigOption.BooleanOption("hideUnknownPokemon", { hideUnknownPokemon }, { hideUnknownPokemon = it }, false),
+		ConfigOption.BooleanOption("hide_unknown_pokemon", { hideUnknownPokemon }, { hideUnknownPokemon = it }, false),
 		ConfigOption.BooleanOption(
-			"hideConditionsOfUnknownSpawns",
+			"hide_conditions_of_unknown_spawns",
 			{ hideConditionsOfUnknownSpawns },
 			{ hideConditionsOfUnknownSpawns = it },
 			true,
 		),
 		ConfigOption.BooleanOption(
-			"hideNaturalBlockConditions",
+			"hide_natural_block_conditions",
 			{ hideNaturalBlockConditions },
 			{ hideNaturalBlockConditions = it },
 			true,
 		),
 		ConfigOption.FloatOption(
-			"percentageForKnownHerd",
+			"percentage_for_known_herd",
 			{ percentageForKnownHerd },
 			{ percentageForKnownHerd = it },
 			0f..1f,
 			0.5f,
 		),
-		ConfigOption.BooleanOption("syncLabelsWithClient", { syncLabelsWithClient }, { syncLabelsWithClient = it }, true),
-		ConfigOption.BooleanOption("syncEvYieldWithClient", { syncEvYieldWithClient }, { syncEvYieldWithClient = it }, true),
-		ConfigOption.DoubleOption("searchAreaWidth", { searchAreaWidth }, { searchAreaWidth = it }, 128.0),
-		ConfigOption.DoubleOption("searchAreaHeight", { searchAreaHeight }, { searchAreaHeight = it }, 128.0),
+		ConfigOption.BooleanOption(
+			"sync_labels_with_client",
+			{ syncLabelsWithClient },
+			{ syncLabelsWithClient = it },
+			true,
+		),
+		ConfigOption.BooleanOption(
+			"sync_ev_yield_with_client",
+			{ syncEvYieldWithClient },
+			{ syncEvYieldWithClient = it },
+			true,
+		),
+		ConfigOption.DoubleOption(
+			"search_area_width",
+			{ searchAreaWidth },
+			{ searchAreaWidth = it },
+			128.0,
+		),
+		ConfigOption.DoubleOption(
+			"search_area_height",
+			{ searchAreaHeight },
+			{ searchAreaHeight = it },
+			128.0,
+		),
 	)
 }

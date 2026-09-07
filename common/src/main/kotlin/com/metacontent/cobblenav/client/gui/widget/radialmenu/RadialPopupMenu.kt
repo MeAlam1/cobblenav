@@ -12,6 +12,7 @@ class RadialPopupMenu(val pokenavScreen: PokenavScreen, pX: Int, pY: Int) :
 		pY,
 		RadialMenuState.MENU_DIAMETER,
 		RadialMenuState.MENU_DIAMETER,
+		// @TODO: move literal to lang?
 		Component.literal("Radial Popup Menu"),
 	) {
 	val os = pokenavScreen.os

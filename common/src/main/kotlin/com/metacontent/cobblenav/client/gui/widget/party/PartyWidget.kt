@@ -5,7 +5,11 @@ import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
 
-class PartyWidget(playerX: Int, playerY: Int) : AbstractWidget(playerX, playerY, 0, 0, Component.literal("Party Widget")) {
+class PartyWidget(
+	playerX: Int,
+	playerY: Int,
+	// @TODO: move literal to lang?
+) : AbstractWidget(playerX, playerY, 0, 0, Component.literal("Party Widget")) {
 	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 	}
 

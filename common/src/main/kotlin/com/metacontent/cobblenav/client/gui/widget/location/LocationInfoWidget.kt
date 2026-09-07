@@ -6,13 +6,17 @@ import com.cobblemon.mod.common.api.text.red
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledTextJustifiedRight
 import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.tryTranslating
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 
-class LocationInfoWidget(x: Int, y: Int, biome: String) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Location Info")) {
+class LocationInfoWidget(
+	x: Int,
+	y: Int,
+	biome: String,
+) : SoundlessWidget(x, y, WIDTH, HEIGHT, label("location_info")) {
 	companion object {
 		const val SYMBOL_WIDTH: Int = 13
 		const val SYMBOL_HEIGHT: Int = 14
@@ -30,12 +34,19 @@ class LocationInfoWidget(x: Int, y: Int, biome: String) : SoundlessWidget(x, y, 
 
 	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		val poseStack = guiGraphics.pose()
-		val checkPair = tryTranslating(
-			biomeResourceLocation.toLanguageKey(BIOME_KEY_BASE),
-			Component.translatable("gui.cobblenav.unknown_biome").red()
-				.onHover(Component.literal(biomeResourceLocation.toString())),
-		)
-		if (!checkPair.first) {
+		val biomeKey = biomeResourceLocation.toLanguageKey(BIOME_KEY_BASE)
+		val translatedBiome = Component.translatable(biomeKey)
+		val hasTranslation = translatedBiome.string != biomeKey
+
+		val biomeLabel = if (hasTranslation) {
+			translatedBiome
+		} else {
+			label("unknown_biome")
+				.red()
+				.onHover(Component.literal(biomeResourceLocation.toString()))
+		}
+
+		if (!hasTranslation) {
 			blitk(
 				matrixStack = poseStack,
 				texture = UNKNOWN_BIOME,
@@ -45,15 +56,17 @@ class LocationInfoWidget(x: Int, y: Int, biome: String) : SoundlessWidget(x, y, 
 				height = SYMBOL_HEIGHT,
 			)
 		}
+
 		drawScaledTextJustifiedRight(
 			context = guiGraphics,
-			text = checkPair.second,
-			x = x + BIOME_WIDTH - if (!checkPair.first) (SYMBOL_WIDTH + SPACE) else 0,
+			text = biomeLabel,
+			x = x + BIOME_WIDTH - if (!hasTranslation) (SYMBOL_WIDTH + SPACE) else 0,
 			y = y + 3,
 			maxCharacterWidth = BIOME_WIDTH,
 		)
 
 		val isDay = ((Minecraft.getInstance().level?.dayTime ?: 0) % 24000) in 0..12999
+
 		blitk(
 			matrixStack = poseStack,
 			texture = if (isDay) DAY else NIGHT,
@@ -63,10 +76,10 @@ class LocationInfoWidget(x: Int, y: Int, biome: String) : SoundlessWidget(x, y, 
 			height = SYMBOL_HEIGHT,
 		)
 
-		if (ishHovered(i, j) && !checkPair.first) {
+		if (ishHovered(i, j) && !hasTranslation) {
 			guiGraphics.renderComponentHoverEffect(
 				Minecraft.getInstance().font,
-				checkPair.second.style,
+				biomeLabel.style,
 				i - 100,
 				j + height + 10,
 			)

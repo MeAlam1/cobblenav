@@ -12,7 +12,13 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-class OpeningRadialMenu(os: PokenavOS, statefulWidget: RadialPopupMenu, pX: Int, pY: Int) : RadialMenuState(os, statefulWidget, pX, pY, DIAMETER, DIAMETER, Component.literal("Opening Radial Menu")) {
+class OpeningRadialMenu(
+	os: PokenavOS,
+	statefulWidget: RadialPopupMenu,
+	pX: Int,
+	pY: Int,
+	// @TODO: move literal to lang?
+) : RadialMenuState(os, statefulWidget, pX, pY, DIAMETER, DIAMETER, Component.literal("Opening Radial Menu")) {
 	companion object {
 		const val ANIMATION_DURATION = 3f
 		const val ROTATION = 180f
@@ -38,12 +44,15 @@ class OpeningRadialMenu(os: PokenavOS, statefulWidget: RadialPopupMenu, pX: Int,
 			blitk(
 				poseStack,
 				RADIAL_MENU,
-				x, animY,
+				x,
+				animY,
 				height = DIAMETER,
 				width = DIAMETER,
 				uOffset = DIAMETER * ((frameAmount - 1) * progress).toInt(),
 				textureWidth = ANIMATION_SHEET_WIDTH,
-				red = 1.1, green = 1.1, blue = 1.1,
+				red = 1.1,
+				green = 1.1,
+				blue = 1.1,
 			)
 		}
 

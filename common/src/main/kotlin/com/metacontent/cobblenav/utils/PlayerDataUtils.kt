@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.util
+package com.metacontent.cobblenav.utils
 
 import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.api.storage.player.PlayerInstancedDataStoreManager
@@ -7,7 +7,8 @@ import com.metacontent.cobblenav.storage.SpawnDataCatalogue
 import net.minecraft.server.level.ServerPlayer
 import java.util.*
 
-fun PlayerInstancedDataStoreManager.getSpawnDataCatalogue(playerId: UUID): SpawnDataCatalogue = get(playerId, CobblenavDataStoreTypes.SPAWN_DATA) as SpawnDataCatalogue
+fun PlayerInstancedDataStoreManager.getSpawnDataCatalogue(playerId: UUID): SpawnDataCatalogue =
+	get(playerId, CobblenavDataStoreTypes.SPAWN_DATA) as SpawnDataCatalogue
 
 fun PlayerInstancedDataStoreManager.getSpawnDataCatalogue(player: ServerPlayer): SpawnDataCatalogue = getSpawnDataCatalogue(player.uuid)
 

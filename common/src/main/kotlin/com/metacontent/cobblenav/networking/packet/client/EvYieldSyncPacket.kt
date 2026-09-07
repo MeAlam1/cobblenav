@@ -10,9 +10,9 @@ import com.cobblemon.mod.common.util.readString
 import com.cobblemon.mod.common.util.writeIdentifier
 import com.cobblemon.mod.common.util.writeString
 import com.metacontent.cobblenav.Cobblenav
-import com.metacontent.cobblenav.util.cobblenavResource
-import com.metacontent.cobblenav.util.getEvYield
-import com.metacontent.cobblenav.util.setEvYield
+import com.metacontent.cobblenav.utils.cobblenavResource
+import com.metacontent.cobblenav.utils.getEvYield
+import com.metacontent.cobblenav.utils.setEvYield
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 
@@ -54,7 +54,11 @@ class EvYieldSyncPacket(evYieldData: Collection<EvYieldDataEntry>) : DataRegistr
 	}
 }
 
-data class EvYieldDataEntry(val speciesId: ResourceLocation, val speciesEvYield: Map<Stats, Int>, val formToEvYield: Map<String, Map<Stats, Int>?>) : Encodable {
+data class EvYieldDataEntry(
+	val speciesId: ResourceLocation,
+	val speciesEvYield: Map<Stats, Int>,
+	val formToEvYield: Map<String, Map<Stats, Int>?>,
+) : Encodable {
 	companion object {
 		fun decode(buffer: RegistryFriendlyByteBuf): EvYieldDataEntry = EvYieldDataEntry(
 			speciesId = buffer.readIdentifier(),

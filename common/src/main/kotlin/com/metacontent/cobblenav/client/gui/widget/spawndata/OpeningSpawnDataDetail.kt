@@ -15,6 +15,7 @@ class OpeningSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: I
 		y,
 		SpawnDataDetailWidget.WIDTH,
 		SpawnDataDetailWidget.HEIGHT,
+		// @TODO: move literal to lang?
 		Component.literal("Opening Spawn Data Details"),
 	) {
 	companion object {

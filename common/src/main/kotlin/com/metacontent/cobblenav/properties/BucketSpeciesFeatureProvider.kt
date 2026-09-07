@@ -38,7 +38,10 @@ object BucketSpeciesFeatureProvider :
 		null
 	}
 
-	override fun get(pokemon: Pokemon): StringSpeciesFeature? = pokemon.features.filterIsInstance<StringSpeciesFeature>().find { it.name in keys }
+	override fun get(pokemon: Pokemon): StringSpeciesFeature? = pokemon.features.filterIsInstance<StringSpeciesFeature>().find {
+		it.name in
+			keys
+	}
 
 	override fun getRenderer(pokemon: Pokemon): SummarySpeciesFeatureRenderer<StringSpeciesFeature>? = null
 
@@ -68,11 +71,12 @@ object BucketSpeciesFeatureProvider :
 
 	override fun provide(pokemon: Pokemon): Set<String> = get(pokemon)?.let { setOf(it.toAspect()) } ?: emptySet()
 
-	override fun provide(properties: PokemonProperties): Set<String> = properties.customProperties.filterIsInstance<StringSpeciesFeature>().find {
-		it.name in keys
-	}?.let {
-		setOf(it.toAspect())
-	} ?: emptySet()
+	override fun provide(properties: PokemonProperties): Set<String> =
+		properties.customProperties.filterIsInstance<StringSpeciesFeature>().find {
+			it.name in keys
+		}?.let {
+			setOf(it.toAspect())
+		} ?: emptySet()
 
 	private fun StringSpeciesFeature.toAspect(): String = "bucket-${this.value}"
 }

@@ -12,7 +12,11 @@ import net.minecraft.util.FastColor
 import org.joml.Quaternionf
 import org.joml.Vector3f
 
-class NotificationWidget(pX: Int, pY: Int) : SoundlessWidget(pX, pY, WIDTH, HEIGHT, Component.literal("Notifications")) {
+class NotificationWidget(
+	pX: Int,
+	pY: Int,
+	// @TODO: move literal to lang?
+) : SoundlessWidget(pX, pY, WIDTH, HEIGHT, Component.literal("Notifications")) {
 	companion object {
 		const val WIDTH = 140
 		const val HEIGHT = 12

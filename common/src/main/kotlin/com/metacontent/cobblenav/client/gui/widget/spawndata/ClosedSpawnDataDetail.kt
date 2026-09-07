@@ -11,6 +11,7 @@ class ClosedSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: In
 		y,
 		SpawnDataDetailWidget.WIDTH,
 		SpawnDataDetailWidget.HEIGHT,
+		// @TODO: move literal to lang?
 		Component.literal("Closed Spawn Data Details"),
 	) {
 	init {

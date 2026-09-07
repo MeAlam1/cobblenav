@@ -22,6 +22,7 @@ class SectionWidget(
 	val color: RGB = RGB(178, 228, 188),
 //    val headerColor: RGB = RGB(199, 239, 207),
 	val paragraphOffset: Float = 3f,
+	// @TODO: move literal to lang?
 ) : StatefulWidget(null, x, y, width, HEADER_HEIGHT, Component.literal("Text Section")) {
 	companion object {
 		const val HEADER_HEIGHT = 20
@@ -90,7 +91,13 @@ class SectionWidget(
 	}
 
 	fun renderBody(guiGraphics: GuiGraphics, height: Int = this.height - HEADER_HEIGHT) {
-		guiGraphics.fill(x, y + HEADER_HEIGHT / 2, x + width, y + height - FOOTER_HEIGHT, color.toColor((ALPHA * RGB.MAX_VALUE).toInt()))
+		guiGraphics.fill(
+			x,
+			y + HEADER_HEIGHT / 2,
+			x + width,
+			y + height - FOOTER_HEIGHT,
+			color.toColor((ALPHA * RGB.MAX_VALUE).toInt()),
+		)
 	}
 
 	fun renderFooter(poseStack: PoseStack, x: Int, y: Int) {

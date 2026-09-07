@@ -2,16 +2,12 @@ package com.metacontent.cobblenav.client.settings.pokefinder
 
 import com.google.gson.*
 import com.metacontent.cobblenav.client.settings.pokefinder.filter.RadarFilter
-import com.metacontent.cobblenav.util.asIdentifier
+import com.metacontent.cobblenav.utils.asIdentifier
 import java.lang.reflect.Type
 
 object RadarFilterAdapter : JsonSerializer<RadarFilter>, JsonDeserializer<RadarFilter> {
 
-	override fun serialize(
-		src: RadarFilter,
-		typeOfSrc: Type,
-		context: JsonSerializationContext,
-	): JsonElement {
+	override fun serialize(src: RadarFilter, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
 		val jsonObject = context
 			.serialize(src, src.javaClass)
 			.asJsonObject
@@ -22,11 +18,7 @@ object RadarFilterAdapter : JsonSerializer<RadarFilter>, JsonDeserializer<RadarF
 		return jsonObject
 	}
 
-	override fun deserialize(
-		json: JsonElement,
-		typeOfT: Type,
-		context: JsonDeserializationContext,
-	): RadarFilter {
+	override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): RadarFilter {
 		val jsonObject = json.asJsonObject
 
 		val typeElement = jsonObject["type"]

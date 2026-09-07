@@ -1,8 +1,8 @@
 package com.metacontent.cobblenav.networking.packet.client
 
 import com.metacontent.cobblenav.networking.packet.CobblenavNetworkPacket
-import com.metacontent.cobblenav.util.cobblenavResource
-import com.metacontent.cobblenav.util.finder.FoundPokemon
+import com.metacontent.cobblenav.utils.cobblenavResource
+import com.metacontent.cobblenav.utils.finder.FoundPokemon
 import net.minecraft.network.RegistryFriendlyByteBuf
 
 class FoundPokemonPacket(val pokemon: FoundPokemon) : CobblenavNetworkPacket<FoundPokemonPacket> {
