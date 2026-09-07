@@ -8,8 +8,8 @@ import com.metacontent.cobblenav.api.platform.BiomePlatformRenderDataRepository
 import com.metacontent.cobblenav.api.platform.DimensionPlateRepository
 import com.metacontent.cobblenav.client.gui.PokenavSignalManager
 import com.metacontent.cobblenav.client.gui.PokenavSignalManager.POKEMON_APPEARED_SIGNAL
-import com.metacontent.cobblenav.client.gui.overlay.PokefinderOverlay
-import com.metacontent.cobblenav.client.gui.overlay.TrackArrowOverlay
+import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderOverlay
+import com.metacontent.cobblenav.client.gui.pokefinder.TrackArrowOverlay
 import com.metacontent.cobblenav.client.settings.ClientSettingsDataManager
 import com.metacontent.cobblenav.client.settings.PokefinderSettings
 import com.metacontent.cobblenav.client.settings.PokenavSettings

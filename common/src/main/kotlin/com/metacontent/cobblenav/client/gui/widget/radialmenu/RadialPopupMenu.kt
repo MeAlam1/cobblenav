@@ -1,6 +1,6 @@
 package com.metacontent.cobblenav.client.gui.widget.radialmenu
 
-import com.metacontent.cobblenav.client.gui.screen.PokenavScreen
+import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.client.gui.widget.stateful.StatefulWidget
 import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
 import net.minecraft.network.chat.Component

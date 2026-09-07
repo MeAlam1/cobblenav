@@ -2,8 +2,8 @@ package com.metacontent.cobblenav.item
 
 import com.cobblemon.mod.common.block.entity.PokeSnackBlockEntity
 import com.cobblemon.mod.common.util.raycast
-import com.metacontent.cobblenav.client.gui.screen.FishingnavScreen
-import com.metacontent.cobblenav.client.gui.screen.PokenavScreen
+import com.metacontent.cobblenav.client.gui.pokenav.FishingnavScreen
+import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.networking.packet.client.OpenPokenavPacket
 import com.metacontent.cobblenav.os.PokenavOS
 import com.metacontent.cobblenav.util.cobblenavResource

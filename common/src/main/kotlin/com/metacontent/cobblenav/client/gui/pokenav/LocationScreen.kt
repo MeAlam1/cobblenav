@@ -1,9 +1,10 @@
-package com.metacontent.cobblenav.client.gui.screen
+package com.metacontent.cobblenav.client.gui.pokenav
 
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.render.drawScaledText
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.metacontent.cobblenav.client.CobblenavClient
+import com.metacontent.cobblenav.client.gui.SpawnDataDisplayer
 import com.metacontent.cobblenav.client.gui.util.Sorting
 import com.metacontent.cobblenav.client.gui.util.Timer
 import com.metacontent.cobblenav.client.gui.util.gui
@@ -36,6 +37,7 @@ import net.minecraft.util.FastColor
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.phys.AABB
 import org.joml.Vector3d
+import kotlin.collections.get
 import kotlin.math.max
 import kotlin.math.min
 

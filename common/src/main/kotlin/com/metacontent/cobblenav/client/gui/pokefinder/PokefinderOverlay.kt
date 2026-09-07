@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.client.gui.overlay
+package com.metacontent.cobblenav.client.gui.pokefinder
 
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.render.drawScaledText

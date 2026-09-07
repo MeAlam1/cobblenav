@@ -1,9 +1,9 @@
 package com.metacontent.cobblenav.mixin;
 
 import com.cobblemon.mod.common.entity.fishing.PokeRodFishingBobberEntity;
+import com.metacontent.cobblenav.duck.PokeRodFishingBobberEntityDuck;
 import com.metacontent.cobblenav.event.CobblenavEvents;
 import com.metacontent.cobblenav.event.FishTravelStartedEvent;
-import com.metacontent.cobblenav.util.FishTravelChecker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PokeRodFishingBobberEntity.class)
-public abstract class PokeRodFishingBobberEntityMixin implements FishTravelChecker {
+public abstract class PokeRodFishingBobberEntityMixin implements PokeRodFishingBobberEntityDuck {
 
 	@Shadow
 	private int fishTravelCountdown;

@@ -1,6 +1,6 @@
 package com.metacontent.cobblenav.client.settings.pokefinder.type
 
-import com.metacontent.cobblenav.client.gui.screen.pokefinder.PokefinderScreen
+import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen
 import com.metacontent.cobblenav.client.gui.widget.pokefinder.FilterListEntryWidget
 import com.metacontent.cobblenav.client.settings.pokefinder.filter.RadarFilter
 import net.minecraft.client.gui.components.AbstractWidget

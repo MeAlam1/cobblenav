@@ -2,7 +2,7 @@ package com.metacontent.cobblenav.networking.handler.client
 
 import com.cobblemon.mod.common.api.net.ClientNetworkPacketHandler
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.gui.screen.LocationScreen
+import com.metacontent.cobblenav.client.gui.pokenav.LocationScreen
 import com.metacontent.cobblenav.networking.packet.client.OpenPokenavPacket
 import net.minecraft.client.Minecraft
 

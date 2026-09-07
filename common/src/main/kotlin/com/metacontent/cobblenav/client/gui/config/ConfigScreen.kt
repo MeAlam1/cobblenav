@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.client.gui.screen
+package com.metacontent.cobblenav.client.gui.config
 
 import com.metacontent.cobblenav.config.Config
 import com.metacontent.cobblenav.config.ConfigOption

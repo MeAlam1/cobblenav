@@ -3,12 +3,10 @@ package com.metacontent.cobblenav.neoforge.client
 import com.metacontent.cobblenav.Cobblenav
 import com.metacontent.cobblenav.client.ClientImplementation
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.gui.screen.ConfigListScreen
-import com.metacontent.cobblenav.config.Config
+import com.metacontent.cobblenav.client.gui.config.ConfigListScreen
 import net.minecraft.util.Unit
 import net.neoforged.fml.ModList
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
-import net.neoforged.fml.loading.FMLPaths
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.common.NeoForge

@@ -3,7 +3,7 @@ package com.metacontent.cobblenav.item
 import com.cobblemon.mod.common.api.tags.CobblemonItemTags
 import com.cobblemon.mod.common.api.text.gray
 import com.cobblemon.mod.common.entity.fishing.PokeRodFishingBobberEntity
-import com.metacontent.cobblenav.client.gui.screen.FishingnavScreen
+import com.metacontent.cobblenav.client.gui.pokenav.FishingnavScreen
 import com.metacontent.cobblenav.networking.packet.client.OpenFishingnavPacket
 import com.metacontent.cobblenav.os.PokenavOS
 import com.metacontent.cobblenav.util.cobblenavResource

@@ -5,6 +5,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceLocation
 
+// TODO: Nuke with the New Lang Branch
 fun translate(key: String, placeholder: MutableComponent = Component.literal(key).red()): MutableComponent {
 	val component = Component.translatable(key)
 	if (component.string == key) {
