@@ -1,6 +1,8 @@
 # Changelog
 ## 2.4.1
 
+# BEFORE RELEASE: Streamline between Cobblenav and Pokenav and make the N capitalized
+
 ### Additions
 * Added Compatibility with ModMenu
 * Added a Config Editing Screen
@@ -9,9 +11,12 @@
 
 ### Changes
 * Removed Unused Files
+* Changed RadarFilterTypes to ResourceLocation in stead of String
+  * This allows for better compatibility with other mods that may add their own radar filter types
 
 ### Fixes
 * Fix concurrent modification during spawn catalogue encoding
+* Fixed Pokefinder Properties filter working incorrectly
 
 ### Developer
 * Added Github Templates

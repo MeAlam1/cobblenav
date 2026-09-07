@@ -2,10 +2,12 @@ package com.metacontent.cobblenav.client.settings.pokefinder.filter
 
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.metacontent.cobblenav.client.CobblenavClient
+import com.metacontent.cobblenav.util.cobblenavResource
+import net.minecraft.resources.ResourceLocation
 
 class LabelFilter(private var labels: List<String> = emptyList()) : EditableTextFilter() {
 	companion object {
-		const val TYPE = "label"
+		val TYPE: ResourceLocation = cobblenavResource("label")
 	}
 
 	override val type = TYPE
