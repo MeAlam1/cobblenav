@@ -20,7 +20,15 @@ class PokemonPropertiesFilter(private var properties: PokemonProperties = Pokemo
 	}
 
 	override fun update(value: String) {
-		properties = PokemonProperties.parse(value)
+		try {
+			properties = if (value.isBlank()) {
+				PokemonProperties()
+			} else {
+				PokemonProperties.parse(value)
+			}
+		} catch (_: Exception) {
+		}
+
 		CobblenavClient.pokefinderSettings?.changed = true
 	}
 
