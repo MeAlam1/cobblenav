@@ -12,7 +12,7 @@ import com.cobblemon.mod.common.util.adapters.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.utils.cobblenavResource
 import com.mojang.datafixers.util.Either
 import net.minecraft.core.registries.Registries
@@ -43,7 +43,7 @@ object BiomePlatforms : JsonDataRegistry<BiomePlatform> {
 		platforms.clear()
 		platforms.addAll(data.values)
 		observable.emit(this)
-		Cobblenav.LOGGER.info("Loaded {} biome platforms", platforms.size)
+		CobbleNav.LOGGER.info("Loaded {} biome platforms", platforms.size)
 	}
 
 	fun firstFitting(spawnablePositions: List<SpawnablePosition>): ResourceLocation? {

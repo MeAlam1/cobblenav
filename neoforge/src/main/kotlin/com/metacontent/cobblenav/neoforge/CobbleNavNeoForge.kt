@@ -1,10 +1,10 @@
 package com.metacontent.cobblenav.neoforge
 
-import com.metacontent.cobblenav.Cobblenav
-import com.metacontent.cobblenav.CobblenavCommands
-import com.metacontent.cobblenav.CobblenavImplementation
-import com.metacontent.cobblenav.CobblenavItems
-import com.metacontent.cobblenav.CobblenavLootInjector
+import com.metacontent.cobblenav.CobbleNav
+import com.metacontent.cobblenav.CobbleNavCommands
+import com.metacontent.cobblenav.CobbleNavImplementation
+import com.metacontent.cobblenav.CobbleNavItems
+import com.metacontent.cobblenav.CobbleNavLootInjector
 import com.metacontent.cobblenav.neoforge.client.CobblenavNeoForgeClient
 import com.metacontent.cobblenav.utils.I18nUtil.itemGroup
 import com.metacontent.cobblenav.utils.cobblenavResource
@@ -29,15 +29,15 @@ import net.neoforged.neoforge.registries.RegisterEvent
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 import kotlin.reflect.KClass
 
-@Mod(Cobblenav.ID)
-class CobblenavNeoForge : CobblenavImplementation {
-	private val commandArgumentTypes = DeferredRegister.create(Registries.COMMAND_ARGUMENT_TYPE, Cobblenav.ID)
+@Mod(CobbleNav.MOD_ID)
+class CobbleNavNeoForge : CobbleNavImplementation {
+	private val commandArgumentTypes = DeferredRegister.create(Registries.COMMAND_ARGUMENT_TYPE, CobbleNav.MOD_ID)
 	override val networkManager = CobblenavNeoForgeNetworkManager
 
 	init {
 		with(MOD_BUS) {
-			this@CobblenavNeoForge.commandArgumentTypes.register(this)
-			Cobblenav.init(this@CobblenavNeoForge)
+			this@CobbleNavNeoForge.commandArgumentTypes.register(this)
+			CobbleNav.init(this@CobbleNavNeoForge)
 			addListener(networkManager::registerMessages)
 		}
 		with(NeoForge.EVENT_BUS) {
@@ -51,8 +51,8 @@ class CobblenavNeoForge : CobblenavImplementation {
 	override fun registerItems() {
 		with(MOD_BUS) {
 			addListener<RegisterEvent> { event ->
-				event.register(CobblenavItems.resourceKey) { helper ->
-					CobblenavItems.register { resourceLocation, item -> helper.register(resourceLocation, item) }
+				event.register(CobbleNavItems.resourceKey) { helper ->
+					CobbleNavItems.register { resourceLocation, item -> helper.register(resourceLocation, item) }
 				}
 			}
 			addListener<RegisterEvent> { event ->
@@ -62,8 +62,8 @@ class CobblenavNeoForge : CobblenavImplementation {
 						CreativeModeTab
 							.builder()
 							.title(itemGroup("general"))
-							.icon { ItemStack(CobblenavItems.POKENAV) }
-							.displayItems(CobblenavItems::addToGroup)
+							.icon { ItemStack(CobbleNavItems.POKENAV) }
+							.displayItems(CobbleNavItems::addToGroup)
 							.build(),
 					)
 				}
@@ -74,7 +74,7 @@ class CobblenavNeoForge : CobblenavImplementation {
 	override fun registerCommands() {
 		with(NeoForge.EVENT_BUS) {
 			addListener<RegisterCommandsEvent> { event ->
-				CobblenavCommands.register(event.dispatcher, event.buildContext, event.commandSelection)
+				CobbleNavCommands.register(event.dispatcher, event.buildContext, event.commandSelection)
 			}
 		}
 	}
@@ -92,12 +92,12 @@ class CobblenavNeoForge : CobblenavImplementation {
 	override fun injectLootTables() {
 		with(NeoForge.EVENT_BUS) {
 			addListener<LootTableLoadEvent> { event ->
-				CobblenavLootInjector.inject(event.name) { builder -> event.table.addPool(builder.build()) }
+				CobbleNavLootInjector.inject(event.name) { builder -> event.table.addPool(builder.build()) }
 			}
 		}
 	}
 
 	fun onWanderingTraderRegistry(event: WandererTradesEvent) {
-		event.rareTrades.addAll(Cobblenav.resolveWandererTrades())
+		event.rareTrades.addAll(CobbleNav.resolveWandererTrades())
 	}
 }

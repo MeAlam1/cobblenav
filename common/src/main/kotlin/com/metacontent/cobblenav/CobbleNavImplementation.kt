@@ -6,7 +6,7 @@ import net.minecraft.commands.synchronization.ArgumentTypeInfo
 import net.minecraft.resources.ResourceLocation
 import kotlin.reflect.KClass
 
-interface CobblenavImplementation {
+interface CobbleNavImplementation {
 	val networkManager: NetworkManager
 
 	fun registerItems()

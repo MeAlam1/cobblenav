@@ -9,7 +9,7 @@ import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.entries.NestedLootTable
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 
-object CobblenavLootInjector {
+object CobbleNavLootInjector {
 	private val injectableTables =
 		setOf(
 			BuiltInLootTables.FISHING_TREASURE.location(),

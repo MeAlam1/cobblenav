@@ -11,7 +11,7 @@ import com.cobblemon.mod.common.util.readIdentifier
 import com.cobblemon.mod.common.util.readString
 import com.cobblemon.mod.common.util.writeIdentifier
 import com.cobblemon.mod.common.util.writeString
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.client.gui.widget.TextWidget
 import com.metacontent.cobblenav.client.gui.widget.section.SectionWidget
 import com.metacontent.cobblenav.client.gui.widget.spawndata.SpawnDataDetailWidget
@@ -37,7 +37,7 @@ class PokemonSpawnResultData(
 	companion object {
 		fun transform(detail: SpawnDetail, player: ServerPlayer): SpawnResultData? {
 			if (detail !is PokemonSpawnDetail) {
-				Cobblenav.LOGGER.error(
+				CobbleNav.LOGGER.error(
 					"The provided SpawnDetail type (${detail.type}) does not match the key under which it is registered (${PokemonSpawnDetail.TYPE}).",
 				)
 				return null
@@ -52,7 +52,7 @@ class PokemonSpawnResultData(
 					.getSpeciesRecord(renderablePokemon.species.resourceIdentifier)
 					?.getFormRecord(renderablePokemon.form.name)
 					?.knowledge ?: PokedexEntryProgress.UNREGISTERED
-			if (knowledge == PokedexEntryProgress.UNREGISTERED && Cobblenav.config.hideUnknownPokemon) {
+			if (knowledge == PokedexEntryProgress.UNREGISTERED && CobbleNav.config.hideUnknownPokemon) {
 				return UnknownSpawnResultData(
 					positionType,
 				)

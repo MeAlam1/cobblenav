@@ -1,6 +1,6 @@
 package com.metacontent.cobblenav.neoforge.client
 
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.client.ClientImplementation
 import com.metacontent.cobblenav.client.CobblenavClient
 import com.metacontent.cobblenav.client.gui.config.ConfigListScreen
@@ -24,7 +24,7 @@ object CobblenavNeoForgeClient : ClientImplementation {
 
 	private fun initialize(event: FMLClientSetupEvent) {
 		CobblenavClient.init(this)
-		val modContainer = ModList.get().getModContainerById(Cobblenav.ID).get()
+		val modContainer = ModList.get().getModContainerById(CobbleNav.MOD_ID).get()
 		modContainer.registerExtensionPoint(
 			IConfigScreenFactory::class.java,
 			IConfigScreenFactory { _, parent -> ConfigListScreen.defaults(parent) },

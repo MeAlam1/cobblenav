@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.client.gui.widget.finder
+package com.metacontent.cobblenav.client.gui.widget.pokenav
 
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
@@ -12,7 +12,6 @@ import com.metacontent.cobblenav.utils.I18nUtil.label
 import com.metacontent.cobblenav.utils.extensions.gui
 import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor
 import org.joml.Quaternionf
 import org.joml.Vector3f

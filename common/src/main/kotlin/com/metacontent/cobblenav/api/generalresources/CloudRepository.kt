@@ -6,7 +6,7 @@ import com.cobblemon.mod.common.util.adapters.IdentifierAdapter
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.utils.cobblenavResource
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
@@ -35,7 +35,7 @@ object CloudRepository : JsonDataRegistry<CloudRepository.CloudList> {
 			clouds.addAll(list.ids)
 		}
 		observable.emit(this)
-		Cobblenav.LOGGER.info("Loaded {} clouds", clouds.size)
+		CobbleNav.LOGGER.info("Loaded {} clouds", clouds.size)
 	}
 
 	data class CloudList(val replace: Boolean?, val ids: List<ResourceLocation>)

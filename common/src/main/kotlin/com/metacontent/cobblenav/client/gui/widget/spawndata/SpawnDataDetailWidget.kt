@@ -54,7 +54,7 @@ class SpawnDataDetailWidget(
 	fun renderMenu(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		val poseStack = guiGraphics.pose()
 		poseStack.pushAndPop(
-			translate = Vector3d(0.0, 0.0, 3000.0),
+			translate = Vector3d(0.0, 0.0, 10.0),
 		) {
 			blitk(
 				matrixStack = poseStack,

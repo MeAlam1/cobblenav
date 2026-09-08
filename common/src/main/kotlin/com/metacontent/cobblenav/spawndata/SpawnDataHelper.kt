@@ -21,7 +21,7 @@ import com.cobblemon.mod.common.entity.fishing.PokeRodFishingBobberEntity
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemon.mod.common.util.spawner
 import com.cobblemon.mod.common.util.toBlockPos
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.api.platform.BiomePlatforms
 import com.metacontent.cobblenav.event.CobblenavEvents
 import com.metacontent.cobblenav.properties.SpawnDetailIdPropertyType
@@ -56,7 +56,7 @@ object SpawnDataHelper {
 
 		val bucketWeights = Cobblemon.bestSpawner.config.worldBuckets
 		val bucket = bucketWeights.keys.firstOrNull { it == bucketName } ?: run {
-			Cobblenav.LOGGER.error("For some reason bucket is null")
+			CobbleNav.LOGGER.error("For some reason bucket is null")
 			return WeightedBucket(bucketName, 0f) to emptyList()
 		}
 
@@ -74,7 +74,7 @@ object SpawnDataHelper {
 				config.spawningZoneDiameter,
 			),
 		)
-		val spawnablePositions = Cobblenav.resolver.resolve(
+		val spawnablePositions = CobbleNav.resolver.resolve(
 			spawner = spawner,
 			spawnablePositionCalculators = SpawnablePositionCalculator.prioritizedAreaCalculators,
 			zone = zone,
@@ -153,7 +153,7 @@ object SpawnDataHelper {
 
 		val bucketWeights = Cobblemon.bestSpawner.config.pokeSnackBuckets
 		val bucket = bucketWeights.keys.firstOrNull { it == bucketName } ?: run {
-			Cobblenav.LOGGER.error("For some reason bucket is null")
+			CobbleNav.LOGGER.error("For some reason bucket is null")
 			return WeightedBucket(bucketName, 0f) to emptyList()
 		}
 
@@ -162,7 +162,7 @@ object SpawnDataHelper {
 			spawner = spawner,
 			input = spawner.getZoneInput(cause),
 		)
-		val spawnablePositions = Cobblenav.resolver.resolve(
+		val spawnablePositions = CobbleNav.resolver.resolve(
 			spawner = spawner,
 			spawnablePositionCalculators = SpawnablePositionCalculator.prioritizedAreaCalculators,
 			zone = zone,
@@ -191,7 +191,7 @@ object SpawnDataHelper {
 		val anticonditions = mutableListOf<ConditionData>()
 		val blockAnticonditions = mutableSetOf<ResourceLocation>()
 		val canShowConditions =
-			!Cobblenav.config.hideConditionsOfUnknownSpawns || player.spawnCatalogue().contains(detail)
+			!CobbleNav.config.hideConditionsOfUnknownSpawns || player.spawnCatalogue().contains(detail)
 		if (canShowConditions) {
 			detail.conditions.forEach { condition ->
 				conditions += ConditionCollectors.collectConditions(detail, condition, player)
@@ -209,7 +209,7 @@ object SpawnDataHelper {
 		val platformId = BiomePlatforms.firstFitting(fittingPositions)
 
 		return SpawnData(
-			id = if (!result.isUnknown() || !Cobblenav.config.hideUnknownPokemon) detail.id else "???",
+			id = if (!result.isUnknown() || !CobbleNav.config.hideUnknownPokemon) detail.id else "???",
 			result = result,
 			positionType = detail.spawnablePositionType.name,
 			bucket = detail.bucket,

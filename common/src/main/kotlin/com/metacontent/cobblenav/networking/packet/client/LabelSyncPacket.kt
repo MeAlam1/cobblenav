@@ -6,7 +6,7 @@ import com.cobblemon.mod.common.util.readIdentifier
 import com.cobblemon.mod.common.util.readString
 import com.cobblemon.mod.common.util.writeIdentifier
 import com.cobblemon.mod.common.util.writeString
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.utils.cobblenavResource
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
@@ -26,7 +26,7 @@ class LabelSyncPacket(speciesToLabels: Collection<Pair<ResourceLocation, HashSet
 	override fun decodeEntry(buffer: RegistryFriendlyByteBuf): Pair<ResourceLocation, HashSet<String>>? = try {
 		buffer.readIdentifier() to buffer.readList { it.readString() }.toHashSet()
 	} catch (e: Exception) {
-		Cobblenav.LOGGER.error(e.message, e)
+		CobbleNav.LOGGER.error(e.message, e)
 		null
 	}
 
@@ -41,7 +41,7 @@ class LabelSyncPacket(speciesToLabels: Collection<Pair<ResourceLocation, HashSet
 			buffer.writeIdentifier(entry.first)
 			buffer.writeCollection(entry.second) { byteBuf, s -> byteBuf.writeString(s) }
 		} catch (e: Exception) {
-			Cobblenav.LOGGER.error(e.message, e)
+			CobbleNav.LOGGER.error(e.message, e)
 		}
 	}
 }

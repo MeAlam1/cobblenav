@@ -4,7 +4,7 @@ import com.cobblemon.mod.common.CobblemonSounds
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.gui.CobblemonRenderable
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.gui.ScreenElementManager
+import com.metacontent.cobblenav.client.gui.WidgetLayerDispatcher
 import com.metacontent.cobblenav.client.gui.widget.NotificationWidget
 import com.metacontent.cobblenav.client.gui.widget.StatusBarWidget
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
@@ -48,6 +48,9 @@ abstract class PokenavScreen(
 		val SCREEN = gui("pokenav_screen")
 		val BACK_BUTTON = gui("button/back")
 		val SUPPORT = gui("button/support_button")
+
+		private const val LAYER_BLOCKABLE = "blockable"
+		private const val LAYER_UNBLOCKABLE = "unblockable"
 	}
 
 	val scale = CobblenavClient.config.screenScale
@@ -59,7 +62,10 @@ abstract class PokenavScreen(
 	private var animationOffset: Float = if (animateOpening) ANIMATION_OFFSET else 0f
 	var blockWidgets: Boolean = false
 
-	protected val widgets = ScreenElementManager(scale)
+	protected val widgets = WidgetLayerDispatcher(scale).apply {
+		registerLayer(LAYER_BLOCKABLE, blockable = true)
+		registerLayer(LAYER_UNBLOCKABLE, blockable = false)
+	}
 
 	lateinit var notifications: NotificationWidget
 	var previousScreen: PokenavScreen? = null
@@ -72,7 +78,7 @@ abstract class PokenavScreen(
 
 	override fun init() {
 		blockWidgets = false
-		widgets.clear()
+		widgets.clearAll()
 
 		width = (width / scale).toInt()
 		height = (height / scale).toInt()
@@ -83,7 +89,7 @@ abstract class PokenavScreen(
 		notifications = NotificationWidget(
 			screenX + VERTICAL_BORDER_DEPTH,
 			screenY + HORIZONTAL_BORDER_DEPTH,
-		).also { widgets.addUnblockable(it) }
+		).also { addUnblockableWidget(it) }
 
 		initScreen()
 	}
@@ -121,7 +127,7 @@ abstract class PokenavScreen(
 
 		try {
 			renderOnBackLayer(guiGraphics, mouseX, mouseY, delta)
-			widgets.renderBlockable(guiGraphics, mouseX, mouseY, delta, blockWidgets)
+			widgets.renderLayer(LAYER_BLOCKABLE, guiGraphics, mouseX, mouseY, delta, blockWidgets)
 			renderOnFrontLayer(guiGraphics, mouseX, mouseY, delta)
 
 			if (blockWidgets) {
@@ -142,7 +148,7 @@ abstract class PokenavScreen(
 				)
 			}
 
-			widgets.renderUnblockable(guiGraphics, mouseX, mouseY, delta)
+			widgets.renderLayer(LAYER_UNBLOCKABLE, guiGraphics, mouseX, mouseY, delta, blockWidgets)
 		} finally {
 			guiGraphics.disableScissor()
 		}
@@ -195,12 +201,12 @@ abstract class PokenavScreen(
 		)
 	}
 
-	protected fun addBlockableWidget(widget: AbstractWidget) = widgets.addBlockable(widget)
-	protected fun removeBlockableWidget(widget: AbstractWidget) = widgets.removeBlockable(widget)
-	protected fun clearBlockableWidgets() = widgets.clearBlockable()
-	protected fun addUnblockableWidget(widget: AbstractWidget) = widgets.addUnblockable(widget)
-	protected fun removeUnblockableWidget(widget: AbstractWidget) = widgets.removeUnblockable(widget)
-	protected fun clearUnblockableWidget() = widgets.clearUnblockable()
+	protected fun addBlockableWidget(widget: AbstractWidget) = widgets.addWidget(LAYER_BLOCKABLE, widget)
+	protected fun removeBlockableWidget(widget: AbstractWidget) = widgets.removeWidget(LAYER_BLOCKABLE, widget)
+	protected fun clearBlockableWidgets() = widgets.clearLayer(LAYER_BLOCKABLE)
+	protected fun addUnblockableWidget(widget: AbstractWidget) = widgets.addWidget(LAYER_UNBLOCKABLE, widget)
+	protected fun removeUnblockableWidget(widget: AbstractWidget) = widgets.removeWidget(LAYER_UNBLOCKABLE, widget)
+	protected fun clearUnblockableWidget() = widgets.clearLayer(LAYER_UNBLOCKABLE)
 
 	protected fun addDefaultBottomWidgets(
 		includeRadialMenu: Boolean = true,

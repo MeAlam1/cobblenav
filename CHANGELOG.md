@@ -2,9 +2,6 @@
 
 ## 2.4.1
 
-# BEFORE RELEASE: Streamline between Cobblenav and Pokenav and make the N capitalized
-# FIX ALL TODO'S BEFORE RELEASING
-
 ### Additions
 
 * Added Compatibility with ModMenu

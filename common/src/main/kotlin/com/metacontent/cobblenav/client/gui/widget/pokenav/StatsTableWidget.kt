@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.client.gui.widget.finder
+package com.metacontent.cobblenav.client.gui.widget.pokenav
 
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
@@ -14,7 +14,6 @@ import com.metacontent.cobblenav.utils.extensions.drawBlurredArea
 import com.metacontent.cobblenav.utils.extensions.gui
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 
 class StatsTableWidget(
 	x: Int,

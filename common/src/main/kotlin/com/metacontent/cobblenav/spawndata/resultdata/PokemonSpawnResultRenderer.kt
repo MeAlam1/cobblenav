@@ -5,7 +5,7 @@ import com.cobblemon.mod.common.client.render.models.blockbench.FloatingState
 import com.cobblemon.mod.common.entity.PoseType
 import com.cobblemon.mod.common.pokemon.RenderablePokemon
 import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.client.CobblenavClient
 import com.metacontent.cobblenav.utils.I18nUtil.label
 import com.metacontent.cobblenav.utils.extensions.drawPokemon
@@ -41,8 +41,8 @@ abstract class PokemonSpawnResultRenderer {
 					pokemon.species.translatedName.string,
 					pokemon.species.translatedName.string,
 				)
-			Cobblenav.LOGGER.error(message.string)
-			Cobblenav.LOGGER.error(e.message)
+			CobbleNav.LOGGER.error(message.string)
+			CobbleNav.LOGGER.error(e.message)
 			if (CobblenavClient.config.sendErrorMessagesToChat) {
 				Minecraft.getInstance().player?.sendSystemMessage(message.red())
 			}

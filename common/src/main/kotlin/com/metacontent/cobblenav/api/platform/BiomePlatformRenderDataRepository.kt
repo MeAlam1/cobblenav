@@ -6,7 +6,7 @@ import com.cobblemon.mod.common.util.adapters.IdentifierAdapter
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.utils.cobblenavResource
 import com.metacontent.cobblenav.utils.extensions.gui
 import net.minecraft.resources.ResourceLocation
@@ -49,7 +49,7 @@ object BiomePlatformRenderDataRepository : JsonDataRegistry<BiomePlatformRenderD
 			platforms[platform.id] = platform
 		}
 		observable.emit(this)
-		Cobblenav.LOGGER.info("Loaded {} biome platform render data", platforms.size)
+		CobbleNav.LOGGER.info("Loaded {} biome platform render data", platforms.size)
 	}
 
 	fun get(id: ResourceLocation?) = platforms[id] ?: DEFAULT

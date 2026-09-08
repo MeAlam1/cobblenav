@@ -9,7 +9,7 @@ import com.cobblemon.mod.common.util.readIdentifier
 import com.cobblemon.mod.common.util.readString
 import com.cobblemon.mod.common.util.writeIdentifier
 import com.cobblemon.mod.common.util.writeString
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.utils.cobblenavResource
 import com.metacontent.cobblenav.utils.extensions.getEvYield
 import com.metacontent.cobblenav.utils.extensions.setEvYield
@@ -31,7 +31,7 @@ class EvYieldSyncPacket(evYieldData: Collection<EvYieldDataEntry>) : DataRegistr
 	override fun decodeEntry(buffer: RegistryFriendlyByteBuf): EvYieldDataEntry? = try {
 		EvYieldDataEntry.decode(buffer)
 	} catch (e: Exception) {
-		Cobblenav.LOGGER.error(e.message, e)
+		CobbleNav.LOGGER.error(e.message, e)
 		null
 	}
 
@@ -49,7 +49,7 @@ class EvYieldSyncPacket(evYieldData: Collection<EvYieldDataEntry>) : DataRegistr
 		try {
 			entry.encode(buffer)
 		} catch (e: Exception) {
-			Cobblenav.LOGGER.error(e.message, e)
+			CobbleNav.LOGGER.error(e.message, e)
 		}
 	}
 }

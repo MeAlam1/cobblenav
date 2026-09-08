@@ -5,7 +5,7 @@ import com.cobblemon.mod.common.util.adapters.IntRangeAdapter
 import com.cobblemon.mod.common.util.adapters.PokemonPropertiesAdapter
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.client.settings.pokefinder.RadarFilterAdapter
 import com.metacontent.cobblenav.client.settings.pokefinder.filter.RadarFilter
 import java.io.File
@@ -32,7 +32,7 @@ object ClientSettingsDataManager {
 			fileWriter.flush()
 			fileWriter.close()
 		} catch (e: Exception) {
-			Cobblenav.LOGGER.error(e.message, e)
+			CobbleNav.LOGGER.error(e.message, e)
 		}
 	}
 
@@ -46,7 +46,7 @@ object ClientSettingsDataManager {
 			val fileReader = FileReader(file)
 			return GSON.fromJson(fileReader, clazz) ?: clazz.getConstructor().newInstance()
 		} catch (e: Exception) {
-			Cobblenav.LOGGER.error(e.message, e)
+			CobbleNav.LOGGER.error(e.message, e)
 			return clazz.getConstructor().newInstance()
 		}
 	}

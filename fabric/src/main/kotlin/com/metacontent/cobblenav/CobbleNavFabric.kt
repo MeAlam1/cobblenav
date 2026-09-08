@@ -16,25 +16,25 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import kotlin.reflect.KClass
 
-class CobblenavFabric :
+class CobbleNavFabric :
 	ModInitializer,
-	CobblenavImplementation {
+	CobbleNavImplementation {
 	override val networkManager = CobblenavFabricNetworkManager
 
 	override fun onInitialize() {
-		Cobblenav.init(this)
+		CobbleNav.init(this)
 		networkManager.registerMessages()
 		networkManager.registerServerHandlers()
 
 		TradeOfferHelper.registerWanderingTraderOffers(2) { factories ->
-			factories.addAll(Cobblenav.resolveWandererTrades())
+			factories.addAll(CobbleNav.resolveWandererTrades())
 		}
 	}
 
 	override fun registerItems() {
-		CobblenavItems.register { resourceLocation, item ->
+		CobbleNavItems.register { resourceLocation, item ->
 			register(
-				CobblenavItems.registry,
+				CobbleNavItems.registry,
 				resourceLocation,
 				item,
 			)
@@ -45,14 +45,14 @@ class CobblenavFabric :
 			FabricItemGroup
 				.builder()
 				.title(itemGroup("general"))
-				.icon { ItemStack(CobblenavItems.POKENAV) }
-				.displayItems(CobblenavItems::addToGroup)
+				.icon { ItemStack(CobbleNavItems.POKENAV) }
+				.displayItems(CobbleNavItems::addToGroup)
 				.build(),
 		)
 	}
 
 	override fun registerCommands() {
-		CommandRegistrationCallback.EVENT.register(CobblenavCommands::register)
+		CommandRegistrationCallback.EVENT.register(CobbleNavCommands::register)
 	}
 
 	override fun <A : ArgumentType<*>, T : ArgumentTypeInfo.Template<A>> registerCommandArgument(
@@ -65,7 +65,7 @@ class CobblenavFabric :
 
 	override fun injectLootTables() {
 		LootTableEvents.MODIFY.register { id, tableBuilder, _, _ ->
-			CobblenavLootInjector.inject(id.location(), tableBuilder::withPool)
+			CobbleNavLootInjector.inject(id.location(), tableBuilder::withPool)
 		}
 	}
 }

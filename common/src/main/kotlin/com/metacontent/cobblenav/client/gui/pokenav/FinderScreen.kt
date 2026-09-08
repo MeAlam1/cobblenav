@@ -7,8 +7,8 @@ import com.metacontent.cobblenav.client.gui.Timer
 import com.metacontent.cobblenav.client.gui.widget.ContextMenuWidget
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.client.gui.widget.button.TextButton
-import com.metacontent.cobblenav.client.gui.widget.finder.FoundPokemonWidget
-import com.metacontent.cobblenav.client.gui.widget.finder.StatsTableWidget
+import com.metacontent.cobblenav.client.gui.widget.pokenav.FoundPokemonWidget
+import com.metacontent.cobblenav.client.gui.widget.pokenav.StatsTableWidget
 import com.metacontent.cobblenav.finder.FoundPokemon
 import com.metacontent.cobblenav.os.PokenavOS
 import com.metacontent.cobblenav.spawndata.SpawnData

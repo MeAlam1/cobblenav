@@ -111,7 +111,7 @@ class OpenedSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: In
 		}
 
 		poseStack.pushAndPop(
-			translate = Vector3d(0.0, 0.0, 3000.0),
+			translate = Vector3d(0.0, 0.0, 10.0),
 		) {
 			drawScaledTextJustifiedRight(
 				context = guiGraphics,

@@ -2,7 +2,7 @@ package com.metacontent.cobblenav.networking.handler.server
 
 import com.cobblemon.mod.common.api.net.ServerNetworkPacketHandler
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.finder.BestPokemonFinder
 import com.metacontent.cobblenav.networking.packet.client.FoundPokemonPacket
 import com.metacontent.cobblenav.networking.packet.server.FindPokemonPacket
@@ -13,8 +13,8 @@ import net.minecraft.world.phys.AABB
 object FindPokemonHandler : ServerNetworkPacketHandler<FindPokemonPacket> {
 	override fun handle(packet: FindPokemonPacket, server: MinecraftServer, player: ServerPlayer) {
 		server.execute {
-			val width = Cobblenav.config.searchAreaWidth
-			val height = Cobblenav.config.searchAreaHeight
+			val width = CobbleNav.config.searchAreaWidth
+			val height = CobbleNav.config.searchAreaHeight
 			val pokemonEntities = player.serverLevel().getEntitiesOfClass(
 				PokemonEntity::class.java,
 				AABB.ofSize(
