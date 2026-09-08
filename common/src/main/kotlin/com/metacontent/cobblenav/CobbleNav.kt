@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory
 
 object CobbleNav {
 	const val MOD_ID = "cobblenav"
-	const val VERSION = "2.4.1"
+	const val VERSION = "2.4.2"
 	val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
 
 	lateinit var config: CobblenavConfig
