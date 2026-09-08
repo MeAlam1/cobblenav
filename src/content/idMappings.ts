@@ -22,6 +22,14 @@ export type IdMappings = Record<`${string}:${string}`, Hyperlink>;
 const cobblemonWiki = (item: string): string => `https://wiki.cobblemon.com/index.php/${item}`;
 
 /**
+ * Generates a hyperlink to the Minecraft Wiki for a given item.
+ * 
+ * @param item - The name of the item to generate a hyperlink for.
+ * @returns A string representing the URL to the Minecraft Wiki page for the specified item.
+ */
+const minecraftWiki = (item: string): string => `https://minecraft.wiki/w/${item}`;
+
+/**
  * This object contains mappings of specific item IDs to their corresponding hyperlinks on the Cobblemon Wiki.
  * Each key is in the format "modId:itemId" and maps to a Hyperlink object containing the URL.
  */
@@ -41,6 +49,31 @@ export const idMappings: IdMappings = {
     "cobblemon:red_apricorn": { href: cobblemonWiki("Apricorn") },
     "cobblemon:white_apricorn": { href: cobblemonWiki("Apricorn") },
     "cobblemon:yellow_apricorn": { href: cobblemonWiki("Apricorn") },
+
+    "minecraft:compass": { href: minecraftWiki("Compass") },
+    "minecraft:copper_ingot": { href: minecraftWiki("Copper_ingot") },
+    "minecraft:diamond": { href: minecraftWiki("Diamond") },
+    "minecraft:iron_ingot": { href: minecraftWiki("Iron_ingot") },
+    "minecraft:prismarine_crystals": { href: minecraftWiki("Prismarine_crystals") },
+    "minecraft:prismarine_shard": { href: minecraftWiki("Prismarine_shard") },
+    "minecraft:redstone": { href: minecraftWiki("Redstone") },
+
+    "minecraft:black_dye": { href: minecraftWiki("Dye") },
+    "minecraft:blue_dye": { href: minecraftWiki("Dye") },
+    "minecraft:brown_dye": { href: minecraftWiki("Dye") },
+    "minecraft:cyan_dye": { href: minecraftWiki("Dye") },
+    "minecraft:gray_dye": { href: minecraftWiki("Dye") },
+    "minecraft:green_dye": { href: minecraftWiki("Dye") },
+    "minecraft:light_blue_dye": { href: minecraftWiki("Dye") },
+    "minecraft:light_gray_dye": { href: minecraftWiki("Dye") },
+    "minecraft:lime_dye": { href: minecraftWiki("Dye") },
+    "minecraft:magenta_dye": { href: minecraftWiki("Dye") },
+    "minecraft:orange_dye": { href: minecraftWiki("Dye") },
+    "minecraft:pink_dye": { href: minecraftWiki("Dye") },
+    "minecraft:purple_dye": { href: minecraftWiki("Dye") },
+    "minecraft:red_dye": { href: minecraftWiki("Dye") },
+    "minecraft:white_dye": { href: minecraftWiki("Dye") },
+    "minecraft:yellow_dye": { href: minecraftWiki("Dye") },
 };
 
 /**
