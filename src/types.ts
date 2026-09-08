@@ -42,3 +42,11 @@ export interface Ingredient {
     modId: string;
     itemId: string;
 }
+
+export interface CraftingRecipeVariant {
+    name?: string;
+    description?: string;
+    ingredients: (string | Ingredient | null)[];
+    resultItem: Ingredient | string;
+    resultCount?: number;
+}

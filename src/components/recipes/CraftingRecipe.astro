@@ -1,13 +1,18 @@
 ---
-import type { Ingredient } from "../../types";
+import type { Ingredient, CraftingRecipeVariant } from "../../types";
+import CyclingCraftingRecipe from "./CyclingCraftingRecipe.astro";
 
 interface Props {
     // A 9-item array representing the 3x3 grid slots (null for empty slots)
-    ingredients: (string | Ingredient | null)[];
-    resultItem: Ingredient | string;
+    ingredients?: (string | Ingredient | null)[];
+    resultItem?: Ingredient | string;
     resultCount?: number;
     name?: string;
     description?: string;
+    // Multi-variant recipe support
+    recipes?: CraftingRecipeVariant[];
+    variants?: CraftingRecipeVariant[];
+    interval?: number;
 }
 
 const {
@@ -16,7 +21,12 @@ const {
     resultCount = 1,
     name,
     description,
+    recipes,
+    variants,
+    interval = 2000,
 } = Astro.props;
+
+const recipeVariants = variants ?? recipes;
 
 // Helper to construct image paths from your public folder
 const getTexturePath = (item: string | Ingredient | null) => {
@@ -43,53 +53,60 @@ const formatItemName = (item: string | Ingredient | null) => {
 };
 ---
 
-<div class="recipe-container">
-    {name && <h2 class="recipe-name">{name}</h2>}
-    {description && <p class="recipe-description">{description}</p>}
-    <div class="minecraft-recipe">
-        <div class="recipe-grid">
-            {
-                ingredients.map((item) => {
-                    const texture = getTexturePath(item);
-                    return (
-                        <div
-                            class="recipe-slot"
-                            data-tooltip={formatItemName(item)}
-                        >
-                            {texture && (
-                                <img
-                                    src={texture}
-                                    alt={formatItemName(item)}
-                                    class="item-texture"
-                                />
-                            )}
-                        </div>
-                    );
-                })
-            }
-        </div>
+{
+    recipeVariants && recipeVariants.length > 0 ? (
+        <CyclingCraftingRecipe
+            variants={recipeVariants}
+            name={name}
+            description={description}
+            interval={interval}
+        />
+    ) : ingredients && resultItem ? (
+        <div class="recipe-container">
+            {name && <h2 class="recipe-name">{name}</h2>}
+            {description && <p class="recipe-description">{description}</p>}
+            <div class="minecraft-recipe">
+                <div class="recipe-grid">
+                    {ingredients.map((item) => {
+                        const texture = getTexturePath(item);
+                        return (
+                            <div
+                                class="recipe-slot"
+                                data-tooltip={formatItemName(item)}
+                            >
+                                {texture && (
+                                    <img
+                                        src={texture}
+                                        alt={formatItemName(item)}
+                                        class="item-texture"
+                                    />
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
 
-        <div class="recipe-arrow">→</div>
+                <div class="recipe-arrow">→</div>
 
-        <div class="recipe-result-container">
-            <div
-                class="recipe-result"
-                data-tooltip={formatItemName(resultItem)}
-            >
-                <img
-                    src={getTexturePath(resultItem)}
-                    alt={formatItemName(resultItem)}
-                    class="item-texture"
-                />
-                {
-                    resultCount > 1 && (
-                        <span class="item-count">{resultCount}</span>
-                    )
-                }
+                <div class="recipe-result-container">
+                    <div
+                        class="recipe-result"
+                        data-tooltip={formatItemName(resultItem)}
+                    >
+                        <img
+                            src={getTexturePath(resultItem)}
+                            alt={formatItemName(resultItem)}
+                            class="item-texture"
+                        />
+                        {resultCount > 1 && (
+                            <span class="item-count">{resultCount}</span>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    ) : null
+}
 
 <style is:global>
     @font-face {

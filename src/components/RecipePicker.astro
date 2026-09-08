@@ -8,9 +8,12 @@ interface Props {
     modId: string;
     recipeId?: string;
     recipeGlob?: string;
+    cycleVariants?: boolean;
+    interval?: number;
 }
 
-const { collection, modId, recipeId, recipeGlob } = Astro.props;
+const { collection, modId, recipeId, recipeGlob, cycleVariants, interval } =
+    Astro.props;
 
 let allCraftingRecipes: Awaited<
     ReturnType<typeof getCollection<"craftingRecipes">>
@@ -61,14 +64,23 @@ const filteredSmithingRecipes = recipeId
 >
     {
         filteredCraftingRecipes.length > 0 &&
-            filteredCraftingRecipes.map((recipe) => (
+            (cycleVariants ? (
                 <Recipe
-                    name={recipe.data.name}
-                    description={recipe.data.description}
-                    ingredients={recipe.data.ingredients}
-                    resultItem={recipe.data.resultItem}
-                    resultCount={recipe.data.resultCount}
+                    variants={filteredCraftingRecipes.map(
+                        (recipe) => recipe.data,
+                    )}
+                    interval={interval}
                 />
+            ) : (
+                filteredCraftingRecipes.map((recipe) => (
+                    <Recipe
+                        name={recipe.data.name}
+                        description={recipe.data.description}
+                        ingredients={recipe.data.ingredients}
+                        resultItem={recipe.data.resultItem}
+                        resultCount={recipe.data.resultCount}
+                    />
+                ))
             ))
     }
 
