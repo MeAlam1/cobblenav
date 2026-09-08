@@ -40,11 +40,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Items',
-					items: [
-						{ label: 'PokéNav', slug: 'pokenav' },
-						{ label: 'PokéFinder', slug: 'pokefinder' },
-						{ label: 'FishingNav', slug: 'fishingnav' },
-					]
+					items: [{ autogenerate: { directory: 'item' } }]
 				},
 				{
 					label: "Addon Development",
