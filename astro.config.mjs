@@ -32,19 +32,13 @@ export default defineConfig({
 
 			sidebar: [
 				{ label: 'Getting Started', slug: 'getting-started' },
-				{ label: 'PokéNav', slug: 'pokenav' },
-				{ label: 'PokéFinder', slug: 'pokefinder' },
-				{ label: 'FishingNav', slug: 'fishingnav' },
 				{
-					label: 'Guides',
+					label: 'Items',
 					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
-					],
-				},
-				{
-					label: 'Reference',
-					items: [{ autogenerate: { directory: 'reference' } }],
+						{ label: 'PokéNav', slug: 'pokenav' },
+						{ label: 'PokéFinder', slug: 'pokefinder' },
+						{ label: 'FishingNav', slug: 'fishingnav' },
+					]
 				},
 			],
 		}),
