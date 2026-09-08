@@ -31,7 +31,13 @@ export default defineConfig({
 			customCss: ["./src/styles/starlight.css"],
 
 			sidebar: [
-				{ label: 'Getting Started', slug: 'getting-started' },
+				{ 
+					label: 'Getting Started',
+					items: [
+						{ label: 'Introduction', slug: 'getting-started' },
+						{ label: 'Configuration', slug: 'configuration' },
+					]
+				},
 				{
 					label: 'Items',
 					items: [
@@ -40,6 +46,10 @@ export default defineConfig({
 						{ label: 'FishingNav', slug: 'fishingnav' },
 					]
 				},
+				{
+					label: "Addon Development",
+					items: [{ autogenerate: { directory: 'addons' } }]
+				}
 			],
 		}),
 	],

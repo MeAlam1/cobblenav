@@ -1,0 +1,111 @@
+---
+title: Custom Biome Platforms
+description: This page contains information about custom biome platforms in the CobbleNav mod.
+---
+
+To add custom platforms, you will need a datapack and a resource pack. The datapack implements conditions under which a particular platform should be used, while the resource pack adds assets and configures rendering. In order to simplify distribution, the data pack and resource pack can be combined into a single archive, just as is usually done with add-ons for Cobblemon.
+
+In this example, let's take a look at the implementation of the lava platform.
+
+## Conditions
+
+The conditions are specified in the json file located at `data/cobblenav/biome_platforms/lava.json`. The file can have any name, but for convenience, it is better to name it according to the unique ID of your platform.
+
+```json title="data/cobblenav/biome_platforms/lava.json"
+{
+    "id": "cobblenav:lava",
+    "conditions": {
+        "fluids": [
+            "minecraft:lava"
+        ]
+    }
+}
+```
+In accordance with these conditions, the platform with ID `cobblenav:lava` will be used when the spawn conditions require the presence of lava (as a surface or liquid in which the Pokémon is submerged).
+In addition to fluids, the IDs of specific spawn conditions, biomes, and structures may also be specified. Furthermore, anti-conditions are also supported. Here's what the file may look like overall:
+
+```json title="data/cobblenav/biome_platforms/plains.json"
+{
+    "id": "cobblenav:plains",
+    "conditions": {
+        "detailIds": [
+            "bulbasaur-1",
+            "venusaur-1"
+        ],
+        "biomes": [
+            "cobblemon:is_plains",
+            "cobblemon:is_grassland",
+            "cobblemon:is_temperate"
+        ],
+        "structures": [
+            "aether:dungeons"
+        ],
+        "fluids": [
+            "minecraft:water"
+        ]
+    },
+    "anticonditions": {
+        "fluids": [
+            "minecraft:lava"
+        ]
+    }
+}
+```
+
+## Rendering Configuration
+
+The client side of our platform is located at `assets/cobblenav/biome_platforms/lava.json`. The file can still have any name. Basically, only the root directory changes from `data` to `assets`.
+In the case of the lava platform, it looks like this
+
+```json title="assets/cobblenav/biome_platforms/lava.json"
+{
+    "id": "cobblenav:lava",
+    "platform": "cobblenav:textures/gui/biome_platforms/lava.png",
+    "platformHighlighting": {
+        "offset": {
+            "y": -2
+        }
+    },
+    "hoveredPokemonOffset": {
+        "y": -2
+    }
+}
+```
+
+It is important to specify the same ID that was specified in the file with the conditions. The `platform` field specifies the namespace, followed by a colon and the path to the main platform sprite. This means the line `cobblenav:textures/gui/biome_platforms/lava.png` indicates that the file will be located at `assets/cobblenav/textures/gui/biome_platforms/lava.png`.
+
+The `platformHighlighting` field is used to specify changes that should be applied to the displayed sprite when hovered over.
+
+This could be a shift.
+
+```json
+{
+    "offset": {
+        "y": -2
+    }
+}
+```
+
+Or texture change.
+
+```json
+{
+    "texture": "cobblenav:textures/gui/biome_platforms/lava_hovered.png"
+}
+```
+
+The `hoveredPokemonOffset` field specifies the Pokémon's offset when hovering over it.
+
+This file may also contain so-called details. This is a texture that will be displayed on top of the platform and the Pokémon model.
+
+```json title="assets/cobblenav/biome_platforms/lava.json"
+{
+    ...
+    "details": "cobblenav:textures/gui/biome_platforms/lava_details.png",
+    "detailsHighlighting": {
+        "offset": {
+            "y": -2
+        }
+    }
+}
+```
