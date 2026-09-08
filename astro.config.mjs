@@ -33,6 +33,8 @@ export default defineConfig({
 			sidebar: [
 				{ label: 'Getting Started', slug: 'getting-started' },
 				{ label: 'PokéNav', slug: 'pokenav' },
+				{ label: 'PokéFinder', slug: 'pokefinder' },
+				{ label: 'FishingNav', slug: 'fishingnav' },
 				{
 					label: 'Guides',
 					items: [

@@ -1,0 +1,33 @@
+{
+    "name": "PokeFinder (green)",
+    "description": "Accessory to the PokeNav, the PokeFinder allows you to track down wild Pokemon in the area.",
+    "modFilter": "cobblenav",
+    "ingredients": [
+        null,
+        {
+            "modId": "cobblemon",
+            "itemId": "green_apricorn"
+        },
+        null,
+        {
+            "modId": "cobblemon",
+            "itemId": "green_apricorn"
+        },
+        "compass",
+        {
+            "modId": "cobblemon",
+            "itemId": "green_apricorn"
+        },
+        "copper_ingot",
+        {
+            "modId": "cobblemon",
+            "itemId": "electirizer"
+        },
+        "copper_ingot"
+    ],
+    "resultItem": {
+        "modId": "cobblenav",
+        "itemId": "pokefinder_item_green"
+    },
+    "resultCount": 1
+}

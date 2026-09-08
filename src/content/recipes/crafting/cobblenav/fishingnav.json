@@ -1,0 +1,30 @@
+{
+    "name": "FishingNav",
+    "description": "The FishingNav is a device that allows players to check spawn information about Pokémon spawning near them while fishing.",
+    "modFilter": "cobblenav",
+    "ingredients": [
+        "prismarine_shard",
+        "prismarine_crystals",
+        "prismarine_shard",
+        {
+            "modId": "cobblemon",
+            "itemId": "electirizer"
+        },
+        {
+            "modId": "cobblemon",
+            "itemId": "water_gem"
+        },
+        {
+            "modId": "cobblemon",
+            "itemId": "upgrade"
+        },
+        "prismarine_shard",
+        "redstone",
+        "prismarine_shard"
+    ],
+    "resultItem": {
+        "modId": "cobblenav",
+        "itemId": "fishingnav_item"
+    },
+    "resultCount": 1
+}

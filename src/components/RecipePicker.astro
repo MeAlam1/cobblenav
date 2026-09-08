@@ -1,0 +1,88 @@
+---
+import { getCollection } from "astro:content";
+import Recipe from "./recipes/CraftingRecipe.astro";
+import SmithingRecipe from "./recipes/SmithingRecipe.astro";
+
+interface Props {
+    collection: "craftingRecipes" | "smithingRecipes";
+    modId: string;
+    recipeId?: string;
+    recipeGlob?: string;
+}
+
+const { collection, modId, recipeId, recipeGlob } = Astro.props;
+
+let allCraftingRecipes: Awaited<
+    ReturnType<typeof getCollection<"craftingRecipes">>
+> = [];
+let allSmithingRecipes: Awaited<
+    ReturnType<typeof getCollection<"smithingRecipes">>
+> = [];
+
+switch (collection) {
+    case "craftingRecipes":
+        allCraftingRecipes = await getCollection(
+            "craftingRecipes",
+            (item) => item.data.modFilter === modId,
+        );
+        break;
+    case "smithingRecipes":
+        allSmithingRecipes = await getCollection(
+            "smithingRecipes",
+            (item) => item.data.modFilter === modId,
+        );
+        break;
+}
+
+const filteredCraftingRecipes = recipeId
+    ? allCraftingRecipes.filter(
+          (recipe) => recipe.id === `${modId}/${recipeId}`,
+      )
+    : recipeGlob
+      ? allCraftingRecipes.filter((recipe) =>
+            recipe.id.startsWith(`${modId}/${recipeGlob}`),
+        )
+      : allCraftingRecipes;
+
+const filteredSmithingRecipes = recipeId
+    ? allSmithingRecipes.filter(
+          (recipe) => recipe.id === `${modId}/${recipeId}`,
+      )
+    : recipeGlob
+      ? allSmithingRecipes.filter((recipe) =>
+            recipe.id.startsWith(`${modId}/${recipeGlob}`),
+        )
+      : allSmithingRecipes;
+---
+
+<div
+    class="recipes-list not-content"
+    style="display: flex; flex-direction: column; gap: 32px;"
+>
+    {
+        filteredCraftingRecipes.length > 0 &&
+            filteredCraftingRecipes.map((recipe) => (
+                <Recipe
+                    name={recipe.data.name}
+                    description={recipe.data.description}
+                    ingredients={recipe.data.ingredients}
+                    resultItem={recipe.data.resultItem}
+                    resultCount={recipe.data.resultCount}
+                />
+            ))
+    }
+
+    {
+        filteredSmithingRecipes.length > 0 &&
+            filteredSmithingRecipes.map((recipe) => (
+                <SmithingRecipe
+                    name={recipe.data.name}
+                    description={recipe.data.description}
+                    template={recipe.data.template ?? null}
+                    baseItem={recipe.data.baseItem}
+                    additionItem={recipe.data.additionItem}
+                    resultItem={recipe.data.resultItem}
+                />
+            ))
+    }
+</div>

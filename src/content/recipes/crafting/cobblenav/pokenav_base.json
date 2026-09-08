@@ -1,0 +1,27 @@
+{
+    "name": "PokeNav (base)",
+    "description": "The PokeNav is a device that allows players to check spawn information about Pokémon spawning near them.",
+    "modFilter": "cobblenav",
+    "ingredients": [
+        "copper_ingot",
+        "iron_ingot",
+        "copper_ingot",
+        {
+            "modId": "cobblemon",
+            "itemId": "electirizer"
+        },
+        "diamond",
+        {
+            "modId": "cobblemon",
+            "itemId": "upgrade"
+        },
+        "copper_ingot",
+        "redstone",
+        "copper_ingot"
+    ],
+    "resultItem": {
+        "modId": "cobblenav",
+        "itemId": "pokenav_item_base"
+    },
+    "resultCount": 1
+}
