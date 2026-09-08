@@ -26,6 +26,7 @@ export default defineConfig({
 			components: {
 				ContentPanel: "./src/components/starlight/ContentPanel.astro",
 				SocialIcons: "./src/components/starlight/SocialIcons.astro",
+				Footer: "./src/components/starlight/Footer.astro",
 			},
 			
 			customCss: ["./src/styles/starlight.css"],
