@@ -11,7 +11,7 @@ import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters
 import net.minecraft.world.item.CreativeModeTab.Output
 import net.minecraft.world.item.Item
 
-object CobblenavItems : CobblenavRegistry<Registry<Item>, ResourceKey<Registry<Item>>, Item>() {
+object CobbleNavItems : CobblenavRegistry<Registry<Item>, ResourceKey<Registry<Item>>, Item>() {
 	override val registry: Registry<Item> = BuiltInRegistries.ITEM
 	override val resourceKey: ResourceKey<Registry<Item>> = Registries.ITEM
 

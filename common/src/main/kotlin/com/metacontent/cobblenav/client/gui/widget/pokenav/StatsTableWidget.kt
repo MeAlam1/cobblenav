@@ -1,20 +1,19 @@
-package com.metacontent.cobblenav.client.gui.widget.finder
+package com.metacontent.cobblenav.client.gui.widget.pokenav
 
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
 import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
-import com.metacontent.cobblenav.client.gui.util.drawBlurredArea
-import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.button.InfoButton
 import com.metacontent.cobblenav.client.gui.widget.layout.TableView
+import com.metacontent.cobblenav.finder.FoundPokemon
+import com.metacontent.cobblenav.finder.PokemonFinder
 import com.metacontent.cobblenav.spawndata.SpawnData
 import com.metacontent.cobblenav.utils.I18nUtil.label
-import com.metacontent.cobblenav.utils.finder.FoundPokemon
-import com.metacontent.cobblenav.utils.finder.PokemonFinder
+import com.metacontent.cobblenav.utils.extensions.drawBlurredArea
+import com.metacontent.cobblenav.utils.extensions.gui
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 
 class StatsTableWidget(
 	x: Int,
@@ -22,8 +21,7 @@ class StatsTableWidget(
 	val spawnData: SpawnData,
 	val pokemon: FoundPokemon,
 	val parent: PokenavScreen,
-	// @TODO: move literal to lang?
-) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Stats Table")) {
+) : SoundlessWidget(x, y, WIDTH, HEIGHT, label("stats_table")) {
 	companion object {
 		const val WIDTH = 82
 		const val HEIGHT = 66

@@ -9,7 +9,6 @@ class CollapsedSection(
 	x: Int,
 	y: Int,
 	width: Int,
-	// @TODO: get rid of empty?
 ) : WidgetState<SectionWidget>(statefulWidget, x, y, width, SectionWidget.HEADER_HEIGHT, Component.empty()) {
 	override fun renderWidget(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
 		statefulWidget.renderTitle(guiGraphics, i, j, f)

@@ -2,7 +2,7 @@ package com.metacontent.cobblenav.config
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
@@ -32,7 +32,7 @@ abstract class Config<T : Config<T>> {
 					GSON.fromJson(it, clazz) ?: default
 				}
 			}.onFailure {
-				Cobblenav.LOGGER.error(it.message, it)
+				CobbleNav.LOGGER.error(it.message, it)
 			}.getOrDefault(default)
 
 			config.applyToLoadedConfig(default)
@@ -52,7 +52,7 @@ abstract class Config<T : Config<T>> {
 				GSON.toJson(this, it)
 			}
 		} catch (e: Exception) {
-			Cobblenav.LOGGER.error(e.message, e)
+			CobbleNav.LOGGER.error(e.message, e)
 		}
 	}
 

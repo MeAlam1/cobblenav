@@ -1,6 +1,6 @@
 package com.metacontent.cobblenav.item
 
-import com.metacontent.cobblenav.client.isGui
+import com.metacontent.cobblenav.utils.extensions.isGui
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack

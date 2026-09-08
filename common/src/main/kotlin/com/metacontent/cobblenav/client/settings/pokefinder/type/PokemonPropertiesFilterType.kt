@@ -1,8 +1,8 @@
 package com.metacontent.cobblenav.client.settings.pokefinder.type
 
-import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.settings.pokefinder.filter.PokemonPropertiesFilter
 import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.extensions.gui
 
 object PokemonPropertiesFilterType : EditableTextFilterType<PokemonPropertiesFilter>() {
 	override val filterClass = PokemonPropertiesFilter::class.java

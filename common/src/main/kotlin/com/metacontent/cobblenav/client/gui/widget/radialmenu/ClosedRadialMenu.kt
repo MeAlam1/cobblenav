@@ -1,18 +1,17 @@
 package com.metacontent.cobblenav.client.gui.widget.radialmenu
 
 import com.cobblemon.mod.common.api.gui.blitk
-import com.metacontent.cobblenav.client.gui.util.Timer
+import com.metacontent.cobblenav.client.gui.Timer
 import com.metacontent.cobblenav.os.PokenavOS
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 
 class ClosedRadialMenu(
 	os: PokenavOS,
 	statefulWidget: RadialPopupMenu,
 	pX: Int,
 	pY: Int,
-	// @TODO: move literal to lang?
-) : RadialMenuState(os, statefulWidget, pX, pY, MENU_DIAMETER, MENU_DIAMETER, Component.literal("Closed Radial Menu")) {
+) : RadialMenuState(os, statefulWidget, pX, pY, MENU_DIAMETER, MENU_DIAMETER, label("closed_radial_menu")) {
 	companion object {
 		const val ANIMATION_DURATION: Float = 0.5f
 	}

@@ -1,6 +1,6 @@
 package com.metacontent.cobblenav.client.gui.widget.section
 
-import com.metacontent.cobblenav.client.gui.util.Timer
+import com.metacontent.cobblenav.client.gui.Timer
 import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
@@ -11,7 +11,6 @@ class CollapsingSection(
 	y: Int,
 	width: Int,
 	height: Int,
-	// @TODO: get rid of empty?
 ) : WidgetState<SectionWidget>(statefulWidget, x, y, width, height, Component.empty()) {
 	companion object {
 		const val ANIMATION_TIME = 0.1f

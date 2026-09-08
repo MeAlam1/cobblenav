@@ -13,7 +13,6 @@ class ExpandedSection(statefulWidget: SectionWidget, x: Int, y: Int, width: Int)
 		y,
 		width,
 		SectionWidget.HEADER_HEIGHT + SectionWidget.FOOTER_HEIGHT + statefulWidget.expandablePartHeight,
-		// @TODO: get rid of empty?
 		Component.empty(),
 	) {
 	private val tableView =

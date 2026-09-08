@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.client.gui.util
+package com.metacontent.cobblenav.utils.extensions
 
 import com.cobblemon.mod.common.client.gui.drawProfilePokemon
 import com.cobblemon.mod.common.client.render.models.blockbench.PosableState
@@ -9,6 +9,7 @@ import com.metacontent.cobblenav.client.CobblenavClient
 import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen
 import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.duck.GameRendererDuck
+import com.metacontent.cobblenav.utils.RGB
 import com.metacontent.cobblenav.utils.cobblenavResource
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.Minecraft

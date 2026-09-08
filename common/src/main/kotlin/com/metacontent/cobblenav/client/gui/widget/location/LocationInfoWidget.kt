@@ -5,8 +5,8 @@ import com.cobblemon.mod.common.api.text.onHover
 import com.cobblemon.mod.common.api.text.red
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledTextJustifiedRight
-import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.extensions.gui
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component

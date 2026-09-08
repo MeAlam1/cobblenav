@@ -2,11 +2,15 @@ package com.metacontent.cobblenav.client.gui.widget.fishing
 
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.render.drawScaledText
-import com.metacontent.cobblenav.client.gui.util.*
 import com.metacontent.cobblenav.client.gui.widget.layout.TableView
 import com.metacontent.cobblenav.client.gui.widget.layout.scrollable.ScrollableItemWidget
 import com.metacontent.cobblenav.client.gui.widget.spawndata.SpawnDataWidget
 import com.metacontent.cobblenav.utils.I18nUtil.bucket
+import com.metacontent.cobblenav.utils.RGB
+import com.metacontent.cobblenav.utils.extensions.dayCycleColor
+import com.metacontent.cobblenav.utils.extensions.gui
+import com.metacontent.cobblenav.utils.extensions.interpolate
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.util.FastColor

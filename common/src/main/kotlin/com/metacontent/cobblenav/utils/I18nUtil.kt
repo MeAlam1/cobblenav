@@ -1,7 +1,6 @@
 package com.metacontent.cobblenav.utils
 
-import com.cobblemon.mod.common.api.text.red
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Component.translatable
 import net.minecraft.network.chat.MutableComponent
@@ -16,7 +15,7 @@ object I18nUtil {
 		translatable(cobblenavResource(key).toLanguageKey(prefix), *args)
 
 	fun withPrefix(prefix: String, key: String, vararg args: Any): MC =
-		translatable("$prefix.${Cobblenav.ID}.$key", *args)
+		translatable("$prefix.${CobbleNav.MOD_ID}.$key", *args)
 
 	fun tag(key: String, vararg args: Any): MutableComponent = prefixed(key, "tag", *args)
 

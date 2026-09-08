@@ -3,8 +3,9 @@ package com.metacontent.cobblenav.client.gui.widget
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
-import com.metacontent.cobblenav.client.gui.util.getTimeString
-import com.metacontent.cobblenav.client.gui.util.gui
+import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.extensions.getTimeString
+import com.metacontent.cobblenav.utils.extensions.gui
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
@@ -12,8 +13,7 @@ import net.minecraft.network.chat.Component
 class StatusBarWidget(
 	x: Int,
 	y: Int,
-	// @TODO: move literal to lang?
-) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Status Bar")) {
+) : SoundlessWidget(x, y, WIDTH, HEIGHT, label("status_bar")) {
 	companion object {
 		const val DECORATION_WIDTH: Int = 16
 		const val CLOCKS_WIDTH: Int = 30

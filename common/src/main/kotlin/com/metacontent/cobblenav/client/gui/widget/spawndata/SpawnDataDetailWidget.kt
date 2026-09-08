@@ -3,12 +3,12 @@ package com.metacontent.cobblenav.client.gui.widget.spawndata
 import com.cobblemon.mod.common.api.gui.blitk
 import com.metacontent.cobblenav.client.gui.SpawnDataDisplayer
 import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
-import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.client.gui.widget.stateful.StatefulWidget
+import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.extensions.gui
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 import org.joml.Vector3d
 
 class SpawnDataDetailWidget(
@@ -16,8 +16,7 @@ class SpawnDataDetailWidget(
 	val pokenavScreen: PokenavScreen,
 	x: Int,
 	y: Int,
-	// @TODO: move literal to lang?
-) : StatefulWidget(pokenavScreen, x, y, WIDTH, HEIGHT, Component.literal("Spawn Data Details")) {
+) : StatefulWidget(pokenavScreen, x, y, WIDTH, HEIGHT, label("spawn_data_details")) {
 	companion object {
 		const val WIDTH = PokenavScreen.SCREEN_WIDTH
 		const val HEIGHT = PokenavScreen.SCREEN_HEIGHT
@@ -55,7 +54,7 @@ class SpawnDataDetailWidget(
 	fun renderMenu(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
 		val poseStack = guiGraphics.pose()
 		poseStack.pushAndPop(
-			translate = Vector3d(0.0, 0.0, 3000.0),
+			translate = Vector3d(0.0, 0.0, 10.0),
 		) {
 			blitk(
 				matrixStack = poseStack,

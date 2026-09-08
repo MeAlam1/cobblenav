@@ -2,7 +2,7 @@ package com.metacontent.cobblenav.client.gui.widget
 
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
-import com.metacontent.cobblenav.client.gui.util.splitText
+import com.metacontent.cobblenav.utils.extensions.splitText
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
@@ -17,8 +17,7 @@ open class TextWidget(
 	val lineOffset: Int = 1,
 	val centered: Boolean = false,
 	val shadow: Boolean = false,
-	// @TODO: get rid of empty?
-) : SoundlessWidget(x, y, width, 0, Component.empty()) {
+) : SoundlessWidget(x, y, width, 0, text) {
 	val splittedText = splitText(text, width)
 
 	init {

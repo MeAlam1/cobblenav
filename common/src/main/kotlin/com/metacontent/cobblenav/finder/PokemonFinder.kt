@@ -1,10 +1,10 @@
-package com.metacontent.cobblenav.utils.finder
+package com.metacontent.cobblenav.finder
 
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.cobblemon.mod.common.pokemon.IVs
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemon.mod.common.pokemon.abilities.HiddenAbilityType
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
@@ -27,8 +27,8 @@ abstract class PokemonFinder {
 		player: ServerPlayer,
 		level: ServerLevel = player.serverLevel(),
 	): PokemonEntity? {
-		val width = Cobblenav.config.searchAreaWidth
-		val height = Cobblenav.config.searchAreaHeight
+		val width = CobbleNav.config.searchAreaWidth
+		val height = CobbleNav.config.searchAreaHeight
 		return level.getNearestEntity(
 			pokemonEntities.toList(),
 			TargetingConditions.forNonCombat(),

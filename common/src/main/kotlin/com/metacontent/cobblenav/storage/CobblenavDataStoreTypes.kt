@@ -2,7 +2,7 @@ package com.metacontent.cobblenav.storage
 
 import com.cobblemon.mod.common.api.storage.player.PlayerInstancedDataStoreType
 import com.cobblemon.mod.common.api.storage.player.PlayerInstancedDataStoreTypes.register
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.storage.client.ClientSpawnDataCatalogue
 import com.metacontent.cobblenav.utils.cobblenavResource
 
@@ -17,6 +17,6 @@ object CobblenavDataStoreTypes {
 	)
 
 	fun info() {
-		Cobblenav.LOGGER.info("Registering cobblenav data store types!")
+		CobbleNav.LOGGER.info("Registering cobblenav data store types!")
 	}
 }

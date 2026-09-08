@@ -7,8 +7,6 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.metacontent.cobblenav.api.generalresources.ColorRepository
 import com.metacontent.cobblenav.client.CobblenavClient
 import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderOverlay.Companion.RADIUS
-import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.client.gui.widget.layout.TableView
 import com.metacontent.cobblenav.client.gui.widget.layout.scrollable.ScrollableView
@@ -18,6 +16,8 @@ import com.metacontent.cobblenav.client.settings.pokefinder.RadarFilterTypeRegis
 import com.metacontent.cobblenav.client.settings.pokefinder.filter.RadarFilter
 import com.metacontent.cobblenav.client.settings.pokefinder.type.LabelFilterType.createEntry
 import com.metacontent.cobblenav.client.settings.pokefinder.type.RadarFilterType
+import com.metacontent.cobblenav.utils.extensions.gui
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget

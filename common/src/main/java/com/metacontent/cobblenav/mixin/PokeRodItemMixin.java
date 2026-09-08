@@ -1,7 +1,7 @@
 package com.metacontent.cobblenav.mixin;
 
 import com.cobblemon.mod.common.item.interactive.PokerodItem;
-import com.metacontent.cobblenav.CobblenavItems;
+import com.metacontent.cobblenav.CobbleNavItems;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +17,7 @@ public class PokeRodItemMixin {
 
 	@Inject(method = "use", at = @At("HEAD"), cancellable = true)
 	protected void injectUse(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir) {
-		if (user.getOffhandItem().is(CobblenavItems.INSTANCE.getFISHINGNAV()) && user.isShiftKeyDown()) {
+		if (user.getOffhandItem().is(CobbleNavItems.INSTANCE.getFISHINGNAV()) && user.isShiftKeyDown()) {
 			cir.setReturnValue(InteractionResultHolder.pass(user.getItemInHand(hand)));
 			cir.cancel();
 		}

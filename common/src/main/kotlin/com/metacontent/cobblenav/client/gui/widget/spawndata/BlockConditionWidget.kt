@@ -2,8 +2,8 @@ package com.metacontent.cobblenav.client.gui.widget.spawndata
 
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.metacontent.cobblenav.spawndata.BlockConditions
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 import kotlin.math.ceil
 
 class BlockConditionWidget(
@@ -13,8 +13,7 @@ class BlockConditionWidget(
 	width: Int,
 	val horizontalGap: Int,
 	val verticalGap: Int,
-	// @TODO: move literal to lang?
-) : SoundlessWidget(x, y, width, 0, Component.literal("Block Conditions")) {
+) : SoundlessWidget(x, y, width, 0, label("block_conditions")) {
 	companion object {
 		const val ITEM_SIZE = 16
 	}

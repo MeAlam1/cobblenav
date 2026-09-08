@@ -5,7 +5,6 @@ import com.cobblemon.mod.common.util.readIdentifier
 import com.cobblemon.mod.common.util.readString
 import com.cobblemon.mod.common.util.writeIdentifier
 import com.cobblemon.mod.common.util.writeString
-import com.metacontent.cobblenav.client.gui.util.RGB
 import com.metacontent.cobblenav.client.gui.widget.TextWidget
 import com.metacontent.cobblenav.client.gui.widget.section.SectionWidget
 import com.metacontent.cobblenav.client.gui.widget.spawndata.BlockConditionWidget
@@ -15,6 +14,7 @@ import com.metacontent.cobblenav.event.SpawnDataWidgetsCreatedEvent
 import com.metacontent.cobblenav.spawndata.resultdata.SpawnResultData
 import com.metacontent.cobblenav.utils.I18nUtil.bucket
 import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.RGB
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation

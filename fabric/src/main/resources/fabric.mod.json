@@ -17,7 +17,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.metacontent.cobblenav.CobblenavFabric"
+      "CobbleNavFabric"
     ],
     "client": [
       "com.metacontent.cobblenav.client.CobblenavFabricClient"

@@ -3,19 +3,19 @@ package com.metacontent.cobblenav.client.gui.pokenav
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.render.drawScaledText
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.gui.util.Timer
-import com.metacontent.cobblenav.client.gui.util.cobblenavScissor
-import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
+import com.metacontent.cobblenav.client.gui.Timer
 import com.metacontent.cobblenav.client.gui.widget.ContextMenuWidget
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.client.gui.widget.button.TextButton
-import com.metacontent.cobblenav.client.gui.widget.finder.FoundPokemonWidget
-import com.metacontent.cobblenav.client.gui.widget.finder.StatsTableWidget
+import com.metacontent.cobblenav.client.gui.widget.pokenav.FoundPokemonWidget
+import com.metacontent.cobblenav.client.gui.widget.pokenav.StatsTableWidget
+import com.metacontent.cobblenav.finder.FoundPokemon
 import com.metacontent.cobblenav.os.PokenavOS
 import com.metacontent.cobblenav.spawndata.SpawnData
 import com.metacontent.cobblenav.utils.I18nUtil.label
-import com.metacontent.cobblenav.utils.finder.FoundPokemon
+import com.metacontent.cobblenav.utils.extensions.cobblenavScissor
+import com.metacontent.cobblenav.utils.extensions.gui
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor
@@ -27,8 +27,7 @@ class FinderScreen(
 	os: PokenavOS,
 	makeOpeningSound: Boolean = false,
 	animateOpening: Boolean = false,
-	// @TODO: move literal to lang?
-) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Finder")) {
+) : PokenavScreen(os, makeOpeningSound, animateOpening, label("finder")) {
 	companion object {
 		const val CLOSING_DURATION = 3f
 		const val FADING_DURATION = 5f

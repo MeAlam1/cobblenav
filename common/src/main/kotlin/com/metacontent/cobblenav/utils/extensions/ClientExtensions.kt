@@ -1,4 +1,4 @@
-package com.metacontent.cobblenav.client
+package com.metacontent.cobblenav.utils.extensions
 
 import net.minecraft.world.item.ItemDisplayContext
 

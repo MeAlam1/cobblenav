@@ -1,10 +1,10 @@
 package com.metacontent.cobblenav.client.gui.widget.layout
 
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
-import com.metacontent.cobblenav.client.gui.util.Sorting
+import com.metacontent.cobblenav.client.gui.Sorting
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
-import net.minecraft.network.chat.Component
 import kotlin.math.ceil
 import kotlin.math.max
 
@@ -16,8 +16,7 @@ open class TableView<I : AbstractWidget>(
 	val columnWidth: Int = width / columns,
 	private val verticalGap: Float = 0f,
 	private val horizontalGap: Float = (width - columns * columnWidth) / (columns - 1f),
-	// @TODO: move literal to lang?
-) : SoundlessWidget(x, y, width, 0, Component.literal("Table View")) {
+) : SoundlessWidget(x, y, width, 0, label("table_view")) {
 	internal val items = mutableListOf<I>()
 	val rows
 		get() = ceil(items.size.toFloat() / columns.toFloat()).toInt()

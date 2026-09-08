@@ -4,7 +4,7 @@ import com.cobblemon.mod.common.api.pokemon.PokemonProperties
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.metacontent.cobblenav.client.CobblenavClient
 import com.metacontent.cobblenav.utils.cobblenavResource
-import com.metacontent.cobblenav.utils.matchesOnClient
+import com.metacontent.cobblenav.utils.extensions.matchesOnClient
 import net.minecraft.resources.ResourceLocation
 
 class PokemonPropertiesFilter(private var properties: PokemonProperties = PokemonProperties()) : EditableTextFilter() {

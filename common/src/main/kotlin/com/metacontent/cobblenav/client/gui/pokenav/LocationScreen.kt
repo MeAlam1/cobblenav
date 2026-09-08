@@ -4,11 +4,9 @@ import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.render.drawScaledText
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.metacontent.cobblenav.client.CobblenavClient
+import com.metacontent.cobblenav.client.gui.Sorting
 import com.metacontent.cobblenav.client.gui.SpawnDataDisplayer
-import com.metacontent.cobblenav.client.gui.util.Sorting
-import com.metacontent.cobblenav.client.gui.util.Timer
-import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
+import com.metacontent.cobblenav.client.gui.Timer
 import com.metacontent.cobblenav.client.gui.widget.ContextMenuWidget
 import com.metacontent.cobblenav.client.gui.widget.StatusBarWidget
 import com.metacontent.cobblenav.client.gui.widget.button.CheckBox
@@ -30,6 +28,8 @@ import com.metacontent.cobblenav.spawndata.CheckedSpawnData
 import com.metacontent.cobblenav.spawndata.SpawnData
 import com.metacontent.cobblenav.utils.I18nUtil.label
 import com.metacontent.cobblenav.utils.WeightedBucket
+import com.metacontent.cobblenav.utils.extensions.gui
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.BlockPos
@@ -47,7 +47,7 @@ class LocationScreen(
 	makeOpeningSound: Boolean = false,
 	animateOpening: Boolean = false,
 	val fixedAreaPoint: BlockPos? = null,
-) : PokenavScreen(os, makeOpeningSound, animateOpening, Component.literal("Location")),
+) : PokenavScreen(os, makeOpeningSound, animateOpening, label("location")),
 	SpawnDataDisplayer {
 	companion object {
 		val LOADING = gui("location/loading_animation")
@@ -264,7 +264,6 @@ class LocationScreen(
 
 		val newlyCatalogued = CobblenavClient.spawnDataCatalogue.newlyCataloguedAmount
 		if (newlyCatalogued > 0) {
-			notifications.add(label("notification.newly_catalogued", newlyCatalogued))
 			CobblenavClient.spawnDataCatalogue.newlyCataloguedAmount = 0
 		}
 		if (fixedAreaPoint != null) {

@@ -3,12 +3,12 @@ package com.metacontent.cobblenav.client.gui.pokefinder
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.render.drawScaledText
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.api.generalresources.ColorRepository
 import com.metacontent.cobblenav.client.CobblenavClient
-import com.metacontent.cobblenav.client.gui.util.gui
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
 import com.metacontent.cobblenav.item.Pokefinder
+import com.metacontent.cobblenav.utils.extensions.gui
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
@@ -125,7 +125,7 @@ class PokefinderOverlay : Gui(Minecraft.getInstance()) {
 			)
 			drawScaledText(
 				context = guiGraphics,
-				text = Component.literal("v.${Cobblenav.VERSION}"),
+				text = Component.literal("v.${CobbleNav.VERSION}"),
 				x = x + VERSION_X,
 				y = y + VERSION_Y,
 				scale = TEXT_SCALE,

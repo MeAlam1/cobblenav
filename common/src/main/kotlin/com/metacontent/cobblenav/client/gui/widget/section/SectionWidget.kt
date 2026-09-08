@@ -2,10 +2,10 @@ package com.metacontent.cobblenav.client.gui.widget.section
 
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.render.drawScaledText
-import com.metacontent.cobblenav.client.gui.util.RGB
-import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.stateful.StatefulWidget
 import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
+import com.metacontent.cobblenav.utils.RGB
+import com.metacontent.cobblenav.utils.extensions.gui
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -22,8 +22,7 @@ class SectionWidget(
 	val color: RGB = RGB(178, 228, 188),
 //    val headerColor: RGB = RGB(199, 239, 207),
 	val paragraphOffset: Float = 3f,
-	// @TODO: move literal to lang?
-) : StatefulWidget(null, x, y, width, HEADER_HEIGHT, Component.literal("Text Section")) {
+) : StatefulWidget(null, x, y, width, HEADER_HEIGHT, title) {
 	companion object {
 		const val HEADER_HEIGHT = 20
 		const val FOOTER_HEIGHT = 2

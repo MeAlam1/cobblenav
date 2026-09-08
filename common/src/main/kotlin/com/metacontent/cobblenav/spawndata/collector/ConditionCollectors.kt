@@ -2,7 +2,7 @@ package com.metacontent.cobblenav.spawndata.collector
 
 import com.cobblemon.mod.common.api.spawning.condition.SpawningCondition
 import com.cobblemon.mod.common.api.spawning.detail.SpawnDetail
-import com.metacontent.cobblenav.Cobblenav
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.config.CobblenavConfig
 import com.metacontent.cobblenav.event.CobblenavEvents
 import com.metacontent.cobblenav.event.CustomCollectorRegistrar
@@ -32,17 +32,17 @@ object ConditionCollectors {
 	private val blockCollectors = mutableListOf<BlockConditionCollector<*>>()
 
 	private fun registerGeneral(collector: GeneralConditionCollector) {
-		if (!Cobblenav.config.collectorEnabled(collector)) return
+		if (!CobbleNav.config.collectorEnabled(collector)) return
 		generalCollectors += collector
 	}
 
 	internal fun register(collector: ConditionCollector<*>) {
-		if (collector.isConfigurable() && !Cobblenav.config.collectorEnabled(collector)) return
+		if (collector.isConfigurable() && !CobbleNav.config.collectorEnabled(collector)) return
 		collectors += collector
 	}
 
 	internal fun register(collector: BlockConditionCollector<*>) {
-		if (collector.isConfigurable() && !Cobblenav.config.collectorEnabled(collector)) return
+		if (collector.isConfigurable() && !CobbleNav.config.collectorEnabled(collector)) return
 		blockCollectors += collector
 	}
 
@@ -108,7 +108,7 @@ object ConditionCollectors {
 			}
 		})
 
-		Cobblenav.LOGGER.info("Registered {} collectors and {} block collectors", collectors.size, blockCollectors.size)
+		CobbleNav.LOGGER.info("Registered {} collectors and {} block collectors", collectors.size, blockCollectors.size)
 	}
 
 	fun registerConfigEntries() {

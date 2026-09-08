@@ -2,13 +2,12 @@ package com.metacontent.cobblenav.client.gui.widget.button
 
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.render.drawScaledText
-import com.metacontent.cobblenav.client.gui.util.gui
+import com.metacontent.cobblenav.utils.extensions.gui
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.util.FastColor
 import kotlin.math.min
 
 class CheckBox(
@@ -22,8 +21,7 @@ class CheckBox(
 	private val text: MutableComponent? = null,
 	default: Boolean = false,
 	afterClick: (CheckBox) -> Unit,
-	// @TODO: get rid of empty?
-) : PokenavButton(x, y, width, height, Component.empty(), disabled, {
+) : PokenavButton(x, y, width, height, text ?: Component.empty(), disabled, {
 	(it as CheckBox).checked = !it.checked
 	afterClick.invoke(it)
 }) {

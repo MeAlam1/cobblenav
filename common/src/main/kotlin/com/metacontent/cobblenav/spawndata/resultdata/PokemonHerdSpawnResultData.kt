@@ -9,13 +9,13 @@ import com.cobblemon.mod.common.util.pokedex
 import com.cobblemon.mod.common.util.randomNoCopy
 import com.cobblemon.mod.common.util.readString
 import com.cobblemon.mod.common.util.writeString
-import com.metacontent.cobblenav.Cobblenav
-import com.metacontent.cobblenav.client.gui.util.RGB
+import com.metacontent.cobblenav.CobbleNav
 import com.metacontent.cobblenav.client.gui.widget.TextWidget
 import com.metacontent.cobblenav.client.gui.widget.section.SectionWidget
 import com.metacontent.cobblenav.client.gui.widget.spawndata.SpawnDataDetailWidget
 import com.metacontent.cobblenav.utils.I18nUtil.label
-import com.metacontent.cobblenav.utils.createAndGetAsRenderable
+import com.metacontent.cobblenav.utils.RGB
+import com.metacontent.cobblenav.utils.extensions.createAndGetAsRenderable
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -35,7 +35,7 @@ class PokemonHerdSpawnResultData(
 			player: ServerPlayer,
 		): SpawnResultData? {
 			if (detail !is PokemonHerdSpawnDetail) {
-				Cobblenav.LOGGER.error(
+				CobbleNav.LOGGER.error(
 					"The provided SpawnDetail type (${detail.type}) does not match the key under which it is registered (${PokemonHerdSpawnDetail.TYPE}).",
 				)
 				return null
@@ -63,7 +63,7 @@ class PokemonHerdSpawnResultData(
 					pokemon to knowledge
 				}
 
-			if (isUnknown(allPokemon.values) && Cobblenav.config.hideUnknownPokemon) {
+			if (isUnknown(allPokemon.values) && CobbleNav.config.hideUnknownPokemon) {
 				return UnknownSpawnResultData(detail.spawnablePositionType.name)
 			}
 
@@ -89,7 +89,7 @@ class PokemonHerdSpawnResultData(
 		)
 
 		fun isUnknown(knowledge: Collection<PokedexEntryProgress>) = knowledge.filter { it != PokedexEntryProgress.UNREGISTERED }.size.toDouble() / knowledge.size <
-			Cobblenav.config.percentageForKnownHerd
+			CobbleNav.config.percentageForKnownHerd
 	}
 
 	override val type = PokemonHerdSpawnDetail.TYPE

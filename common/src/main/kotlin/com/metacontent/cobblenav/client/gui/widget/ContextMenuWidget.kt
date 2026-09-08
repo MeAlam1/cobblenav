@@ -3,9 +3,13 @@ package com.metacontent.cobblenav.client.gui.widget
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
-import com.metacontent.cobblenav.client.gui.util.*
+import com.metacontent.cobblenav.client.gui.Timer
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.client.gui.widget.button.PokenavButton
+import com.metacontent.cobblenav.utils.extensions.cobblenavScissor
+import com.metacontent.cobblenav.utils.extensions.drawBlurredArea
+import com.metacontent.cobblenav.utils.extensions.gui
+import com.metacontent.cobblenav.utils.extensions.splitText
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
@@ -21,8 +25,7 @@ class ContextMenuWidget(
 	private val centerText: Boolean = true,
 	acceptAction: ((ContextMenuWidget, PokenavButton) -> Unit)? = null,
 	cancelAction: (ContextMenuWidget, PokenavButton) -> Unit,
-	// @TODO: move literal to lang?
-) : SoundlessWidget(pX, pY, WIDTH, 0, Component.literal("Context Menu")) {
+) : SoundlessWidget(pX, pY, WIDTH, 0, text.first()) {
 	companion object {
 		const val WIDTH: Int = 220
 		const val TOP_HEIGHT: Int = 9

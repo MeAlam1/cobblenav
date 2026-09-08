@@ -4,11 +4,7 @@ import com.metacontent.cobblenav.config.ConfigOption
 import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.client.gui.components.AbstractWidget
-import net.minecraft.client.gui.components.Button
-import net.minecraft.client.gui.components.ContainerObjectSelectionList
-import net.minecraft.client.gui.components.CycleButton
-import net.minecraft.client.gui.components.EditBox
+import net.minecraft.client.gui.components.*
 import net.minecraft.client.gui.components.events.GuiEventListener
 import net.minecraft.client.gui.narration.NarratableEntry
 import net.minecraft.network.chat.Component
@@ -73,23 +69,25 @@ class ConfigVariableList(private val idPrefix: String, y: Int, height: Int, scre
 			is ConfigOption.StringOption -> buildText(option) { it }
 		}
 
-		private fun buildBoolean(option: ConfigOption.BooleanOption): AbstractWidget = CycleButton.onOffBuilder(option.get())
-			.displayOnlyValue()
-			.create(0, 0, ConfigScreen.WIDGET_WIDTH, ConfigScreen.WIDGET_HEIGHT, Component.empty()) { _, value ->
-				option.set(value)
-				updateResetState()
-			}
+		private fun buildBoolean(option: ConfigOption.BooleanOption): AbstractWidget =
+			CycleButton.onOffBuilder(option.get())
+				.displayOnlyValue()
+				.create(0, 0, ConfigScreen.WIDGET_WIDTH, ConfigScreen.WIDGET_HEIGHT, Component.empty()) { _, value ->
+					option.set(value)
+					updateResetState()
+				}
 
-		private fun buildEnum(option: ConfigOption.EnumOption<*>): AbstractWidget = CycleButton.builder<Enum<*>> { value ->
-			Component.literal(value.name)
-		}
-			.withValues(option.values)
-			.withInitialValue(option.get())
-			.displayOnlyValue()
-			.create(0, 0, ConfigScreen.WIDGET_WIDTH, ConfigScreen.WIDGET_HEIGHT, Component.empty()) { _, value ->
-				option.setUnchecked(value)
-				updateResetState()
+		private fun buildEnum(option: ConfigOption.EnumOption<*>): AbstractWidget =
+			CycleButton.builder<Enum<*>> { value ->
+				Component.literal(value.name)
 			}
+				.withValues(option.values)
+				.withInitialValue(option.get())
+				.displayOnlyValue()
+				.create(0, 0, ConfigScreen.WIDGET_WIDTH, ConfigScreen.WIDGET_HEIGHT, Component.empty()) { _, value ->
+					option.setUnchecked(value)
+					updateResetState()
+				}
 
 		private fun <V : Any> buildText(option: ConfigOption<V>, parse: (String) -> V?): EditBox = EditBox(
 			Minecraft.getInstance().font,
@@ -168,6 +166,7 @@ class ConfigVariableList(private val idPrefix: String, y: Int, height: Int, scre
 
 		override fun children(): MutableList<out GuiEventListener> = children.toMutableList()
 
-		override fun narratables(): MutableList<out NarratableEntry> = children.filterIsInstance<NarratableEntry>().toMutableList()
+		override fun narratables(): MutableList<out NarratableEntry> =
+			children.toMutableList()
 	}
 }

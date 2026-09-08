@@ -2,9 +2,6 @@
 
 ## 2.4.1
 
-# BEFORE RELEASE: Streamline between Cobblenav and Pokenav and make the N capitalized
-# FIX ALL TODO'S BEFORE RELEASING
-
 ### Additions
 
 * Added Compatibility with ModMenu
@@ -22,8 +19,10 @@
 
 ### Fixes
 
-* Fix concurrent modification during spawn catalogue encoding
+* Fixed concurrent modification during spawn catalogue encoding
 * Fixed Pokefinder Properties filter working incorrectly
+* Fixed Toasts from leaking through the CobbleNav GUI's
+  * All Toasts should render on top of the CobbleNav GUI's
 
 ### Developer
 

@@ -1,6 +1,6 @@
 package com.metacontent.cobblenav.client.settings
 
-import com.metacontent.cobblenav.client.gui.util.Sorting
+import com.metacontent.cobblenav.client.gui.Sorting
 
 class PokenavSettings : Settings<PokenavSettings>() {
 	companion object {

@@ -34,21 +34,21 @@ import com.metacontent.cobblenav.spawndata.resultdata.SpawnResultData
 import com.metacontent.cobblenav.spawndata.resultdata.UnknownSpawnResultData
 import com.metacontent.cobblenav.storage.CobblenavDataStoreTypes
 import com.metacontent.cobblenav.storage.adapter.SpawnDataCatalogueNbtBackend
-import com.metacontent.cobblenav.utils.registerDirectly
+import com.metacontent.cobblenav.utils.extensions.registerDirectly
 import net.minecraft.world.entity.npc.VillagerTrades
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-object Cobblenav {
-	const val ID = "cobblenav"
+object CobbleNav {
+	const val MOD_ID = "cobblenav"
 	const val VERSION = "2.4.1"
-	val LOGGER: Logger = LoggerFactory.getLogger(ID)
+	val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
 
 	lateinit var config: CobblenavConfig
-	lateinit var implementation: CobblenavImplementation
+	lateinit var implementation: CobbleNavImplementation
 	val resolver = PokenavSpawnablePositionResolver()
 
-	fun init(implementation: CobblenavImplementation) {
+	fun init(implementation: CobbleNavImplementation) {
 		ConditionCollectors.registerConfigEntries()
 		config = Config.load(CobblenavConfig::class.java)
 		this.implementation = implementation
@@ -125,7 +125,7 @@ object Cobblenav {
 	}
 
 	fun resolveWandererTrades() = listOf(
-		VillagerTrades.ItemsForEmeralds(CobblenavItems.WANDERER_POKENAV, 24, 1, 1, 60),
+		VillagerTrades.ItemsForEmeralds(CobbleNavItems.WANDERER_POKENAV, 24, 1, 1, 60),
 	)
 
 	fun registerCustomProperties() {

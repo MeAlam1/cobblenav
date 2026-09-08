@@ -3,10 +3,10 @@ package com.metacontent.cobblenav.client.gui.widget
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
 import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
-import com.metacontent.cobblenav.client.gui.util.Timer
-import com.metacontent.cobblenav.client.gui.util.pushAndPop
+import com.metacontent.cobblenav.client.gui.Timer
+import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.util.FastColor
 import org.joml.Quaternionf
@@ -15,8 +15,7 @@ import org.joml.Vector3f
 class NotificationWidget(
 	pX: Int,
 	pY: Int,
-	// @TODO: move literal to lang?
-) : SoundlessWidget(pX, pY, WIDTH, HEIGHT, Component.literal("Notifications")) {
+) : SoundlessWidget(pX, pY, WIDTH, HEIGHT, label("notifications")) {
 	companion object {
 		const val WIDTH = 140
 		const val HEIGHT = 12

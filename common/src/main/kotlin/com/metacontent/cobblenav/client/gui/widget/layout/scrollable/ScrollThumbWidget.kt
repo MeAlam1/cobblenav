@@ -1,18 +1,17 @@
 package com.metacontent.cobblenav.client.gui.widget.layout.scrollable
 
 import com.metacontent.cobblenav.client.gui.widget.button.PokenavButton
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.client.sounds.SoundManager
-import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor
 
 class ScrollThumbWidget(
 	x: Int,
 	y: Int,
 	val parent: ScrollableView,
-	// @TODO: move literal to lang?
-) : PokenavButton(x, y, WIDTH, 0, Component.literal(" Scroll Thumb"), false, {}) {
+) : PokenavButton(x, y, WIDTH, 0, label("scroll_thumb"), false, {}) {
 	companion object {
 		const val WIDTH: Int = 2
 	}

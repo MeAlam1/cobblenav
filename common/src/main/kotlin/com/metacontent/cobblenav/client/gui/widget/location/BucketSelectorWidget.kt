@@ -5,17 +5,16 @@ import com.cobblemon.mod.common.api.text.red
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
 import com.metacontent.cobblenav.client.gui.pokenav.LocationScreen
-import com.metacontent.cobblenav.client.gui.util.gui
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.utils.I18nUtil.bucket
 import com.metacontent.cobblenav.utils.I18nUtil.label
+import com.metacontent.cobblenav.utils.extensions.gui
 import net.minecraft.client.gui.GuiGraphics
 
 class BucketSelectorWidget(
 	x: Int,
 	y: Int,
 	private val parent: LocationScreen,
-	// @TODO: move literal to lang?
 ) : SoundlessWidget(x, y, WIDTH, HEIGHT, label("bucket_selector")) {
 	companion object {
 		const val WIDTH: Int = 80

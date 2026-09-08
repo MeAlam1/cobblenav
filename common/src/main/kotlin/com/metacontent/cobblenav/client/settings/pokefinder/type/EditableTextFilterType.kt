@@ -19,6 +19,7 @@ abstract class EditableTextFilterType<T : EditableTextFilter> : RadarFilterType<
 		lineWidth = LINE_WIDTH,
 		lineHeight = LINE_HEIGHT,
 		lineX = 5,
+		// TODO: Look into making translatable
 		default = filter.asString(),
 		textColor = ColorRepository.get("pokefinder_text"),
 		textureSheet = FIELD,
