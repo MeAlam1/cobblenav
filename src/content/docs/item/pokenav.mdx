@@ -7,6 +7,7 @@ prev: false
 next: false
 ---
 
+import ReadMore from "~/components/ReadMore.astro"
 import RecipePicker from "~/components/RecipePicker.astro"
 
 A PokéNav is an item that allows players to see specific information about [Pokémon](https://wiki.cobblemon.com/index.php/Pokémon) spawning near them.
@@ -19,6 +20,8 @@ A PokéNav is an item that allows players to see specific information about [Pok
 
 <RecipePicker collection="craftingRecipes" modId="cobblenav" recipeId="pokenav_base" />
 
+<ReadMore>See the [Variants](#variants) section for crafting recipes for the color variants and Gholdengo variant.</ReadMore>
+
 ## Usage
 
 [TODO]
@@ -29,7 +32,6 @@ The PokéNav has several color variants, and a Gholdengo variant. The color vari
 
 ### Color Variants
 
-{/* TODO - Add Color variant recipes to Collection */}
 <RecipePicker collection="craftingRecipes" modId="cobblenav" recipeGlob="pokenav/" cycleVariants />
 
 ### Gholdengo Variant
