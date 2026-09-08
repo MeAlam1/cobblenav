@@ -12,6 +12,7 @@ import com.metacontent.cobblenav.client.gui.SpawnDataDisplayer
 import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.spawndata.CheckedSpawnData
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import com.metacontent.cobblenav.utils.extensions.gui
 import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.Minecraft
@@ -30,8 +31,7 @@ open class SpawnDataWidget(
 	y: Int,
 	val spawnData: CheckedSpawnData,
 	private val displayer: SpawnDataDisplayer,
-	// @TODO: move literal to lang?
-) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Spawn Data Widget")) {
+) : SoundlessWidget(x, y, WIDTH, HEIGHT, label("spawn_data_widget")) {
 	companion object {
 		const val WIDTH = 45
 		const val HEIGHT = 45

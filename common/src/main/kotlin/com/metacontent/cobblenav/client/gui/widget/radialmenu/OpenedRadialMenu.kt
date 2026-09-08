@@ -5,8 +5,8 @@ import com.metacontent.cobblenav.client.gui.pokenav.LocationScreen
 import com.metacontent.cobblenav.client.gui.pokenav.MapScreen
 import com.metacontent.cobblenav.client.gui.widget.button.IconButton
 import com.metacontent.cobblenav.os.PokenavOS
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -16,8 +16,7 @@ class OpenedRadialMenu(
 	statefulWidget: RadialPopupMenu,
 	pX: Int,
 	pY: Int,
-	// @TODO: move literal to lang?
-) : RadialMenuState(os, statefulWidget, pX, pY, DIAMETER, DIAMETER, Component.literal("Opened Radial Menu")) {
+) : RadialMenuState(os, statefulWidget, pX, pY, DIAMETER, DIAMETER, label("opened_radial_menu")) {
 	companion object {
 		const val DIAMETER: Int = 100
 	}

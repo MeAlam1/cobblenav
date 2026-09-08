@@ -8,17 +8,13 @@ import com.cobblemon.mod.common.entity.PoseType
 import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
 import com.metacontent.cobblenav.api.generalresources.CloudRepository
 import com.metacontent.cobblenav.client.CobblenavClient
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import com.metacontent.cobblenav.utils.RGB
-import com.metacontent.cobblenav.utils.extensions.cobblenavScissor
-import com.metacontent.cobblenav.utils.extensions.dayCycleColor
-import com.metacontent.cobblenav.utils.extensions.drawPokemon
-import com.metacontent.cobblenav.utils.extensions.gui
-import com.metacontent.cobblenav.utils.extensions.pushAndPop
+import com.metacontent.cobblenav.utils.extensions.*
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.multiplayer.ClientLevel
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import org.joml.Quaternionf
 import org.joml.Vector2f
@@ -35,8 +31,7 @@ class FishingContextWidget(
 	width: Int,
 	height: Int,
 	val level: ClientLevel? = Minecraft.getInstance().level,
-	// @TODO: move literal to lang?
-) : SoundlessWidget(x, y, width, height, Component.literal("Weather")) {
+) : SoundlessWidget(x, y, width, height, label("weather")) {
 	companion object {
 		const val SUN_WIDTH = 20
 		const val SUN_HEIGHT = 21

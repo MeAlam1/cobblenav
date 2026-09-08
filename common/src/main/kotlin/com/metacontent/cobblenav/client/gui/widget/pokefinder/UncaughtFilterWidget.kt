@@ -14,7 +14,6 @@ import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 
-// @TODO: get rid of empty?
 class UncaughtFilterWidget : SoundlessWidget(0, 0, WIDGET_WIDTH, WIDGET_HEIGHT, Component.empty()) {
 	private val uncaught = 100 - CobblemonClient.clientPokedexData.getGlobalCalculatedValue(CaughtPercent).toInt()
 

@@ -12,7 +12,6 @@ class ExpandingSection(
 	y: Int,
 	width: Int,
 	height: Int,
-	// @TODO: get rid of empty?
 ) : WidgetState<SectionWidget>(statefulWidget, x, y, width, height, Component.empty()) {
 	companion object {
 		const val ANIMATION_TIME = 0.25f

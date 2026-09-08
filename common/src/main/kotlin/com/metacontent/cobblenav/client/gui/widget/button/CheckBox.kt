@@ -21,8 +21,7 @@ class CheckBox(
 	private val text: MutableComponent? = null,
 	default: Boolean = false,
 	afterClick: (CheckBox) -> Unit,
-	// @TODO: get rid of empty?
-) : PokenavButton(x, y, width, height, Component.empty(), disabled, {
+) : PokenavButton(x, y, width, height, text ?: Component.empty(), disabled, {
 	(it as CheckBox).checked = !it.checked
 	afterClick.invoke(it)
 }) {

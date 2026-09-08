@@ -1,10 +1,10 @@
 package com.metacontent.cobblenav.client.gui.widget.layout.scrollable
 
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import com.metacontent.cobblenav.utils.extensions.cobblenavScissor
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
-import net.minecraft.network.chat.Component
 import kotlin.math.max
 import kotlin.math.min
 
@@ -16,8 +16,7 @@ class ScrollableView(
 	private val scissorSpreading: Int = 0,
 	private val scrollMultiplier: Float = 20f,
 	val child: AbstractWidget,
-	// @TODO: move literal to lang?
-) : SoundlessWidget(x, y, width, height, Component.literal("Scrollable View")) {
+) : SoundlessWidget(x, y, width, height, label("scrollable_view")) {
 	var scrolled = 0
 		set(value) {
 			field = max(min(value, child.height - height + scrollMultiplier.toInt()), 0)
@@ -48,7 +47,12 @@ class ScrollableView(
 	override fun mouseClicked(pMouseX: Double, pMouseY: Double, pButton: Int): Boolean =
 		clicked(pMouseX, pMouseY) && super.mouseClicked(pMouseX, pMouseY, pButton)
 
-	override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
+	override fun mouseScrolled(
+		mouseX: Double,
+		mouseY: Double,
+		horizontalAmount: Double,
+		verticalAmount: Double,
+	): Boolean {
 		if (child.height > height) {
 			scrolled -= (verticalAmount * scrollMultiplier).toInt()
 		}

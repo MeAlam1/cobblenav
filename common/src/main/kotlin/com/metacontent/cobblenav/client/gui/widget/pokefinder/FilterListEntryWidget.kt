@@ -17,7 +17,6 @@ class FilterListEntryWidget(
 	val widget: AbstractWidget,
 	val icon: ResourceLocation,
 	parent: PokefinderScreen,
-	// @TODO: get rid of empty?
 ) : SoundlessWidget(0, 0, WIDTH, HEIGHT, Component.empty()) {
 	companion object {
 		const val WIDTH = 238

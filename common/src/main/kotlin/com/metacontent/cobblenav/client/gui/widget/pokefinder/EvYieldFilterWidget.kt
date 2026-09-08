@@ -23,7 +23,6 @@ import java.util.*
 
 class EvYieldFilterWidget(
 	val filter: EvYieldFilter,
-	// @TODO: get rid of empty?
 ) : SoundlessWidget(0, 0, WIDGET_WIDTH, WIDGET_HEIGHT, Component.empty()) {
 	companion object {
 		const val CHECK_BOX_WIDTH = 32

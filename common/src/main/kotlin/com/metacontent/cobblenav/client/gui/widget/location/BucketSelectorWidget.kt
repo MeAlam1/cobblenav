@@ -15,7 +15,6 @@ class BucketSelectorWidget(
 	x: Int,
 	y: Int,
 	private val parent: LocationScreen,
-	// @TODO: move literal to lang?
 ) : SoundlessWidget(x, y, WIDTH, HEIGHT, label("bucket_selector")) {
 	companion object {
 		const val WIDTH: Int = 80

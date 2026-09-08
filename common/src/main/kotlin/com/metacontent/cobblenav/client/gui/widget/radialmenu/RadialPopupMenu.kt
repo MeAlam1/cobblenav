@@ -3,7 +3,7 @@ package com.metacontent.cobblenav.client.gui.widget.radialmenu
 import com.metacontent.cobblenav.client.gui.pokenav.PokenavScreen
 import com.metacontent.cobblenav.client.gui.widget.stateful.StatefulWidget
 import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
-import net.minecraft.network.chat.Component
+import com.metacontent.cobblenav.utils.I18nUtil.label
 
 class RadialPopupMenu(val pokenavScreen: PokenavScreen, pX: Int, pY: Int) :
 	StatefulWidget(
@@ -12,8 +12,7 @@ class RadialPopupMenu(val pokenavScreen: PokenavScreen, pX: Int, pY: Int) :
 		pY,
 		RadialMenuState.MENU_DIAMETER,
 		RadialMenuState.MENU_DIAMETER,
-		// @TODO: move literal to lang?
-		Component.literal("Radial Popup Menu"),
+		label("radial_popup_menu"),
 	) {
 	val os = pokenavScreen.os
 

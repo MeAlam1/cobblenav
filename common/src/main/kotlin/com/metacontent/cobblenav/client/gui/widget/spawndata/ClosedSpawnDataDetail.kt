@@ -1,8 +1,8 @@
 package com.metacontent.cobblenav.client.gui.widget.spawndata
 
 import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 
 class ClosedSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: Int) :
 	WidgetState<SpawnDataDetailWidget>(
@@ -11,8 +11,7 @@ class ClosedSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: In
 		y,
 		SpawnDataDetailWidget.WIDTH,
 		SpawnDataDetailWidget.HEIGHT,
-		// @TODO: move literal to lang?
-		Component.literal("Closed Spawn Data Details"),
+		label("closed_spawn_data_details"),
 	) {
 	init {
 		statefulWidget.pokenavScreen.blockWidgets = false

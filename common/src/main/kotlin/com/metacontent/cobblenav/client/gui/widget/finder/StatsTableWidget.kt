@@ -22,8 +22,7 @@ class StatsTableWidget(
 	val spawnData: SpawnData,
 	val pokemon: FoundPokemon,
 	val parent: PokenavScreen,
-	// @TODO: move literal to lang?
-) : SoundlessWidget(x, y, WIDTH, HEIGHT, Component.literal("Stats Table")) {
+) : SoundlessWidget(x, y, WIDTH, HEIGHT, label("stats_table")) {
 	companion object {
 		const val WIDTH = 82
 		const val HEIGHT = 66

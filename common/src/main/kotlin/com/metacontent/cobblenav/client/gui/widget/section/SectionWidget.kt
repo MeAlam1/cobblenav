@@ -22,8 +22,7 @@ class SectionWidget(
 	val color: RGB = RGB(178, 228, 188),
 //    val headerColor: RGB = RGB(199, 239, 207),
 	val paragraphOffset: Float = 3f,
-	// @TODO: move literal to lang?
-) : StatefulWidget(null, x, y, width, HEADER_HEIGHT, Component.literal("Text Section")) {
+) : StatefulWidget(null, x, y, width, HEADER_HEIGHT, title) {
 	companion object {
 		const val HEADER_HEIGHT = 20
 		const val FOOTER_HEIGHT = 2

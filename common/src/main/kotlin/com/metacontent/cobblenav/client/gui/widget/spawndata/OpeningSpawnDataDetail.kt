@@ -2,9 +2,9 @@ package com.metacontent.cobblenav.client.gui.widget.spawndata
 
 import com.metacontent.cobblenav.client.gui.Timer
 import com.metacontent.cobblenav.client.gui.widget.stateful.WidgetState
+import com.metacontent.cobblenav.utils.I18nUtil.label
 import com.metacontent.cobblenav.utils.extensions.pushAndPop
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 import org.joml.Vector3d
 import org.joml.Vector3f
 
@@ -15,8 +15,7 @@ class OpeningSpawnDataDetail(statefulWidget: SpawnDataDetailWidget, x: Int, y: I
 		y,
 		SpawnDataDetailWidget.WIDTH,
 		SpawnDataDetailWidget.HEIGHT,
-		// @TODO: move literal to lang?
-		Component.literal("Opening Spawn Data Details"),
+		label("opening_spawn_data_details"),
 	) {
 	companion object {
 		const val ANIMATION_DURATION = 2f
