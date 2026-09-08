@@ -3,4 +3,165 @@ title: Configuration
 description: This page contains information about the configuration of the CobbleNav mod.
 ---
 
-[TODO]
+## Server Configuration
+
+```
+TODO: Add Example server config file here
+```
+
+### enableMythsAndLegendsIntegration
+
+Determines whether spawn condition collectors for the Myths and Legends mod will be registered. Disabled by default to prevent crashes with older versions (requires MaL 1.8.0 or newer).
+
+- **Type**: `boolean`
+- **Default**: `false`
+
+### hideUnknownPokemon
+
+If true, hides information about Pokémon the player hasn't discovered yet. They won't appear in the PokéNav until they're registered in the Pokédex.
+
+- **Type**: `boolean`
+- **Default**: `false`
+
+### showPokemonTooltips
+
+If disabled, the mod will skip the condition-building step, removing all condition-related tooltip info.
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+### hideUnknownPokemonTooltips
+
+If enabled, condition-building will be skipped for Pokémon not registered in the Pokédex.
+
+- **Type**: `boolean`
+- **Default**: `false`
+
+### hideNaturalBlockConditions
+
+Determines whether block collectors include blocks tagged as natural. Disabled by default to avoid overly large tooltips.
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+### syncLabelsWithClient
+
+If enabled, synchronizes Pokémon labels from the server to the client. Required for label filters in the PokéFinder on dedicated servers.
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+### checkSpawnWidth
+
+Sets the width of the spawn-checking area.
+
+- **Type**: `integer`
+- **Default**: `8`
+
+### checkSpawnHeight
+
+Sets the height of the spawn-checking area.
+
+- **Type**: `integer`
+- **Default**: `16`
+
+### searchAreaWidth
+
+Sets the horizontal range for Pokémon searching via the Finder Screen.
+
+- **Type**: `float`
+- **Default**: `200.0`
+
+### searchAreaHeight
+
+Sets the vertical range for Pokémon searching via the Finder Screen.
+
+- **Type**: `float`
+- **Default**: `200.0`
+
+### pokemonFeatureWeights
+
+Weight configuration for evaluating Pokémon features. Used by Finder Screen to determine which Pokémon is better.
+
+- **Type**: `object`
+
+### collectableConditions
+
+Specifies which condition collectors are enabled (i.e., which conditions will be shown in tooltips).
+
+- **Type**: `object`
+
+## Client Configuration
+
+```
+TODO: Add Example client config file here
+```
+
+### screenScale
+
+Multiplier for the scale of the user interface.
+
+- **Type**: `float`
+- **Default**: `1.0`
+
+### enableBlurEffect
+
+Determines whether blur effects are used in the UI. Disable if you experience visual glitches caused by mod conflicts, such as incorrectly rendered tooltips.
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+### sendErrorMessagesToChat
+
+If enabled, displays error messages about broken animation models in the in-game chat.
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+### obscureUnknownPokemon
+
+If enabled, models of unknown Pokémon (those not registered in the player's Pokédex) will be darkened.
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+### useSwimmingAnimationIfSubmerged
+
+If enabled, Pokémon that spawn submerged will use swimming animations.
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+### pokefinderOverlayOffset
+
+UI offset from both sides of the screen for the PokéFinder interface.
+
+- **Type**: `integer`
+- **Default**: `10`
+
+### trackArrowYOffset
+
+Vertical offset of the tracking arrow from the bottom of the screen.
+
+- **Type**: `integer`
+- **Default**: `80`
+
+### maxCloudNumber
+
+Maximum number of clouds shown on the FishingNav screen.
+
+- **Type**: `integer`
+- **Default**: `12`
+
+### maxCloudVelocity
+
+Maximum velocity of clouds on the FishingNav screen.
+
+- **Type**: `integer`
+- **Default**: `6`
+
+### collectableClientConditions
+
+Client-side collector configuration. Determines which collectors are enabled and what information is shown in tooltips.
+
+- **Type**: `object`
