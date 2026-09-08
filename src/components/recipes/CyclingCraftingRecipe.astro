@@ -1,5 +1,6 @@
 ---
 import type { Ingredient, CraftingRecipeVariant } from "../../types";
+import { getItemHyperlink } from "../../content/idMappings";
 
 interface Props {
     /** An array of crafting recipe variants to cycle between */
@@ -88,15 +89,41 @@ const formatItemName = (item: string | Ingredient | null) => {
                         <div class="recipe-grid">
                             {variant.ingredients.map((item) => {
                                 const texture = getTexturePath(item);
-                                return (
-                                    <div
-                                        class="recipe-slot"
-                                        data-tooltip={formatItemName(item)}
+                                const link = getItemHyperlink(item);
+                                const tooltip = formatItemName(item);
+                                return link ? (
+                                    <a
+                                        href={link}
+                                        target={
+                                            link.startsWith("http")
+                                                ? "_blank"
+                                                : undefined
+                                        }
+                                        rel={
+                                            link.startsWith("http")
+                                                ? "noopener noreferrer"
+                                                : undefined
+                                        }
+                                        class="recipe-slot has-link"
+                                        data-tooltip={tooltip}
                                     >
                                         {texture && (
                                             <img
                                                 src={texture}
-                                                alt={formatItemName(item)}
+                                                alt={tooltip}
+                                                class="item-texture"
+                                            />
+                                        )}
+                                    </a>
+                                ) : (
+                                    <div
+                                        class="recipe-slot"
+                                        data-tooltip={tooltip}
+                                    >
+                                        {texture && (
+                                            <img
+                                                src={texture}
+                                                alt={tooltip}
                                                 class="item-texture"
                                             />
                                         )}
@@ -108,21 +135,62 @@ const formatItemName = (item: string | Ingredient | null) => {
                         <div class="recipe-arrow">→</div>
 
                         <div class="recipe-result-container">
-                            <div
-                                class="recipe-result"
-                                data-tooltip={formatItemName(
+                            {(() => {
+                                const link = getItemHyperlink(
                                     variant.resultItem,
-                                )}
-                            >
-                                <img
-                                    src={getTexturePath(variant.resultItem)}
-                                    alt={formatItemName(variant.resultItem)}
-                                    class="item-texture"
-                                />
-                                {count > 1 && (
-                                    <span class="item-count">{count}</span>
-                                )}
-                            </div>
+                                );
+                                const tooltip = formatItemName(
+                                    variant.resultItem,
+                                );
+                                return link ? (
+                                    <a
+                                        href={link}
+                                        target={
+                                            link.startsWith("http")
+                                                ? "_blank"
+                                                : undefined
+                                        }
+                                        rel={
+                                            link.startsWith("http")
+                                                ? "noopener noreferrer"
+                                                : undefined
+                                        }
+                                        class="recipe-result has-link"
+                                        data-tooltip={tooltip}
+                                    >
+                                        <img
+                                            src={getTexturePath(
+                                                variant.resultItem,
+                                            )}
+                                            alt={tooltip}
+                                            class="item-texture"
+                                        />
+                                        {count > 1 && (
+                                            <span class="item-count">
+                                                {count}
+                                            </span>
+                                        )}
+                                    </a>
+                                ) : (
+                                    <div
+                                        class="recipe-result"
+                                        data-tooltip={tooltip}
+                                    >
+                                        <img
+                                            src={getTexturePath(
+                                                variant.resultItem,
+                                            )}
+                                            alt={tooltip}
+                                            class="item-texture"
+                                        />
+                                        {count > 1 && (
+                                            <span class="item-count">
+                                                {count}
+                                            </span>
+                                        )}
+                                    </div>
+                                );
+                            })()}
                         </div>
                     </div>
                 </div>
@@ -373,6 +441,15 @@ const formatItemName = (item: string | Ingredient | null) => {
         width: 100%;
         height: 100%;
         box-sizing: border-box;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    a.recipe-slot,
+    a.recipe-result,
+    .recipe-slot.has-link,
+    .recipe-result.has-link {
+        cursor: pointer;
     }
 
     .recipe-slot[data-tooltip]:hover::after,

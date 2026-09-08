@@ -1,5 +1,6 @@
 ---
 import type { Ingredient, CraftingRecipeVariant } from "../../types";
+import { getItemHyperlink } from "../../content/idMappings";
 import CyclingCraftingRecipe from "./CyclingCraftingRecipe.astro";
 
 interface Props {
@@ -69,15 +70,38 @@ const formatItemName = (item: string | Ingredient | null) => {
                 <div class="recipe-grid">
                     {ingredients.map((item) => {
                         const texture = getTexturePath(item);
-                        return (
-                            <div
-                                class="recipe-slot"
-                                data-tooltip={formatItemName(item)}
+                        const link = getItemHyperlink(item);
+                        const tooltip = formatItemName(item);
+                        return link ? (
+                            <a
+                                href={link}
+                                target={
+                                    link.startsWith("http")
+                                        ? "_blank"
+                                        : undefined
+                                }
+                                rel={
+                                    link.startsWith("http")
+                                        ? "noopener noreferrer"
+                                        : undefined
+                                }
+                                class="recipe-slot has-link"
+                                data-tooltip={tooltip}
                             >
                                 {texture && (
                                     <img
                                         src={texture}
-                                        alt={formatItemName(item)}
+                                        alt={tooltip}
+                                        class="item-texture"
+                                    />
+                                )}
+                            </a>
+                        ) : (
+                            <div class="recipe-slot" data-tooltip={tooltip}>
+                                {texture && (
+                                    <img
+                                        src={texture}
+                                        alt={tooltip}
                                         class="item-texture"
                                     />
                                 )}
@@ -89,19 +113,51 @@ const formatItemName = (item: string | Ingredient | null) => {
                 <div class="recipe-arrow">→</div>
 
                 <div class="recipe-result-container">
-                    <div
-                        class="recipe-result"
-                        data-tooltip={formatItemName(resultItem)}
-                    >
-                        <img
-                            src={getTexturePath(resultItem)}
-                            alt={formatItemName(resultItem)}
-                            class="item-texture"
-                        />
-                        {resultCount > 1 && (
-                            <span class="item-count">{resultCount}</span>
-                        )}
-                    </div>
+                    {(() => {
+                        const link = getItemHyperlink(resultItem);
+                        const tooltip = formatItemName(resultItem);
+                        return link ? (
+                            <a
+                                href={link}
+                                target={
+                                    link.startsWith("http")
+                                        ? "_blank"
+                                        : undefined
+                                }
+                                rel={
+                                    link.startsWith("http")
+                                        ? "noopener noreferrer"
+                                        : undefined
+                                }
+                                class="recipe-result has-link"
+                                data-tooltip={tooltip}
+                            >
+                                <img
+                                    src={getTexturePath(resultItem)}
+                                    alt={tooltip}
+                                    class="item-texture"
+                                />
+                                {resultCount > 1 && (
+                                    <span class="item-count">
+                                        {resultCount}
+                                    </span>
+                                )}
+                            </a>
+                        ) : (
+                            <div class="recipe-result" data-tooltip={tooltip}>
+                                <img
+                                    src={getTexturePath(resultItem)}
+                                    alt={tooltip}
+                                    class="item-texture"
+                                />
+                                {resultCount > 1 && (
+                                    <span class="item-count">
+                                        {resultCount}
+                                    </span>
+                                )}
+                            </div>
+                        );
+                    })()}
                 </div>
             </div>
         </div>
@@ -242,6 +298,15 @@ const formatItemName = (item: string | Ingredient | null) => {
         width: 100%;
         height: 100%;
         box-sizing: border-box;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    a.recipe-slot,
+    a.recipe-result,
+    .recipe-slot.has-link,
+    .recipe-result.has-link {
+        cursor: pointer;
     }
 
     .recipe-slot[data-tooltip]:hover::after,

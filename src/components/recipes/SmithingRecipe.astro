@@ -1,5 +1,6 @@
 ---
 import type { Ingredient } from "../../types";
+import { getItemHyperlink } from "../../content/idMappings";
 
 interface Props {
     template: string | Ingredient | null;
@@ -45,44 +46,125 @@ const formatItemName = (item: string | Ingredient | null) => {
         <!-- Template Slot -->
         <div class="smithing-slot-container">
             <div class="slot-label">Template</div>
-            <div class="smithing-slot" data-tooltip={formatItemName(template)}>
-                {
-                    template && (
-                        <img
-                            src={getTexturePath(template)}
-                            alt={formatItemName(template)}
-                            class="item-texture"
-                        />
-                    )
-                }
-            </div>
+            {
+                (() => {
+                    const link = getItemHyperlink(template);
+                    const tooltip = formatItemName(template);
+                    return link ? (
+                        <a
+                            href={link}
+                            target={
+                                link.startsWith("http") ? "_blank" : undefined
+                            }
+                            rel={
+                                link.startsWith("http")
+                                    ? "noopener noreferrer"
+                                    : undefined
+                            }
+                            class="smithing-slot has-link"
+                            data-tooltip={tooltip}
+                        >
+                            {template && (
+                                <img
+                                    src={getTexturePath(template)}
+                                    alt={tooltip}
+                                    class="item-texture"
+                                />
+                            )}
+                        </a>
+                    ) : (
+                        <div class="smithing-slot" data-tooltip={tooltip}>
+                            {template && (
+                                <img
+                                    src={getTexturePath(template)}
+                                    alt={tooltip}
+                                    class="item-texture"
+                                />
+                            )}
+                        </div>
+                    );
+                })()
+            }
         </div>
 
         <!-- Base Item Slot -->
         <div class="smithing-slot-container">
             <div class="slot-label">Base</div>
-            <div class="smithing-slot" data-tooltip={formatItemName(baseItem)}>
-                <img
-                    src={getTexturePath(baseItem)}
-                    alt={formatItemName(baseItem)}
-                    class="item-texture"
-                />
-            </div>
+            {
+                (() => {
+                    const link = getItemHyperlink(baseItem);
+                    const tooltip = formatItemName(baseItem);
+                    return link ? (
+                        <a
+                            href={link}
+                            target={
+                                link.startsWith("http") ? "_blank" : undefined
+                            }
+                            rel={
+                                link.startsWith("http")
+                                    ? "noopener noreferrer"
+                                    : undefined
+                            }
+                            class="smithing-slot has-link"
+                            data-tooltip={tooltip}
+                        >
+                            <img
+                                src={getTexturePath(baseItem)}
+                                alt={tooltip}
+                                class="item-texture"
+                            />
+                        </a>
+                    ) : (
+                        <div class="smithing-slot" data-tooltip={tooltip}>
+                            <img
+                                src={getTexturePath(baseItem)}
+                                alt={tooltip}
+                                class="item-texture"
+                            />
+                        </div>
+                    );
+                })()
+            }
         </div>
 
         <!-- Addition Item Slot -->
         <div class="smithing-slot-container">
             <div class="slot-label">Addition</div>
-            <div
-                class="smithing-slot"
-                data-tooltip={formatItemName(additionItem)}
-            >
-                <img
-                    src={getTexturePath(additionItem)}
-                    alt={formatItemName(additionItem)}
-                    class="item-texture"
-                />
-            </div>
+            {
+                (() => {
+                    const link = getItemHyperlink(additionItem);
+                    const tooltip = formatItemName(additionItem);
+                    return link ? (
+                        <a
+                            href={link}
+                            target={
+                                link.startsWith("http") ? "_blank" : undefined
+                            }
+                            rel={
+                                link.startsWith("http")
+                                    ? "noopener noreferrer"
+                                    : undefined
+                            }
+                            class="smithing-slot has-link"
+                            data-tooltip={tooltip}
+                        >
+                            <img
+                                src={getTexturePath(additionItem)}
+                                alt={tooltip}
+                                class="item-texture"
+                            />
+                        </a>
+                    ) : (
+                        <div class="smithing-slot" data-tooltip={tooltip}>
+                            <img
+                                src={getTexturePath(additionItem)}
+                                alt={tooltip}
+                                class="item-texture"
+                            />
+                        </div>
+                    );
+                })()
+            }
         </div>
 
         <!-- Arrow -->
@@ -91,16 +173,41 @@ const formatItemName = (item: string | Ingredient | null) => {
         <!-- Result Slot -->
         <div class="smithing-result-container">
             <div class="slot-label">Result</div>
-            <div
-                class="smithing-result"
-                data-tooltip={formatItemName(resultItem)}
-            >
-                <img
-                    src={getTexturePath(resultItem)}
-                    alt={formatItemName(resultItem)}
-                    class="item-texture"
-                />
-            </div>
+            {
+                (() => {
+                    const link = getItemHyperlink(resultItem);
+                    const tooltip = formatItemName(resultItem);
+                    return link ? (
+                        <a
+                            href={link}
+                            target={
+                                link.startsWith("http") ? "_blank" : undefined
+                            }
+                            rel={
+                                link.startsWith("http")
+                                    ? "noopener noreferrer"
+                                    : undefined
+                            }
+                            class="smithing-result has-link"
+                            data-tooltip={tooltip}
+                        >
+                            <img
+                                src={getTexturePath(resultItem)}
+                                alt={tooltip}
+                                class="item-texture"
+                            />
+                        </a>
+                    ) : (
+                        <div class="smithing-result" data-tooltip={tooltip}>
+                            <img
+                                src={getTexturePath(resultItem)}
+                                alt={tooltip}
+                                class="item-texture"
+                            />
+                        </div>
+                    );
+                })()
+            }
         </div>
     </div>
 </div>
@@ -244,6 +351,15 @@ const formatItemName = (item: string | Ingredient | null) => {
         align-items: center;
         justify-content: center;
         box-sizing: border-box;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    a.smithing-slot,
+    a.smithing-result,
+    .smithing-slot.has-link,
+    .smithing-result.has-link {
+        cursor: pointer;
     }
 
     .smithing-slot[data-tooltip]:hover::after,
