@@ -56,87 +56,139 @@ description: This page contains information about the configuration of the Cobbl
 }
 ```
 
-### enableMythsAndLegendsIntegration
-
-Determines whether spawn condition collectors for the Myths and Legends mod will be registered. Disabled by default to prevent crashes with older versions (requires MaL 1.8.0 or newer).
-
-- **Type**: `boolean`
-- **Default**: `false`
-
 ### hideUnknownPokemon
 
-If true, hides information about Pokémon the player hasn't discovered yet. They won't appear in the PokéNav until they're registered in the Pokédex.
+Determines whether Pokémon that the player has not discovered yet are hidden from the PokéNav.
 
-- **Type**: `boolean`
-- **Default**: `false`
+* **Type**: `boolean`
+* **Default**: `false`
 
-### showPokemonTooltips
+### hideConditionsOfUnknownSpawns
 
-If disabled, the mod will skip the condition-building step, removing all condition-related tooltip info.
+Determines whether spawn conditions are hidden for Pokémon that the player has not discovered yet.
 
-- **Type**: `boolean`
-- **Default**: `true`
-
-### hideUnknownPokemonTooltips
-
-If enabled, condition-building will be skipped for Pokémon not registered in the Pokédex.
-
-- **Type**: `boolean`
-- **Default**: `false`
+* **Type**: `boolean`
+* **Default**: `true`
 
 ### hideNaturalBlockConditions
 
-Determines whether block collectors include blocks tagged as natural. Disabled by default to avoid overly large tooltips.
+Determines whether blocks tagged as natural are excluded from block-based spawn conditions.
 
-- **Type**: `boolean`
-- **Default**: `true`
+* **Type**: `boolean`
+* **Default**: `true`
+
+### percentageForKnownHerd
+
+Determines the percentage of a herd that must be known to the player before the herd's Pokémon information is displayed.
+
+* **Type**: `float`
+* **Default**: `0.5`
 
 ### syncLabelsWithClient
 
-If enabled, synchronizes Pokémon labels from the server to the client. Required for label filters in the PokéFinder on dedicated servers.
+Determines whether Pokémon labels are synchronized from the server to the client.
 
-- **Type**: `boolean`
-- **Default**: `true`
+* **Type**: `boolean`
+* **Default**: `true`
 
-### checkSpawnWidth
+### syncEvYieldWithClient
 
-Sets the width of the spawn-checking area.
+Determines whether Pokémon EV yield information is synchronized from the server to the client.
 
-- **Type**: `integer`
-- **Default**: `8`
-
-### checkSpawnHeight
-
-Sets the height of the spawn-checking area.
-
-- **Type**: `integer`
-- **Default**: `16`
+* **Type**: `boolean`
+* **Default**: `true`
 
 ### searchAreaWidth
 
-Sets the horizontal range for Pokémon searching via the Finder Screen.
+Sets the horizontal range used when searching for Pokémon through the PokéFinder.
 
-- **Type**: `float`
-- **Default**: `200.0`
+* **Type**: `float`
+* **Default**: `128.0`
 
 ### searchAreaHeight
 
-Sets the vertical range for Pokémon searching via the Finder Screen.
+Sets the vertical range used when searching for Pokémon through the PokéFinder.
 
-- **Type**: `float`
-- **Default**: `200.0`
+* **Type**: `float`
+* **Default**: `128.0`
 
 ### pokemonFeatureWeights
 
-Weight configuration for evaluating Pokémon features. Used by Finder Screen to determine which Pokémon is better.
+Defines the weights used by the PokéFinder when evaluating Pokémon features. Higher weights make a feature more influential when determining which Pokémon is considered more desirable.
 
-- **Type**: `object`
+* **Type**: `object`
+
+#### shiny
+
+Weight assigned to shiny Pokémon.
+
+* **Type**: `float`
+* **Default**: `10.0`
+
+#### perfectIvsRates
+
+Defines the weight assigned to Pokémon based on the number of perfect IVs they have.
+
+The keys represent the number of perfect IVs, from `1` to `6`.
+
+* **Type**: `object`
+
+| Perfect IVs | Default |
+| ----------: | ------: |
+|           1 |   `1.0` |
+|           2 |   `2.0` |
+|           3 |   `3.0` |
+|           4 |   `4.0` |
+|           5 |   `5.0` |
+|           6 |   `6.0` |
+
+#### hiddenAbility
+
+Weight assigned to Pokémon with a hidden ability.
+
+* **Type**: `float`
+* **Default**: `1.0`
+
+#### eggMove
+
+Weight assigned to Pokémon with an egg move.
+
+* **Type**: `float`
+* **Default**: `1.0`
 
 ### collectableConditions
 
-Specifies which condition collectors are enabled (i.e., which conditions will be shown in tooltips).
+Determines which spawn condition collectors are enabled. Disabled collectors will not contribute their respective conditions to Pokémon information.
 
-- **Type**: `object`
+* **Type**: `object`
+
+Each available condition can be enabled or disabled independently.
+
+| Condition             | Default |
+| --------------------- | ------: |
+| `biomes`              |  `true` |
+| `moon_phase`          |  `true` |
+| `under_open_sky`      |  `true` |
+| `y_height`            |  `true` |
+| `coordinates`         |  `true` |
+| `light`               |  `true` |
+| `sky_light`           |  `true` |
+| `weather`             |  `true` |
+| `time_range`          |  `true` |
+| `structures`          |  `true` |
+| `slime_chunk`         |  `true` |
+| `fluid_surface`       |  `true` |
+| `depth_surface`       |  `true` |
+| `fluid_submerged`     |  `true` |
+| `depth_submerged`     |  `true` |
+| `bait`                |  `true` |
+| `lure_level`          |  `true` |
+| `rod`                 |  `true` |
+| `rod_type`            |  `true` |
+| `area_type_block`     |  `true` |
+| `grounded_type_block` |  `true` |
+| `seafloor_type_block` |  `true` |
+| `fishing_block`       |  `true` |
 
 ## Client Configuration
 
@@ -160,69 +212,91 @@ Specifies which condition collectors are enabled (i.e., which conditions will be
 
 ### screenScale
 
-Multiplier for the scale of the user interface.
+Multiplier for the scale of the CobbleNav user interface.
 
-- **Type**: `float`
-- **Default**: `1.0`
+* **Type**: `float`
+* **Default**: `1.0`
 
 ### enableBlurEffect
 
-Determines whether blur effects are used in the UI. Disable if you experience visual glitches caused by mod conflicts, such as incorrectly rendered tooltips.
+Determines whether blur effects are used in CobbleNav interfaces. Disable this if you experience visual glitches caused by mod conflicts.
 
-- **Type**: `boolean`
-- **Default**: `true`
+* **Type**: `boolean`
+* **Default**: `true`
 
 ### sendErrorMessagesToChat
 
-If enabled, displays error messages about broken animation models in the in-game chat.
+Determines whether errors encountered while loading animation models are displayed in the in-game chat.
 
-- **Type**: `boolean`
-- **Default**: `true`
+* **Type**: `boolean`
+* **Default**: `true`
 
-### obscureUnknownPokemon
+### pokefinderScreenScale
 
-If enabled, models of unknown Pokémon (those not registered in the player's Pokédex) will be darkened.
+Multiplier for the scale of the PokéFinder screen.
 
-- **Type**: `boolean`
-- **Default**: `true`
+* **Type**: `float`
+* **Default**: `1.0`
 
-### useSwimmingAnimationIfSubmerged
+### pokefinderOverlayScale
 
-If enabled, Pokémon that spawn submerged will use swimming animations.
+Multiplier for the scale of the PokéFinder overlay.
 
-- **Type**: `boolean`
-- **Default**: `true`
+* **Type**: `float`
+* **Default**: `1.0`
 
-### pokefinderOverlayOffset
+### pokefinderOverlayOffsetX
 
-UI offset from both sides of the screen for the PokéFinder interface.
+Horizontal offset of the PokéFinder overlay from the edge of the screen.
 
-- **Type**: `integer`
-- **Default**: `10`
+* **Type**: `integer`
+* **Default**: `10`
+
+### pokefinderOverlayOffsetY
+
+Vertical offset of the PokéFinder overlay from the edge of the screen.
+
+* **Type**: `integer`
+* **Default**: `10`
+
+### enableDisplayOfNamesOnRadar
+
+Determines whether Pokémon names are displayed above Pokémon detected by the radar.
+
+* **Type**: `boolean`
+* **Default**: `false`
 
 ### trackArrowYOffset
 
 Vertical offset of the tracking arrow from the bottom of the screen.
 
-- **Type**: `integer`
-- **Default**: `80`
+* **Type**: `integer`
+* **Default**: `80`
 
 ### maxCloudNumber
 
-Maximum number of clouds shown on the FishingNav screen.
+Maximum number of clouds that can be displayed on the FishingNav screen.
 
-- **Type**: `integer`
-- **Default**: `12`
+* **Type**: `integer`
+* **Default**: `8`
 
 ### maxCloudVelocity
 
-Maximum velocity of clouds on the FishingNav screen.
+Maximum velocity of clouds displayed on the FishingNav screen.
 
-- **Type**: `integer`
-- **Default**: `6`
+* **Type**: `integer`
+* **Default**: `6`
 
-### collectableClientConditions
+### enableItemShaking
 
-Client-side collector configuration. Determines which collectors are enabled and what information is shown in tooltips.
+Determines whether items can use the item-shaking animation.
 
-- **Type**: `object`
+* **Type**: `boolean`
+* **Default**: `true`
+
+### enableMultipleModelItems
+
+Determines whether items that support multiple models can use those models.
+
+* **Type**: `boolean`
+* **Default**: `true`
