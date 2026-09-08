@@ -1,0 +1,279 @@
+---
+import Fabric from "~/assets/loaders/fabric.svg";
+import NeoForge from "~/assets/loaders/neoforge.svg";
+import FabricUnsupported from "~/assets/loaders/fabric_unsupported.svg";
+import NeoForgeUnsupported from "~/assets/loaders/neoforge_unsupported.svg";
+import Modrinth from "~/assets/links/modrinth.svg";
+import CurseForge from "~/assets/links/curseforge.svg";
+import Github from "~/assets/links/github.svg";
+import LiveVersionDetector from "./LiveVersionDetector.astro";
+
+interface Props {
+    modrinth?: string;
+    curseforge?: string;
+    github: string;
+    minecraftVersion: string;
+    fabric?: boolean;
+    neoforge?: boolean;
+}
+
+const { modrinth, curseforge, github, minecraftVersion, fabric, neoforge } =
+    Astro.props;
+---
+
+<div class="not-content meta-header">
+    <div class="not-content meta-content">
+        <div class="meta-row">
+            <div class="meta-label">Minecraft Version</div>
+            <div class="meta-value version-value">
+                <div class="version-box">{minecraftVersion}</div>
+            </div>
+        </div>
+
+        <div class="meta-row">
+            <div class="meta-label">Mod Loaders</div>
+            <div class="meta-value loaders-value">
+                {
+                    fabric ? (
+                        <a
+                            href="https://fabricmc.net/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="loader-icon"
+                            data-tooltip="Fabric"
+                        >
+                            <Fabric />
+                        </a>
+                    ) : (
+                        <a
+                            href="https://fabricmc.net/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="loader-icon"
+                            data-tooltip="Fabric (Unsupported)"
+                        >
+                            <FabricUnsupported />
+                        </a>
+                    )
+                }
+                {
+                    neoforge ? (
+                        <a
+                            href="https://neoforged.net/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="loader-icon"
+                            data-tooltip="NeoForge"
+                        >
+                            <NeoForge />
+                        </a>
+                    ) : (
+                        <a
+                            href="https://neoforged.net/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="loader-icon"
+                            data-tooltip="NeoForge (Unsupported)"
+                        >
+                            <NeoForgeUnsupported />
+                        </a>
+                    )
+                }
+            </div>
+        </div>
+
+        <div class="meta-row">
+            <div class="meta-label">External Links</div>
+            <div class="meta-value links-value">
+                {
+                    modrinth && (
+                        <a
+                            href={`https://modrinth.com/mod/${modrinth}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="link-badge"
+                            data-tooltip="View on Modrinth"
+                        >
+                            <Modrinth />
+                        </a>
+                    )
+                }
+
+                {
+                    curseforge && (
+                        <a
+                            href={`https://www.curseforge.com/minecraft/mc-mods/${curseforge}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="link-badge"
+                            data-tooltip="View on CurseForge"
+                        >
+                            <CurseForge />
+                        </a>
+                    )
+                }
+
+                <a
+                    href={`https://github.com/mealam1/${github}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link-badge"
+                    data-tooltip="View on GitHub"
+                >
+                    <Github />
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {modrinth && <LiveVersionDetector projectId={modrinth} />}
+</div>
+
+<style is:global>
+    @font-face {
+        font-family: "Minecraft";
+        src: url("/font/Monocraft.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+    }
+</style>
+
+<style>
+    .meta-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 24px;
+        gap: 20px;
+    }
+
+    .meta-content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: linear-gradient(135deg, #c6c6c6 0%, #8b8b8b 100%);
+        padding: 20px 24px;
+        border-top: 3px solid #ffffff;
+        border-left: 3px solid #ffffff;
+        border-right: 3px solid #373737;
+        border-bottom: 3px solid #373737;
+        box-shadow:
+            inset 0 0 0 1px #555555,
+            0 4px 8px rgba(0, 0, 0, 0.4);
+        width: fit-content;
+        min-width: 400px;
+        font-family: "Minecraft", monospace, sans-serif;
+        image-rendering: pixelated;
+        user-select: none;
+    }
+
+    .meta-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(55, 55, 55, 0.3);
+    }
+
+    .meta-row:last-child {
+        border-bottom: none;
+    }
+
+    .meta-label {
+        font-family: "Minecraft", monospace, sans-serif;
+        font-size: 1rem;
+        color: #3f3f3f;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+        min-width: 220px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .meta-value {
+        font-family: "Minecraft", monospace, sans-serif;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+    }
+
+    .version-value {
+        font-size: 1.25rem;
+        color: #2d2d2d;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .version-box {
+        font-family: "Minecraft", monospace, sans-serif;
+        font-size: 1rem;
+        padding: 8px 16px;
+        background: linear-gradient(135deg, #8b8b8b 0%, #646464 100%);
+        border-top: 2px solid #373737;
+        border-left: 2px solid #373737;
+        border-right: 2px solid #ffffff;
+        border-bottom: 2px solid #ffffff;
+        box-shadow:
+            inset 1px 1px 0 0 rgba(0, 0, 0, 0.5),
+            inset -1px -1px 0 0 rgba(255, 255, 255, 0.3);
+        color: #ffffff;
+        text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+        letter-spacing: 1px;
+    }
+
+    .loaders-value,
+    .links-value {
+        display: flex;
+        gap: 8px;
+    }
+
+    .loader-icon,
+    .link-badge {
+        position: relative;
+        display: inline-flex;
+        cursor: pointer;
+        transition: transform 0.15s ease;
+    }
+
+    .loader-icon:hover,
+    .link-badge:hover {
+        transform: scale(1.1);
+    }
+
+    .loader-icon::after,
+    .link-badge::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-8px);
+        padding: 6px 10px;
+        background: linear-gradient(180deg, #100010 0%, #100010 100%);
+        border: 2px solid;
+        border-color: #5000ff #2800aa #2800aa #5000ff;
+        color: #ffffff;
+        font-family: "Minecraft", monospace, sans-serif;
+        font-size: 14px;
+        pointer-events: none;
+        z-index: 10000;
+        white-space: nowrap;
+        text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+        opacity: 0;
+        transition: opacity 0.15s ease-in-out;
+    }
+
+    .loader-icon:hover::after,
+    .link-badge:hover::after {
+        opacity: 1;
+    }
+
+    .loaders-value :global(svg),
+    .links-value :global(svg) {
+        width: 40px;
+        height: 40px;
+    }
+
+    .link-badge {
+        text-decoration: none;
+    }
+</style>

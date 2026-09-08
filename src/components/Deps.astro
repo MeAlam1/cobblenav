@@ -1,0 +1,122 @@
+---
+import Cobblemon from "~/assets/deps/cobblemon.svg";
+import FabricApi from "~/assets/deps/fabric-api.svg";
+
+interface Props {
+    cobblemon?: boolean;
+    fabricApi?: boolean;
+}
+
+const { cobblemon, fabricApi } = Astro.props;
+
+const depMap = [
+    {
+        name: "Cobblemon",
+        enabled: cobblemon,
+        Icon: Cobblemon,
+        url: "https://modrinth.com/mod/cobblemon",
+    },
+    {
+        name: "Fabric API",
+        enabled: fabricApi,
+        Icon: FabricApi,
+        url: "https://modrinth.com/mod/fabric-api",
+    },
+];
+---
+
+<div class="deps-container not-content">
+    <div class="deps">
+        {
+            depMap.map(
+                ({ name, enabled, Icon, url }) =>
+                    enabled && (
+                        <a
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="dep-icon"
+                            data-tooltip={name}
+                        >
+                            <Icon />
+                        </a>
+                    ),
+            )
+        }
+    </div>
+</div>
+
+<style>
+    .deps-container {
+        margin-top: 1rem;
+    }
+
+    .deps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .dep-icon {
+        position: relative;
+        display: inline-flex;
+        cursor: pointer;
+    }
+
+    .dep-icon::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-4px);
+        background-color: rgba(0, 0, 0, 0.9);
+        color: #fff;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .dep-icon:hover::after {
+        opacity: 1;
+    }
+
+    .dep-icon[data-tooltip]:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-8px);
+        padding: 6px 10px;
+        background: linear-gradient(180deg, #100010 0%, #100010 100%);
+        border: 2px solid;
+        border-color: #5000ff #2800aa #2800aa #5000ff;
+        color: #ffffff;
+        font-family: "Minecraft", monospace, sans-serif;
+        font-size: 14px;
+        pointer-events: none;
+        z-index: 10000;
+        white-space: nowrap;
+        text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+        box-shadow:
+            inset 0 0 0 1px rgba(80, 0, 255, 0.4),
+            0 4px 8px rgba(0, 0, 0, 0.6);
+        image-rendering: pixelated;
+        animation: tooltipFadeIn 0.15s ease;
+    }
+
+    @keyframes tooltipFadeIn {
+        from {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-4px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-8px);
+        }
+    }
+</style>

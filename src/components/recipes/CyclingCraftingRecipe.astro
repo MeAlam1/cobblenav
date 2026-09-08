@@ -13,7 +13,7 @@ interface Props {
     /** Common / fallback name and description */
     name?: string;
     description?: string;
-    /** Cycle interval in milliseconds (default: 2000 = 2 seconds) */
+    /** Cycle interval in milliseconds (default: 1000 = 1 second) */
     interval?: number;
 }
 
@@ -25,7 +25,7 @@ const {
     resultCount = 1,
     name,
     description,
-    interval = 2000,
+    interval = 1000,
 } = Astro.props;
 
 // Consolidate recipes into an array
