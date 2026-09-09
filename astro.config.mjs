@@ -17,6 +17,9 @@ export default defineConfig({
 		starlight({
 			title: 'CobbleNav Docs',
 			description: 'CobbleNav is a sidemod that adds a pokenav item similar to the one featured in the Pokemon RS games, that allows you to check spawns without the command and more in the future',
+			logo: {
+				src: './src/assets/icon.png',
+			},
 
 			social: [
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/MeAlam1/cobblenav' },
