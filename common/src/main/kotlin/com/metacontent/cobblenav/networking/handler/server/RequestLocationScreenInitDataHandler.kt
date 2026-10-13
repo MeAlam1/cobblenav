@@ -15,7 +15,7 @@ object RequestLocationScreenInitDataHandler : ServerNetworkPacketHandler<Request
 			val buckets = Cobblemon.bestSpawner.config.worldBuckets.entries
 				.sortedWith(
 					compareBy<Map.Entry<String, Float>> { it.key.equals(BOSS_BUCKET, ignoreCase = true) }
-						.thenByDescending { it.value }
+						.thenByDescending { it.value },
 				)
 				.map { it.key }
 
