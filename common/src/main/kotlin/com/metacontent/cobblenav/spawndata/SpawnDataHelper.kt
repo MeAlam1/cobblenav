@@ -41,10 +41,11 @@ object SpawnDataHelper {
 	val spawnDetailIds = mutableSetOf<String>()
 	val spawnDetailIdBySpecies = mutableMapOf<String, MutableList<String>>()
 
-	fun calculateWeightedBuckets(bucketWeights: MutableMap<String, Float>, influences: List<SpawningInfluence>): List<WeightedBucket> {
-		influences.forEach { it.affectBucketWeights(bucketWeights) }
-		val sum = bucketWeights.values.sum()
-		return bucketWeights.map { (key, value) -> WeightedBucket(key, value / sum) }
+	fun calculateWeightedBuckets(bucketWeights: Map<String, Float>, influences: List<SpawningInfluence>): List<WeightedBucket> {
+		val workingWeights = bucketWeights.toMutableMap()
+		influences.forEach { it.affectBucketWeights(workingWeights) }
+		val sum = workingWeights.values.sum()
+		return workingWeights.map { (key, value) -> WeightedBucket(key, value / sum) }
 	}
 
 	fun checkPlayerSpawns(player: ServerPlayer, bucketName: String): Pair<WeightedBucket, List<CheckedSpawnData>> {

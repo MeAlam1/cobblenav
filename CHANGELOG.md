@@ -8,6 +8,8 @@
 
 ### Fixes
 
+* Spawn previews can NOT mutate global bucket weights
+
 ### Developer
 
 ### Localization
