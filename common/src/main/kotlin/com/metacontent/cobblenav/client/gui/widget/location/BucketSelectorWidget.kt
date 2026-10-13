@@ -1,6 +1,5 @@
 package com.metacontent.cobblenav.client.gui.widget.location
 
-import com.cobblemon.mod.common.api.text.onHover
 import com.cobblemon.mod.common.api.text.red
 import com.cobblemon.mod.common.client.gui.summary.widgets.SoundlessWidget
 import com.cobblemon.mod.common.client.render.drawScaledText
@@ -22,6 +21,7 @@ class BucketSelectorWidget(
 		const val BUTTON_WIDTH: Int = 12
 		const val BUTTON_HEIGHT: Int = 10
 		const val SPACE: Int = 1
+		const val BOSS_BUCKET: String = "boss"
 		val NEXT = gui("button/next_button")
 		val PREV = gui("button/prev_button")
 	}
@@ -53,7 +53,9 @@ class BucketSelectorWidget(
 		prevButton.render(guiGraphics, i, j, f)
 		val bucketName = parent.currentBucket
 		val text = bucket(bucketName)
-		text.onHover(text).red()
+		if (bucketName.equals(BOSS_BUCKET, ignoreCase = true)) {
+			text.red()
+		}
 
 		drawScaledText(
 			context = guiGraphics,

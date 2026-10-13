@@ -9,6 +9,7 @@
 ### Fixes
 
 * Spawn previews can NOT mutate global bucket weights
+* Resolved Bucket Order + Color
 
 ### Developer
 
